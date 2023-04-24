@@ -4411,11 +4411,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\kasap\\OneDrive\\Desktop\\Biblioteka\\BibliotekaMS\\BibliotekaMS.csproj",
+      "projectUniqueName": "C:\\Users\\kasap\\Desktop\\BibliotekaMS\\BibliotekaMS\\BibliotekaMS.csproj",
       "projectName": "BibliotekaMS",
-      "projectPath": "C:\\Users\\kasap\\OneDrive\\Desktop\\Biblioteka\\BibliotekaMS\\BibliotekaMS.csproj",
+      "projectPath": "C:\\Users\\kasap\\Desktop\\BibliotekaMS\\BibliotekaMS\\BibliotekaMS.csproj",
       "packagesPath": "C:\\Users\\kasap\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\kasap\\OneDrive\\Desktop\\Biblioteka\\BibliotekaMS\\obj\\",
+      "outputPath": "C:\\Users\\kasap\\Desktop\\BibliotekaMS\\BibliotekaMS\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

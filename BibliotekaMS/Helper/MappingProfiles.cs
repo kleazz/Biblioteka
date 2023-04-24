@@ -9,6 +9,9 @@ namespace BibliotekaMS.Helper
         {
             CreateMap<Libri, LibriDto>();
             CreateMap<LibriDto, Libri>();
+            CreateMap<Kategoria, KategoriaDto>();
+            CreateMap<KategoriaDto, Kategoria>();
+
         }
     }
 }

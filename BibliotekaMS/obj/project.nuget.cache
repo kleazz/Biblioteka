@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "a1uZY7YbzxbYz6OKBfGv5CKyJJAPC6+fCaASNtx8bzGJ/hBpcZoUusAyXXmhnvPXntbcrEe1sbQ13/qgz+gXvQ==",
+  "dgSpecHash": "HyJpv+3rqVs2E0ld/WCxf3hhQ1aaZ8pNk4xKJlWW19jPkRcF61xNBYFNnJ9HDEk5uOFB1Vt9RT/FHtLPr3wPlA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\kasap\\OneDrive\\Desktop\\Biblioteka\\BibliotekaMS\\BibliotekaMS.csproj",
+  "projectFilePath": "C:\\Users\\kasap\\Desktop\\BibliotekaMS\\BibliotekaMS\\BibliotekaMS.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\kasap\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\kasap\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",

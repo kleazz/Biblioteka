@@ -3,6 +3,8 @@ using BibliotekaMS.Interfaces;
 using BibliotekaMS.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
+
 var builder = WebApplication.CreateBuilder(args);
 
 var provider = builder.Services.BuildServiceProvider();
@@ -19,12 +21,15 @@ builder.Services.AddCors(options =>
             {
                 builder.WithOrigins(frontendURL).AllowAnyMethod().AllowAnyHeader();
             });
-    });
+        });
 });
 
 // Add services to the container.
 builder.Services.AddControllers();
-builder.Services.AddScoped<ILibriRepository,LibriRepository>();
+builder.Services.AddControllers().AddJsonOptions(x =>
+                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+builder.Services.AddScoped<ILibriRepository, LibriRepository>();
+builder.Services.AddScoped<IKategoriaRepository, KategoriaRepository>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
