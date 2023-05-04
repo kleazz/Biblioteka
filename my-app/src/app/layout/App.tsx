@@ -1,4 +1,3 @@
-
 import { useState, useEffect, Fragment} from "react";
 import axios from 'axios';
 import { ILibri } from "./models/libri";
@@ -9,9 +8,20 @@ import LibriDashboard from "../../features/librat/dashboard/LibriDashboard";
 const App =()=>{
   const [librat, setLibrat]=useState<ILibri[]>([]);
 
-  const [editMode, setEditMode]=useState(false);
+  const[selectedLibri, setSelectedLibri]=useState<ILibri | null>(null);
 
   const [createMode, setCreateMode]=useState(false);
+
+  const [editMode, setEditMode]=useState(false);
+
+  const handleSelectLibri =(isbn: string)=>{
+    setSelectedLibri(librat.filter(l=>l.isbn===isbn)[0])
+    setEditMode(true)
+    }
+
+  const handleDeleteLibri =(isbn: string) =>{
+    setLibrat([...librat.filter(l=>l.isbn !== isbn)])
+  }
 
   useEffect(()=>{
     axios
@@ -28,7 +38,11 @@ const App =()=>{
        editMode={editMode}
        setEditMode={setEditMode}
        createMode={createMode}
-       setCreateMode={setCreateMode}/>  
+       setCreateMode={setCreateMode}
+       selectLibri={handleSelectLibri}
+       selectedLibri={selectedLibri!}
+       deleteLibri={handleDeleteLibri}
+       />  
       </Fragment>
     )
 }

@@ -1,4 +1,6 @@
-﻿namespace BibliotekaMS.Dto
+﻿using BibliotekaMS.Models;
+
+namespace BibliotekaMS.Dto
 {
     public class LibriDto
     {

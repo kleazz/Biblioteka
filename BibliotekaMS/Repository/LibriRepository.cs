@@ -13,27 +13,27 @@ namespace BibliotekaMS.Repository
             _context = context;
         }
 
-        public bool CreateLibri(Libri libri)
-        {
-            _context.Add(libri);
-            _context.SaveChanges();
-            return Save();
-        }
 
-        public bool CreateLibri(int kategoriaId, Libri libri)
+        public bool CreateLibri(Libri libri, int []kategoriaIds)
+           
         {
-            var kategoriaELibritEntity = _context.Kategoria.Where(a => a.KategoriaId == kategoriaId).FirstOrDefault();
-
-            var kategoriaELibrit = new KategoriaELibrit()
+            foreach (var kategoriaId in kategoriaIds)
             {
-                Kategoria = kategoriaELibritEntity,
-                Libri = libri,
-            };
+                var kategoriaELibritEntity = _context.Kategoria.Where(a => a.KategoriaId== kategoriaId).FirstOrDefault();
 
-            _context.Add(kategoriaELibrit);
+                var kategoriaELibrit = new KategoriaELibrit()
+                {
+                    Kategoria = kategoriaELibritEntity,
+                    Libri = libri,
+                };
+
+                _context.Add(kategoriaELibrit);
+            }
+
             _context.Add(libri);
+      
 
-            return Save(); 
+            return Save();
         }
 
         public bool DeleteLibri(Libri libri)

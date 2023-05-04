@@ -8,5 +8,7 @@ namespace BibliotekaMS.Dto
     {
         public int KategoriaId { get; set; }
         public string EmriKategorise { get; set; }
+
+  
     }
 }

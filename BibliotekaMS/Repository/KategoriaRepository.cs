@@ -18,6 +18,7 @@ namespace BibliotekaMS.Repository
             return Save();
         }
 
+
         public bool DeleteKategoria(Kategoria kategoria)
         {
             _context.Remove(kategoria);

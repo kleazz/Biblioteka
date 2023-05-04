@@ -11,7 +11,7 @@ namespace BibliotekaMS.Interfaces
 
         bool LibriExists(String libriId);
 
-        bool CreateLibri(int kategoriaId, Libri libri);
+        bool CreateLibri(Libri libri, int[] kategoriaIds);
 
         bool UpdateLibri(int kategoriaId, Libri libri);
 

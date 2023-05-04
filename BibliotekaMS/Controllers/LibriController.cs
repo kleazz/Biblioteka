@@ -54,7 +54,7 @@ namespace BibliotekaMS.Controllers
         [HttpPost]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
-        public IActionResult CreateLibri([FromQuery] int kategoriaId, [FromBody] LibriDto libriCreate)
+        public IActionResult CreateLibri([FromBody] LibriDto libriCreate, [FromQuery]int[]kategoriaIds)
         {
             if (libriCreate == null)
                 return BadRequest(ModelState);
@@ -74,7 +74,7 @@ namespace BibliotekaMS.Controllers
 
             var libriMap = _mapper.Map<Libri>(libriCreate);
 
-            if (!_libriRepository.CreateLibri(kategoriaId,libriMap))
+            if (!_libriRepository.CreateLibri(libriMap, kategoriaIds))
             {
                 ModelState.AddModelError("", "Something went wrong while saving");
                 return StatusCode(500, ModelState);

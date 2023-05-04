@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
 import { ILibri } from '../../../app/layout/models/libri';
 import LibriTabela from './LibriTabela';
-import LibriForm from '../form/LibriForm';
+import KrijoLibrin from '../form/KrijoLibrin';
+import EditoLibrin from '../form/EditoLibrin';
 
 interface IProps {
   librat: ILibri[];
@@ -9,6 +9,9 @@ interface IProps {
   setEditMode: (editMode: boolean) => void;
   createMode: boolean;
   setCreateMode: (createMode: boolean) => void;
+  selectLibri: (isbn: string) => void;
+  selectedLibri: ILibri;
+  deleteLibri: (isbn: string) => void;
 
 }
 
@@ -17,34 +20,42 @@ const LibriDashboard: React.FC<IProps> = ({
   editMode,
   setEditMode,
   createMode,
-  setCreateMode,}
+  setCreateMode,
+  selectLibri, 
+  selectedLibri,
+  deleteLibri}
   ) => {
 
-  return (
-    <>
-      <LibriTabela librat={librat} setEditMode={setEditMode} setCreateMode={setCreateMode}
-      />
-        {createMode && (
-        <LibriForm
-          show={true}
-          onHide={() => setCreateMode(false)}
-          onCreate={(libri: ILibri): void => {
-            throw new Error('Function not implemented.');
-          } } mode={'create'}        />
-      )}
-           {editMode && (
-        <LibriForm 
-          show={true}
-          onHide={() => setEditMode(false)}
-          onCreate={(libri: ILibri): void => {
-            throw new Error('Function not implemented.');
-          } } mode={'edit'}   />
-      )}
+    return (
+      <>
+        <LibriTabela
+          librat={librat}
+          setEditMode={setEditMode}
+          setCreateMode={setCreateMode}
+          selectLibri={selectLibri}
+          deleteLibri={deleteLibri}
 
-  
-    </>
+        />
+        {createMode && (
+          <KrijoLibrin
+            show={true}
+            onHide={() => setCreateMode(false)}
+            onCreate={(libri: ILibri): void => {
+              throw new Error('Function not implemented.');
+            }}
+          />
+        )}
+        {editMode && selectedLibri && (
+          <EditoLibrin
+            show={true}
+            onHide={() => setEditMode(false)}
+            libri={selectedLibri} setLibri={function (libri: ILibri): void {
+              throw new Error('Function not implemented.');
+            } }            />
+        )}
+      </>
+    );
     
-);
 };
 
 export default LibriDashboard;

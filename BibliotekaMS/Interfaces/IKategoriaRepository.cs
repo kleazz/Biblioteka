@@ -9,7 +9,7 @@ namespace BibliotekaMS.Interfaces
         ICollection<Libri> GetLibriNgaKategoria(int kategoriaId);
         bool KategoriaExists(int kategoriaId);
 
-        bool CreateKategoria(Kategoria kategoria);
+        bool CreateKategoria( Kategoria kategoria);
 
         bool UpdateKategoria(Kategoria kategoria);
 
