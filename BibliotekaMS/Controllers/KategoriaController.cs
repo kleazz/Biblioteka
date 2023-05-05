@@ -11,10 +11,10 @@ namespace BibliotekaMS.Controllers
     [ApiController]
     public class KategoriaController : Controller
     {
-        private readonly IKategoriaRepository _kategoriaRepository;
+        private readonly Interfaces.IKategoriaRepository _kategoriaRepository;
         private readonly IMapper _mapper;
 
-        public KategoriaController(IKategoriaRepository kategoriaRepository, IMapper mapper)
+        public KategoriaController(Interfaces.IKategoriaRepository kategoriaRepository, IMapper mapper)
         {
             _kategoriaRepository = kategoriaRepository;
             _mapper = mapper;

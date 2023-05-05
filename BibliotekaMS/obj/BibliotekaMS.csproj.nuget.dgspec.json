@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\kasap\\Desktop\\BibliotekaMS\\BibliotekaMS\\BibliotekaMS.csproj": {}
+    "C:\\Users\\Vlera Muhaxheri\\Desktop\\Lab1\\kleazz\\Biblioteka\\BibliotekaMS\\BibliotekaMS.csproj": {}
   },
   "projects": {
-    "C:\\Users\\kasap\\Desktop\\BibliotekaMS\\BibliotekaMS\\BibliotekaMS.csproj": {
+    "C:\\Users\\Vlera Muhaxheri\\Desktop\\Lab1\\kleazz\\Biblioteka\\BibliotekaMS\\BibliotekaMS.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\kasap\\Desktop\\BibliotekaMS\\BibliotekaMS\\BibliotekaMS.csproj",
+        "projectUniqueName": "C:\\Users\\Vlera Muhaxheri\\Desktop\\Lab1\\kleazz\\Biblioteka\\BibliotekaMS\\BibliotekaMS.csproj",
         "projectName": "BibliotekaMS",
-        "projectPath": "C:\\Users\\kasap\\Desktop\\BibliotekaMS\\BibliotekaMS\\BibliotekaMS.csproj",
-        "packagesPath": "C:\\Users\\kasap\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\kasap\\Desktop\\BibliotekaMS\\BibliotekaMS\\obj\\",
+        "projectPath": "C:\\Users\\Vlera Muhaxheri\\Desktop\\Lab1\\kleazz\\Biblioteka\\BibliotekaMS\\BibliotekaMS.csproj",
+        "packagesPath": "C:\\Users\\Vlera Muhaxheri\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Vlera Muhaxheri\\Desktop\\Lab1\\kleazz\\Biblioteka\\BibliotekaMS\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\kasap\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Vlera Muhaxheri\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -52,6 +52,14 @@
             "AutoMapper.Extensions.Microsoft.DependencyInjection": {
               "target": "Package",
               "version": "[12.0.1, )"
+            },
+            "DocumentFormat.OpenXml": {
+              "target": "Package",
+              "version": "[2.20.0, )"
+            },
+            "DocumentFormat.OpenXml.DotNet.Core": {
+              "target": "Package",
+              "version": "[1.0.1, )"
             },
             "Microsoft.AspNetCore.Mvc.Core": {
               "target": "Package",

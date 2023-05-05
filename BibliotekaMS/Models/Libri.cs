@@ -6,6 +6,7 @@
         public string Titulli { get; set; }
         public string Pershkrimi { get; set; }
         public string Fotoja { get; set; }
+        public Autori Autori { get; set; }
 
         public ICollection<KategoriaELibrit> KategoriaELibrit { get; set; }
     }

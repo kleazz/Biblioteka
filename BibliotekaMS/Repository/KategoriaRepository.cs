@@ -4,7 +4,7 @@ using BibliotekaMS.Models;
 
 namespace BibliotekaMS.Repository
 {
-    public class KategoriaRepository : IKategoriaRepository
+    public class KategoriaRepository : Interfaces.IKategoriaRepository
     {
         private DataContext _context;
         public KategoriaRepository(DataContext context)

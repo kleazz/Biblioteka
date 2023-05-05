@@ -13,7 +13,7 @@ namespace BibliotekaMS.Data
         public DbSet<Kategoria> Kategoria { get; set; }
         public DbSet<Libri> Libri { get; set; }
         public DbSet<KategoriaELibrit> KategoriaELibrit { get; set; }
-
+        public DbSet<Autori> Autori { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Libri>()
@@ -28,6 +28,9 @@ namespace BibliotekaMS.Data
                .HasOne(p => p.Kategoria)
                .WithMany(pc => pc.KategoriaELibrit)
                .HasForeignKey(c => c.KategoriaId);
+            modelBuilder.Entity<Autori>()
+               .HasKey(p => p.Id);
+
         }
     }
 }
