@@ -2,9 +2,7 @@
 using BibliotekaMS.Dto;
 using BibliotekaMS.Interfaces;
 using BibliotekaMS.Models;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 
 namespace BibliotekaMS.Controllers

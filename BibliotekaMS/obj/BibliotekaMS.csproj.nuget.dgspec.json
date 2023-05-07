@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Vlera Muhaxheri\\Desktop\\Lab1\\kleazz\\Biblioteka\\BibliotekaMS\\BibliotekaMS.csproj": {}
+    "C:\\Users\\kasap\\Desktop\\ll\\BibliotekaMS\\BibliotekaMS.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Vlera Muhaxheri\\Desktop\\Lab1\\kleazz\\Biblioteka\\BibliotekaMS\\BibliotekaMS.csproj": {
+    "C:\\Users\\kasap\\Desktop\\ll\\BibliotekaMS\\BibliotekaMS.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Vlera Muhaxheri\\Desktop\\Lab1\\kleazz\\Biblioteka\\BibliotekaMS\\BibliotekaMS.csproj",
+        "projectUniqueName": "C:\\Users\\kasap\\Desktop\\ll\\BibliotekaMS\\BibliotekaMS.csproj",
         "projectName": "BibliotekaMS",
-        "projectPath": "C:\\Users\\Vlera Muhaxheri\\Desktop\\Lab1\\kleazz\\Biblioteka\\BibliotekaMS\\BibliotekaMS.csproj",
-        "packagesPath": "C:\\Users\\Vlera Muhaxheri\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Vlera Muhaxheri\\Desktop\\Lab1\\kleazz\\Biblioteka\\BibliotekaMS\\obj\\",
+        "projectPath": "C:\\Users\\kasap\\Desktop\\ll\\BibliotekaMS\\BibliotekaMS.csproj",
+        "packagesPath": "C:\\Users\\kasap\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\kasap\\Desktop\\ll\\BibliotekaMS\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Vlera Muhaxheri\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\kasap\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],

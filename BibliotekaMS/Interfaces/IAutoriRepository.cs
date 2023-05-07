@@ -26,7 +26,6 @@ namespace BibliotekaMS.Interfaces
         void UpdateAutori(object autoriEntity);
         bool CreateAutori(Autori autori);
         object GetAutori(object autoriId);
-        bool DeleteAutori(object autoriToDelete);
         bool AutoriExists(string autoriId);
     }
 }

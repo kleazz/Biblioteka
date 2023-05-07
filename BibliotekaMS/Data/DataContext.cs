@@ -28,8 +28,7 @@ namespace BibliotekaMS.Data
                .HasOne(p => p.Kategoria)
                .WithMany(pc => pc.KategoriaELibrit)
                .HasForeignKey(c => c.KategoriaId);
-            modelBuilder.Entity<Autori>()
-               .HasKey(p => p.Id);
+       
 
         }
     }

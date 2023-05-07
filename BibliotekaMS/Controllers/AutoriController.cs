@@ -80,12 +80,12 @@ namespace BibliotekaMS.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
-        public IActionResult UpdateAutori(string autoriId, [FromQuery] int autoriId, [FromBody] AutoriDto updatedAutori)
+        public IActionResult UpdateAutori( [FromQuery] int autoriId, [FromBody] AutoriDto updatedAutori)
         {
             if (updatedAutori == null)
                 return BadRequest(ModelState);
 
-            if (autoriId == updatedAutori.id)
+            if (autoriId == updatedAutori.AutoriId)
             {
                 if (_autoriRepository.AutoriExists(autoriId))
                 {

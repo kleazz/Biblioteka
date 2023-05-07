@@ -42,11 +42,6 @@ namespace BibliotekaMS.Repository
             return _context.Autori.ToList();
         }
 
-        public ICollection<Libri> GetLibriNgaAutori(int autoriId)
-        {
-            return _context.Autori.Where(e => e.AutoriID == autoriId).SelectMany(c => c.Libri).ToList();
-        }
-
         public bool AutoriExists(int autoriId)
         {
             return _context.Autori.Any(k => k.AutoriID == autoriId);
@@ -154,9 +149,6 @@ namespace BibliotekaMS.Repository
             throw new NotImplementedException();
         }
 
-        bool IAutoriRepository.DeleteAutori(object autoriToDelete)
-        {
-            throw new NotImplementedException();
-        }
+     
     }
 }
