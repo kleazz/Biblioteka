@@ -5,53 +5,59 @@ import EditoLibrin from '../form/EditoLibrin';
 
 interface IProps {
   librat: ILibri[];
-  editMode: boolean;
-  setEditMode: (editMode: boolean) => void;
-  createMode: boolean;
-  setCreateMode: (createMode: boolean) => void;
   selectLibri: (isbn: string) => void;
   selectedLibri: ILibri;
+  editMode: boolean;
+  setEditMode: (editMode: boolean) => void;
+  setSelectedLibri: (libri: ILibri | null) => void;
+  createLibri: (libri: ILibri) => void;
+  editLibri: (activity: ILibri) => void;
   deleteLibri: (isbn: string) => void;
 
+  createMode: boolean;
+  setCreateMode: (createMode: boolean) => void;
 }
 
 const LibriDashboard: React.FC<IProps> = ({
   librat,
+  selectLibri,
+  selectedLibri,
   editMode,
   setEditMode,
-  createMode,
+  createLibri,
+  editLibri,
+  deleteLibri,
   setCreateMode,
-  selectLibri, 
-  selectedLibri,
-  deleteLibri}
+  createMode}
   ) => {
 
     return (
       <>
         <LibriTabela
           librat={librat}
-          setEditMode={setEditMode}
-          setCreateMode={setCreateMode}
           selectLibri={selectLibri}
           deleteLibri={deleteLibri}
-
+          setEditMode={setEditMode}
+          setCreateMode={setCreateMode}
+          
         />
         {createMode && (
           <KrijoLibrin
             show={true}
             onHide={() => setCreateMode(false)}
-            onCreate={(libri: ILibri): void => {
-              throw new Error('Function not implemented.');
-            }}
+            key={(selectedLibri && selectedLibri.isbn) || 0}
+            libri={selectedLibri!}
+            createLibri={createLibri}
+            editLibri={editLibri}
           />
         )}
         {editMode && selectedLibri && (
           <EditoLibrin
             show={true}
             onHide={() => setEditMode(false)}
-            libri={selectedLibri} setLibri={function (libri: ILibri): void {
-              throw new Error('Function not implemented.');
-            } }            />
+            libri={selectedLibri!}
+            editLibri={editLibri}
+               />
         )}
       </>
     );

@@ -1,46 +1,45 @@
-import Modal from 'react-bootstrap/Modal';
+import { Modal } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { ILibri } from '../../../app/layout/models/libri';
 import { useState } from 'react';
-import axios from 'axios';
 
 interface IProps {
+  libri: ILibri;
+  editLibri: (libri: ILibri) => void;
   show: boolean;
   onHide: () => void;
-  libri: ILibri;
-  setLibri: (libri: ILibri) => void;
 }
 
-const EditoLibrin: React.FC<IProps> = ({ show, onHide, libri, setLibri }) => {
-  
-  const [editedLibri, setEditedLibri] = useState<ILibri>(libri);
+const EditoLibrin: React.FC<IProps> = ({
+  show,
+  onHide,
+  libri: initialFormState,
+  editLibri
+}) => {
+  const initializeForm = () => {
+    if (initialFormState) {
+      return initialFormState;
+    } else {
+      return {
+        isbn: '',
+        titulli: '',
+        pershkrimi: '',
+        fotoja: ''
+      };
+    }
+  };
+
+  const [libri, setLibri] = useState<ILibri>(initializeForm);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    setEditedLibri(prevState => ({
-      ...prevState,
-      [name]: value,
-    }));
+    setLibri({ ...libri, [name]: value });
   };
 
-  const handleSaveChanges = () => {
-    const updatedLibri = {
-      ...libri,
-      titulli: editedLibri.titulli,
-      pershkrimi: editedLibri.pershkrimi,
-      fotoja: editedLibri.fotoja,
-    };
-  
-   
-    axios.put(`https://localhost:7226/api/Libri/${libri.isbn}`, updatedLibri)
-      .then((response) => {
-        setLibri(response.data);
-        onHide();
-      })
-      .catch((error) => {
-        console.error('Error updating book:', error);
-      });
+  const handleSubmit = () => {
+    editLibri(libri);
+    onHide();
   };
 
   return (
@@ -55,7 +54,7 @@ const EditoLibrin: React.FC<IProps> = ({ show, onHide, libri, setLibri }) => {
             <Form.Control
               type="text"
               name="titulli"
-              value={editedLibri.titulli}
+              value={libri.titulli}
               onChange={handleInputChange}
             />
           </Form.Group>
@@ -64,7 +63,7 @@ const EditoLibrin: React.FC<IProps> = ({ show, onHide, libri, setLibri }) => {
             <Form.Control
               as="textarea"
               name="pershkrimi"
-              value={editedLibri.pershkrimi}
+              value={libri.pershkrimi}
               onChange={handleInputChange}
             />
           </Form.Group>
@@ -73,7 +72,7 @@ const EditoLibrin: React.FC<IProps> = ({ show, onHide, libri, setLibri }) => {
             <Form.Control
               type="text"
               name="fotoja"
-              value={editedLibri.fotoja}
+              value={libri.fotoja}
               onChange={handleInputChange}
             />
           </Form.Group>
@@ -83,7 +82,7 @@ const EditoLibrin: React.FC<IProps> = ({ show, onHide, libri, setLibri }) => {
         <Button variant="outline-secondary" onClick={onHide}>
           Mbyll
         </Button>
-        <Button variant="primary" onClick={handleSaveChanges}>
+        <Button variant="primary" onClick={handleSubmit}>
           {'Ruaj Ndryshimet'}
         </Button>
       </Modal.Footer>
@@ -92,3 +91,4 @@ const EditoLibrin: React.FC<IProps> = ({ show, onHide, libri, setLibri }) => {
 };
 
 export default EditoLibrin;
+

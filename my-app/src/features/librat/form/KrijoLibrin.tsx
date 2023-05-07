@@ -1,61 +1,49 @@
-import React, { useState } from "react";
+import React, {  useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { ILibri } from "../../../app/layout/models/libri";
-import axios from "axios";
 
 interface IProps {
+  libri: ILibri;
+  createLibri: (libri: ILibri) => void;
+  editLibri: (libri: ILibri) => void;
   show: boolean;
   onHide: () => void;
-  onCreate: (libri: ILibri) => void;
 }
 
-const KrijoLibrin: React.FC<IProps> = ({ show, onHide, onCreate }) => {
-  const [newLibri, setNewLibri] = useState<ILibri>({
+const KrijoLibrin: React.FC<IProps> = ({ 
+  show, 
+  onHide,
+  createLibri
+}) => {
+  const [libri, setLibri] = useState<ILibri>({
     isbn: "",
     titulli: "",
     pershkrimi: "",
-    fotoja: "",
-    kategoria: [],
+    fotoja: ""
   });
 
-  const handleCreateLibri = async () => {
-    try {
-      const response = await axios.post(
-        "https://localhost:7226/api/Libri/",
-        {
-          isbn: newLibri.isbn,
-          titulli: newLibri.titulli,
-          pershkrimi: newLibri.pershkrimi,
-          fotoja: newLibri.fotoja,
-          kategoriaIds: newLibri.kategoria
-        },
-      );
-      onCreate(response.data);
-      setNewLibri({
-        isbn: "",
-        titulli: "",
-        pershkrimi: "",
-        fotoja: "",
-        kategoria: [],
-      });
+
+  const handleSubmit = () => {
+      let newLibri = {
+         ...libri,
+       };   
+      createLibri(newLibri);
       onHide();
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  const handleKategoriaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const kategoriaString = e.target.value;
-    const kategoria = kategoriaString
-      .split(",")
-      .map((value) => {
-        const num = parseInt(value.trim());
-        return isNaN(num) ? 0 : num; // check if the value is NaN and replace with 0
-      });
-    setNewLibri({ ...newLibri, kategoria });
-  };
-  
+   // }
+  } ;
+
+  // const handleInputChange = (
+  //   event: React.ChangeEvent<HTMLInputElement>
+  //   ) => {
+  //   const { name, value } = event.target;
+  //   setLibri({
+  //     ...libri,
+  //     [name]: value,
+  //   });
+  // };
+
   return (
     <Modal show={show} onHide={onHide}>
       <Modal.Header closeButton>
@@ -68,10 +56,8 @@ const KrijoLibrin: React.FC<IProps> = ({ show, onHide, onCreate }) => {
             <Form.Control
               type="text"
               placeholder="Enter ISBN"
-              value={newLibri.isbn}
-              onChange={(e) =>
-                setNewLibri({ ...newLibri, isbn: e.target.value })
-              }
+              value={libri.isbn}
+              onChange={(e) => setLibri({ ...libri, isbn: e.target.value })}
             />
           </Form.Group>
           <Form.Group controlId="formTitulliE">
@@ -79,10 +65,8 @@ const KrijoLibrin: React.FC<IProps> = ({ show, onHide, onCreate }) => {
             <Form.Control
               type="text"
               placeholder="Enter Titulli"
-              value={newLibri.titulli}
-              onChange={(e) =>
-                setNewLibri({ ...newLibri, titulli: e.target.value })
-              }
+              value={libri.titulli}
+              onChange={(e) => setLibri({ ...libri, titulli: e.target.value })}
             />
           </Form.Group>
           <Form.Group controlId="formPershkrimiE">
@@ -90,10 +74,8 @@ const KrijoLibrin: React.FC<IProps> = ({ show, onHide, onCreate }) => {
             <Form.Control
               as="textarea"
               placeholder="Enter Përshkrimi"
-              value={newLibri.pershkrimi}
-              onChange={(e) =>
-                setNewLibri({ ...newLibri, pershkrimi: e.target.value })
-              }
+              value={libri.pershkrimi}
+              onChange={(e) => setLibri({ ...libri, pershkrimi: e.target.value })}
             />
           </Form.Group>
           <Form.Group controlId="formFotojaE">
@@ -101,22 +83,8 @@ const KrijoLibrin: React.FC<IProps> = ({ show, onHide, onCreate }) => {
             <Form.Control
               type="text"
               placeholder="Enter Fotoja"
-              value={newLibri.fotoja}
-              onChange={(e) =>
-                setNewLibri({
-                  ...newLibri,
-                  fotoja: e.target.value,
-                })
-              }
-            />
-          </Form.Group>
-          <Form.Group controlId="formKategoriaE">
-            <Form.Label>Kategoria</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter Kategoria"
-              value={newLibri.kategoria.join(", ")}
-              onChange={handleKategoriaChange}
+              value={libri.fotoja}
+              onChange={(e) => setLibri({ ...libri, fotoja: e.target.value })}
             />
           </Form.Group>
         </Form>
@@ -125,7 +93,7 @@ const KrijoLibrin: React.FC<IProps> = ({ show, onHide, onCreate }) => {
         <Button variant="secondary" onClick={onHide}>
           Anulo
         </Button>
-        <Button variant="primary" onClick={handleCreateLibri}>
+        <Button variant="primary" onClick={handleSubmit}>
           Krijo
         </Button>
       </Modal.Footer>

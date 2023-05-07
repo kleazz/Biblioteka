@@ -14,21 +14,9 @@ namespace BibliotekaMS.Repository
         }
 
 
-        public bool CreateLibri(Libri libri, int []kategoriaIds)
+        public bool CreateLibri(Libri libri)
            
         {
-            foreach (var kategoriaId in kategoriaIds)
-            {
-                var kategoriaELibritEntity = _context.Kategoria.Where(a => a.KategoriaId== kategoriaId).FirstOrDefault();
-
-                var kategoriaELibrit = new KategoriaELibrit()
-                {
-                    Kategoria = kategoriaELibritEntity,
-                    Libri = libri,
-                };
-
-                _context.Add(kategoriaELibrit);
-            }
 
             _context.Add(libri);
       
