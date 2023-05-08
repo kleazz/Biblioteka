@@ -19,8 +19,6 @@ namespace BibliotekaMS.Repository
         {
 
             _context.Add(libri);
-      
-
             return Save();
         }
 

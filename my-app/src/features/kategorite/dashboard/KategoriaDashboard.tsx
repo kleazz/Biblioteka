@@ -6,14 +6,14 @@ import KategoriaTabela from "./KategoriaTabela";
 
 interface IProps {
   kategorite: IKategoria[];
-  selectKategoria: (id: number) => void;
+  selectKategoria: (kategoriaId: number) => void;
   selectedKategoria: IKategoria;
   editKatMode: boolean;
   setEditKatMode: (editMode: boolean) => void;
   setSelectedKategoria: (kategoria: IKategoria| null) => void;
   createKategoria: (kategoria: IKategoria) => void;
   editKategoria: (kategoria: IKategoria) => void;
-  deleteKategoria: (id: number) => void;
+  deleteKategoria: (kategoriaId: number) => void;
   createKatMode: boolean;
   setCreateKatMode: (createKatMode: boolean) => void;
 }
@@ -43,7 +43,7 @@ const KategoriaDashboard: React.FC<IProps> = ({
         <KrijoKategorine
           show={true}
           onHide={() => setCreateKatMode(false)}
-          key={(selectedKategoria && selectedKategoria.id) || 0}
+          key={(selectedKategoria && selectedKategoria.emriKategorise) || 0}
           kategoria={selectedKategoria!}
           createKategoria={createKategoria}
           editKategoria={editKategoria}

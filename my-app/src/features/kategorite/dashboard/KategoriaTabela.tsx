@@ -8,8 +8,8 @@ interface IProps {
   kategorite: IKategoria[];
   setEditKatMode: (editMode: boolean) => void;
   setCreateKatMode: (createMode: boolean) => void;
-  selectKategoria: (id: number) => void;
-  deleteKategoria: (id: number) => void;
+  selectKategoria: (kategoriaId: number) => void;
+  deleteKategoria: (kategoriaId: number) => void;
 }
 
 const KategoriaTabela: React.FC<IProps> = ({
@@ -34,7 +34,7 @@ const KategoriaTabela: React.FC<IProps> = ({
       <table className="table table-striped">
         <thead>
           <tr>
-            <th scope="col">ID</th>
+          <th scope="col">ID</th>
             <th scope="col">Emri</th>
             <th></th>
             <th></th>
@@ -42,12 +42,12 @@ const KategoriaTabela: React.FC<IProps> = ({
         </thead>
         <tbody>
           {kategorite.map((kategoria) => (
-            <tr key={kategoria.id}>
-              <td>{kategoria.id}</td>
-              <td>{kategoria.emri}</td>
+            <tr key={kategoria.kategoriaId}>
+              <td>{kategoria.kategoriaId}</td>
+              <td>{kategoria.emriKategorise}</td>
               <td>
                 <Button
-                  onClick={() => selectKategoria(kategoria.id)}
+                  onClick={() => selectKategoria(kategoria.kategoriaId)}
                   variant="outline-primary"
                 >
                   Edit
@@ -56,7 +56,7 @@ const KategoriaTabela: React.FC<IProps> = ({
               <td>
                 <Button
                   variant="outline-danger"
-                  onClick={() => deleteKategoria(kategoria.id)}
+                  onClick={() => deleteKategoria(kategoria.kategoriaId)}
                 >
                   Delete
                 </Button>

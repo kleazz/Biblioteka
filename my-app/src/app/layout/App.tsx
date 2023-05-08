@@ -6,8 +6,6 @@ import Librat from "../../features/librat/dashboard/Librat";
 import Kategorite from "../../features/kategorite/dashboard/Kategorite";
 
 const App = () => {
- 
-
   return (
     <Fragment>
       <NavBar />

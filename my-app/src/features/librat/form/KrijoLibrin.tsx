@@ -20,13 +20,6 @@ const KrijoLibrin: React.FC<IProps> = ({ show, onHide, createLibri }) => {
     fotoja: "",
   });
 
-  const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      setLibri({ ...libri, fotoja: URL.createObjectURL(file) });
-    }
-  };
-
   const handleSubmit = () => {
     let newLibri = {
       ...libri,
@@ -79,7 +72,9 @@ const KrijoLibrin: React.FC<IProps> = ({ show, onHide, createLibri }) => {
             <Form.Control
               type="file"
               accept=".png,.jpg,.jpeg"
-              onChange={handleFileInputChange}
+              onChange={(e) =>
+                setLibri({ ...libri, fotoja: e.target.value })
+              }
             />
           </Form.Group>
         </Form>

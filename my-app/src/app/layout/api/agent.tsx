@@ -23,8 +23,9 @@ const Librat ={
 const Kategorite ={
     list: (): Promise<IKategoria[]> => requests.get('/Kategoria'),
     create: (kategoria: IKategoria) => requests.post('/Kategoria', kategoria),
-    update: (kategoria: IKategoria) => requests.put(`/Kategoria/${kategoria.id}`, kategoria),
-    delete: (id: number) => requests.del(`/Kategoria/${id}`)
+    update: (kategoria: IKategoria) => requests.put(`/Kategoria/${kategoria.kategoriaId}`, kategoria),
+    delete: (kategoriaId: number) => requests.del(`/Kategoria/${kategoriaId}`)
+
 }
 
 export default {

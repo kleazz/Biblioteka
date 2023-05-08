@@ -26,7 +26,7 @@ function NavBar() {
           <Nav className="justify-content-end">
             <NavDropdown title="Dashboard" id="basic-nav-dropdown">
               <NavDropdown.Item as={Link} to ='/librat'>Libri</NavDropdown.Item>
-              <NavDropdown.Item href="#kategoria">Kategoria</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to ='/kategorite'>Kategoria</NavDropdown.Item>
               <NavDropdown.Item href="#autori">Autori</NavDropdown.Item>
             </NavDropdown>
             <Nav.Link href="#pricing">Log out</Nav.Link>

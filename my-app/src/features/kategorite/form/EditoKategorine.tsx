@@ -22,8 +22,8 @@ const EditoKategorine: React.FC<IProps> = ({
       return initialFormState;
     } else {
       return {
-        id:0,
-        emri:''
+        kategoriaId:0,
+        emriKategorise:""
       };
     }
   };
@@ -51,8 +51,8 @@ const EditoKategorine: React.FC<IProps> = ({
             <Form.Label>Emri</Form.Label>
             <Form.Control
               type="text"
-              name="titulli"
-              value={kategoria.emri}
+              name="emriKategorise"
+              value={kategoria.emriKategorise}
               onChange={handleInputChange}
               autoComplete="off"
             />

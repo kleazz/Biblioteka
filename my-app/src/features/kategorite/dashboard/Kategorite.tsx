@@ -22,20 +22,20 @@ const Kategorite = () => {
   
     const handleEditKategoria = (kategoria: IKategoria) => {
       agent.Kategorite.update(kategoria).then(() => {
-        setKategorite([...kategorite.filter((k) => k.id !== kategoria.id), kategoria]);
+        setKategorite([...kategorite.filter((k) => k.kategoriaId !== kategoria.kategoriaId), kategoria]);
         setSelectedKategoria(kategoria);
         setEditKatMode(false);
       });
     };
   
-    const handleDeleteKategoria = (id: number) => {
-      agent.Kategorite.delete(id).then(() => {
-        setKategorite([...kategorite.filter((k) => k.id !== id)]);
+    const handleDeleteKategoria = (kategoriaId: number) => {
+      agent.Kategorite.delete(kategoriaId).then(() => {
+        setKategorite([...kategorite.filter((k) => k.kategoriaId !== kategoriaId)]);
       });
     };
   
-    const handleSelectKategoria = (id: number) => {
-      setSelectedKategoria(kategorite.filter((k) => k.id === id)[0]);
+    const handleSelectKategoria = (kategoriaId: number) => {
+      setSelectedKategoria(kategorite.filter((k) => k.kategoriaId === kategoriaId)[0]);
       setEditKatMode(true);
     };
   
