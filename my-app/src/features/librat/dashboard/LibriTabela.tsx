@@ -48,9 +48,7 @@ const LibriTabela: React.FC<IProps> = ({
               <td>{libri.isbn}</td>
               <td>{libri.titulli}</td>
               <td>{libri.pershkrimi}</td>
-              <td>
-                <img src={libri.fotoja} alt="cover" />
-              </td>
+              <td>{libri.fotoja}</td>
               <td>
                 <Button
                   onClick={() => selectLibri(libri.isbn)}

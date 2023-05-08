@@ -1,8 +1,8 @@
-import { Modal } from 'react-bootstrap';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import { ILibri } from '../../../app/layout/models/libri';
-import { useState } from 'react';
+import { Modal } from "react-bootstrap";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import { ILibri } from "../../../app/layout/models/libri";
+import { useState } from "react";
 
 interface IProps {
   libri: ILibri;
@@ -15,17 +15,17 @@ const EditoLibrin: React.FC<IProps> = ({
   show,
   onHide,
   libri: initialFormState,
-  editLibri
+  editLibri,
 }) => {
   const initializeForm = () => {
     if (initialFormState) {
       return initialFormState;
     } else {
       return {
-        isbn: '',
-        titulli: '',
-        pershkrimi: '',
-        fotoja: ''
+        isbn: "",
+        titulli: "",
+        pershkrimi: "",
+        fotoja: "",
       };
     }
   };
@@ -37,6 +37,13 @@ const EditoLibrin: React.FC<IProps> = ({
     setLibri({ ...libri, [name]: value });
   };
 
+  const handleFotojaChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) {
+      const file = event.target.files[0];
+      setLibri({ ...libri, fotoja: URL.createObjectURL(file) });
+    }
+  };
+
   const handleSubmit = () => {
     editLibri(libri);
     onHide();
@@ -45,7 +52,7 @@ const EditoLibrin: React.FC<IProps> = ({
   return (
     <Modal show={show} onHide={onHide}>
       <Modal.Header closeButton>
-        <Modal.Title>{'Edito Librin'}</Modal.Title>
+        <Modal.Title>{"Edito Librin"}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form>
@@ -56,6 +63,7 @@ const EditoLibrin: React.FC<IProps> = ({
               name="titulli"
               value={libri.titulli}
               onChange={handleInputChange}
+              autoComplete="off"
             />
           </Form.Group>
           <Form.Group controlId="formPershkrimiE">
@@ -65,15 +73,17 @@ const EditoLibrin: React.FC<IProps> = ({
               name="pershkrimi"
               value={libri.pershkrimi}
               onChange={handleInputChange}
+              autoComplete="off"
             />
           </Form.Group>
           <Form.Group controlId="formFotojaE">
             <Form.Label>Kopertina</Form.Label>
             <Form.Control
-              type="text"
+              type="file"
               name="fotoja"
-              value={libri.fotoja}
-              onChange={handleInputChange}
+              accept=".png,.jpg,.jpeg"
+              onChange={handleFotojaChange}
+              autoComplete="off"
             />
           </Form.Group>
         </Form>
@@ -83,7 +93,7 @@ const EditoLibrin: React.FC<IProps> = ({
           Mbyll
         </Button>
         <Button variant="primary" onClick={handleSubmit}>
-          {'Ruaj Ndryshimet'}
+          {"Ruaj Ndryshimet"}
         </Button>
       </Modal.Footer>
     </Modal>
@@ -91,4 +101,3 @@ const EditoLibrin: React.FC<IProps> = ({
 };
 
 export default EditoLibrin;
-

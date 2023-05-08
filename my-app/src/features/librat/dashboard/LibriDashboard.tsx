@@ -1,7 +1,7 @@
-import { ILibri } from '../../../app/layout/models/libri';
-import LibriTabela from './LibriTabela';
-import KrijoLibrin from '../form/KrijoLibrin';
-import EditoLibrin from '../form/EditoLibrin';
+import { ILibri } from "../../../app/layout/models/libri";
+import LibriTabela from "./LibriTabela";
+import KrijoLibrin from "../form/KrijoLibrin";
+import EditoLibrin from "../form/EditoLibrin";
 
 interface IProps {
   librat: ILibri[];
@@ -11,7 +11,7 @@ interface IProps {
   setEditMode: (editMode: boolean) => void;
   setSelectedLibri: (libri: ILibri | null) => void;
   createLibri: (libri: ILibri) => void;
-  editLibri: (activity: ILibri) => void;
+  editLibri: (libri: ILibri) => void;
   deleteLibri: (isbn: string) => void;
 
   createMode: boolean;
@@ -28,40 +28,37 @@ const LibriDashboard: React.FC<IProps> = ({
   editLibri,
   deleteLibri,
   setCreateMode,
-  createMode}
-  ) => {
-
-    return (
-      <>
-        <LibriTabela
-          librat={librat}
-          selectLibri={selectLibri}
-          deleteLibri={deleteLibri}
-          setEditMode={setEditMode}
-          setCreateMode={setCreateMode}
-          
+  createMode,
+}) => {
+  return (
+    <>
+      <LibriTabela
+        librat={librat}
+        selectLibri={selectLibri}
+        deleteLibri={deleteLibri}
+        setEditMode={setEditMode}
+        setCreateMode={setCreateMode}
+      />
+      {createMode && (
+        <KrijoLibrin
+          show={true}
+          onHide={() => setCreateMode(false)}
+          key={(selectedLibri && selectedLibri.isbn) || 0}
+          libri={selectedLibri!}
+          createLibri={createLibri}
+          editLibri={editLibri}
         />
-        {createMode && (
-          <KrijoLibrin
-            show={true}
-            onHide={() => setCreateMode(false)}
-            key={(selectedLibri && selectedLibri.isbn) || 0}
-            libri={selectedLibri!}
-            createLibri={createLibri}
-            editLibri={editLibri}
-          />
-        )}
-        {editMode && selectedLibri && (
-          <EditoLibrin
-            show={true}
-            onHide={() => setEditMode(false)}
-            libri={selectedLibri!}
-            editLibri={editLibri}
-               />
-        )}
-      </>
-    );
-    
+      )}
+      {editMode && selectedLibri && (
+        <EditoLibrin
+          show={true}
+          onHide={() => setEditMode(false)}
+          libri={selectedLibri!}
+          editLibri={editLibri}
+        />
+      )}
+    </>
+  );
 };
 
 export default LibriDashboard;

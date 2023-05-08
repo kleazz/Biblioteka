@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -12,37 +12,28 @@ interface IProps {
   onHide: () => void;
 }
 
-const KrijoLibrin: React.FC<IProps> = ({ 
-  show, 
-  onHide,
-  createLibri
-}) => {
+const KrijoLibrin: React.FC<IProps> = ({ show, onHide, createLibri }) => {
   const [libri, setLibri] = useState<ILibri>({
     isbn: "",
     titulli: "",
     pershkrimi: "",
-    fotoja: ""
+    fotoja: "",
   });
 
+  const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      setLibri({ ...libri, fotoja: URL.createObjectURL(file) });
+    }
+  };
 
   const handleSubmit = () => {
-      let newLibri = {
-         ...libri,
-       };   
-      createLibri(newLibri);
-      onHide();
-   // }
-  } ;
-
-  // const handleInputChange = (
-  //   event: React.ChangeEvent<HTMLInputElement>
-  //   ) => {
-  //   const { name, value } = event.target;
-  //   setLibri({
-  //     ...libri,
-  //     [name]: value,
-  //   });
-  // };
+    let newLibri = {
+      ...libri,
+    };
+    createLibri(newLibri);
+    onHide();
+  };
 
   return (
     <Modal show={show} onHide={onHide}>
@@ -55,36 +46,40 @@ const KrijoLibrin: React.FC<IProps> = ({
             <Form.Label>ISBN</Form.Label>
             <Form.Control
               type="text"
-              placeholder="Enter ISBN"
+              placeholder="Shkruaj ISBN"
               value={libri.isbn}
               onChange={(e) => setLibri({ ...libri, isbn: e.target.value })}
+              autoComplete="off"
             />
           </Form.Group>
           <Form.Group controlId="formTitulliE">
             <Form.Label>Titulli</Form.Label>
             <Form.Control
               type="text"
-              placeholder="Enter Titulli"
+              placeholder="Shkruaj titullin"
               value={libri.titulli}
               onChange={(e) => setLibri({ ...libri, titulli: e.target.value })}
+              autoComplete="off"
             />
           </Form.Group>
           <Form.Group controlId="formPershkrimiE">
             <Form.Label>Përshkrimi</Form.Label>
             <Form.Control
               as="textarea"
-              placeholder="Enter Përshkrimi"
+              placeholder="Shkruaj përshkrimin"
               value={libri.pershkrimi}
-              onChange={(e) => setLibri({ ...libri, pershkrimi: e.target.value })}
+              onChange={(e) =>
+                setLibri({ ...libri, pershkrimi: e.target.value })
+              }
+              autoComplete="off"
             />
           </Form.Group>
           <Form.Group controlId="formFotojaE">
             <Form.Label>Fotoja</Form.Label>
             <Form.Control
-              type="text"
-              placeholder="Enter Fotoja"
-              value={libri.fotoja}
-              onChange={(e) => setLibri({ ...libri, fotoja: e.target.value })}
+              type="file"
+              accept=".png,.jpg,.jpeg"
+              onChange={handleFileInputChange}
             />
           </Form.Group>
         </Form>
