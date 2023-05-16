@@ -1,6 +1,7 @@
 ﻿using BibliotekaMS.Data;
 using BibliotekaMS.Interfaces;
 using BibliotekaMS.Models;
+using Microsoft.Extensions.Hosting;
 
 
 namespace BibliotekaMS.Repository
@@ -8,6 +9,8 @@ namespace BibliotekaMS.Repository
     public class LibriRepository : ILibriRepository
     {
         private readonly DataContext _context;
+     
+
         public LibriRepository(DataContext context)
         {
             _context = context;
@@ -15,9 +18,8 @@ namespace BibliotekaMS.Repository
 
 
         public bool CreateLibri(Libri libri)
-           
-        {
 
+        {
             _context.Add(libri);
             return Save();
         }

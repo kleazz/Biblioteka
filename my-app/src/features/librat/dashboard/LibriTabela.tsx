@@ -18,9 +18,15 @@ const LibriTabela: React.FC<IProps> = ({
   selectLibri,
   deleteLibri,
 }) => {
+  const truncateText = (text: string, maxLength: number) => {
+    if (text.length > maxLength) {
+      return text.substring(0, maxLength) + "...";
+    }
+    return text;
+  };
+
   return (
     <div style={{ marginTop: "7em" }}>
-      {" "}
       <Row className="align-items-center justify-content-between">
         <Col>
           <h3>Lista e librave</h3>
@@ -47,8 +53,8 @@ const LibriTabela: React.FC<IProps> = ({
             <tr key={libri.isbn}>
               <td>{libri.isbn}</td>
               <td>{libri.titulli}</td>
-              <td>{libri.pershkrimi}</td>
-              <td>{libri.fotoja}</td>
+              <td>{truncateText(libri.pershkrimi, 50)}</td>
+              <td>{truncateText(libri.fotoja, 50)}</td>
               <td>
                 <Button
                   onClick={() => selectLibri(libri.isbn)}
@@ -72,4 +78,5 @@ const LibriTabela: React.FC<IProps> = ({
     </div>
   );
 };
+
 export default LibriTabela;

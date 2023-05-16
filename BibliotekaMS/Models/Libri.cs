@@ -1,4 +1,6 @@
-﻿namespace BibliotekaMS.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace BibliotekaMS.Models
 {
     public class Libri
     {

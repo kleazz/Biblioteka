@@ -84,12 +84,12 @@ namespace BibliotekaMS.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateLibri(string libriIsbn,[FromQuery] int kategoriaId, [FromBody] LibriDto updatedLibri) 
+        public IActionResult UpdateLibri(string libriIsbn, [FromQuery] int kategoriaId, [FromBody] LibriDto updatedLibri)
         {
             if (updatedLibri == null)
                 return BadRequest(ModelState);
 
-            if(libriIsbn != updatedLibri.isbn)
+            if (libriIsbn != updatedLibri.isbn)
                 return BadRequest(ModelState);
 
             if (!_libriRepository.LibriExists(libriIsbn))
@@ -122,7 +122,7 @@ namespace BibliotekaMS.Controllers
                 return NotFound();
             }
 
-           
+
             var libriToDelete = _libriRepository.GetLibri(libriIsbn);
 
             if (!ModelState.IsValid)
@@ -137,5 +137,4 @@ namespace BibliotekaMS.Controllers
 
     }
 }
-
 

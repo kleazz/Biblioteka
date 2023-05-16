@@ -1,4 +1,5 @@
 ﻿using BibliotekaMS.Models;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BibliotekaMS.Dto
 {

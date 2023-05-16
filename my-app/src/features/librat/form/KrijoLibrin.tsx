@@ -17,7 +17,7 @@ const KrijoLibrin: React.FC<IProps> = ({ show, onHide, createLibri }) => {
     isbn: "",
     titulli: "",
     pershkrimi: "",
-    fotoja: "",
+    fotoja: ""
   });
 
   const handleSubmit = () => {
@@ -27,6 +27,19 @@ const KrijoLibrin: React.FC<IProps> = ({ show, onHide, createLibri }) => {
     createLibri(newLibri);
     onHide();
   };
+
+  function convertFile(files: FileList | null) {
+    if (files && files.length > 0) {
+      const fileRef = files[0];
+      const reader = new FileReader();
+      reader.onload = (ev: ProgressEvent<FileReader>) => {
+        const imageUrl = ev.target?.result as string;
+        setLibri({ ...libri, fotoja: imageUrl });
+      };
+  
+      reader.readAsDataURL(fileRef);
+    }
+  }
 
   return (
     <Modal show={show} onHide={onHide}>
@@ -68,15 +81,13 @@ const KrijoLibrin: React.FC<IProps> = ({ show, onHide, createLibri }) => {
             />
           </Form.Group>
           <Form.Group controlId="formFotojaE">
-            <Form.Label>Fotoja</Form.Label>
-            <Form.Control
-              type="file"
-              accept=".png,.jpg,.jpeg"
-              onChange={(e) =>
-                setLibri({ ...libri, fotoja: e.target.value })
-              }
-            />
-          </Form.Group>
+  <Form.Label>Fotoja</Form.Label>
+  <Form.Control
+    type="file"
+    accept=".png,.jpg,.jpeg"
+    onChange={(e) => convertFile((e.target as HTMLInputElement).files)}
+  />
+</Form.Group>
         </Form>
       </Modal.Body>
       <Modal.Footer>
@@ -92,3 +103,5 @@ const KrijoLibrin: React.FC<IProps> = ({ show, onHide, createLibri }) => {
 };
 
 export default KrijoLibrin;
+
+
