@@ -10,5 +10,6 @@ namespace BibliotekaMS.Models
         public string Fotoja { get; set; }
 
         public ICollection<KategoriaELibrit> KategoriaELibrit { get; set; }
+        public ICollection<AutoriILibrit> AutoriILibrit { get; set; }
     }
 }

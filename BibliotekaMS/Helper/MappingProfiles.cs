@@ -11,7 +11,9 @@ namespace BibliotekaMS.Helper
             CreateMap<LibriDto, Libri>();
             CreateMap<Kategoria, KategoriaDto>();
             CreateMap<KategoriaDto, Kategoria>();
-
+            CreateMap<Autori, AutoriDto>();
+            CreateMap<AutoriDto, Autori>(); 
         }
     }
 }
+ 

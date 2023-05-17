@@ -9,12 +9,10 @@ namespace BibliotekaMS.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AutoriController : ControllerBase
+    public class AutoriController : Controller
     {
         private readonly IAutoriRepository _autoriRepository;
         private readonly IMapper _mapper;
-        private object autoriRepository;
-        private Autori autoriToDelete;
 
         public AutoriController(IAutoriRepository autoriRepository, IMapper mapper)
         {
@@ -26,17 +24,19 @@ namespace BibliotekaMS.Controllers
         [ProducesResponseType(200, Type = typeof(IEnumerable<Autori>))]
         public IActionResult GetAutoret()
         {
-            var autoret = _mapper.Map<List<AutoriDto>>(_autoriRepository.GetAutori());
+            var autoret = _mapper.Map<List<AutoriDto>>(_autoriRepository.GetAutoret());
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             return Ok(autoret);
         }
+      
 
         [HttpGet("{autoriId}")]
         [ProducesResponseType(200, Type = typeof(Autori))]
         [ProducesResponseType(400)]
+
         public IActionResult GetAutori(int autoriId)
         {
             if (!_autoriRepository.AutoriExists(autoriId))
@@ -50,90 +50,117 @@ namespace BibliotekaMS.Controllers
             return Ok(autori);
         }
 
+        [HttpGet("libri/{autoriId}")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Libri>))]
+        [ProducesResponseType(400)]
+
+        public IActionResult GetLibriNgaAutori(int autoriId)
+        {
+            if(!_autoriRepository.AutoriExists(autoriId))
+            {
+                return NotFound();
+            }
+            var librat = _mapper.Map<List<LibriDto>>(
+                _autoriRepository.GetLibriNgaAutori(autoriId));
+
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            return Ok(librat);
+        }
+
         [HttpPost]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
-        public IActionResult CreateAutori([FromBody] AutoriDto autoriDto)
-        {
-            if (autoriDto == null)
-                return BadRequest();
 
-            if (_autoriRepository.AutoriExists(autoriDto.Emri, autoriDto.Mbiemri))
+        public IActionResult CreateAutori([FromBody] AutoriDto autoriCreate)
+        {
+            if (autoriCreate == null)
             {
-                ModelState.AddModelError("", "Ky autor ekziston tashmë!");
-                return StatusCode(404, ModelState);
+                return BadRequest(ModelState);
             }
 
-            var autori = _mapper.Map<Autori>(autoriDto);
+            var autori = _autoriRepository.GetAutoret()
+                .Where(c => c.Emri.Trim().ToUpper() == autoriCreate.Emri.TrimEnd().ToUpper()).FirstOrDefault();
 
-            if (!_autoriRepository.CreateAutori(autori))
+            if (autori != null)
             {
-                ModelState.AddModelError("", $"Diçka shkoi keq duke shtuar autorin {autori.Emri} {autori.Mbiemri}");
+                ModelState.AddModelError("", "Autori already exists");
+                return StatusCode(422, ModelState);
+            }
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var autoriMap = _mapper.Map<Autori>(autoriCreate);
+
+            if (!_autoriRepository.CreateAutori(autoriMap))
+            {
+                ModelState.AddModelError("", "Something went wrong while saving");
                 return StatusCode(500, ModelState);
             }
 
-            return NoContent();
+            return Ok("Successfully created");
         }
 
         [HttpPut("{autoriId}")]
-        [ProducesResponseType(204)]
         [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        [ProducesResponseType(500)]
-        public IActionResult UpdateAutori( [FromQuery] int autoriId, [FromBody] AutoriDto updatedAutori)
+
+        public IActionResult UpdateAutori(int autoriId, [FromBody] AutoriDto updatedAutori)
         {
             if (updatedAutori == null)
                 return BadRequest(ModelState);
 
-            if (autoriId == updatedAutori.AutoriId)
-            {
-                if (_autoriRepository.AutoriExists(autoriId))
-                {
-                    if (!ModelState.IsValid)
-                        return BadRequest();
+            if (autoriId != updatedAutori.AutoriId)
+                return BadRequest(ModelState);
 
-                    var autoriMap = _mapper.Map<Autori>(updatedAutori);
-
-                    if (!_autoriRepository.UpdateAutori(autoriId, autoriMap))
-                    {
-                        ModelState.AddModelError("", "Something went wrong updating autori");
-                        return StatusCode(500, ModelState);
-                    }
-
-                    return NoContent();
-                }
-
+            if (!_autoriRepository.AutoriExists(autoriId))
                 return NotFound();
+
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            var autoriMap = _mapper.Map<Autori>(updatedAutori);
+
+            if (!_autoriRepository.UpdateAutori(autoriMap))
+            {
+                ModelState.AddModelError("", "Something went wrong updating autori");
+                return StatusCode(500, ModelState);
+
             }
 
-            return BadRequest(ModelState);
+            return NoContent();
 
         }
 
         [HttpDelete("{autoriId}")]
-        [ProducesResponseType(204)]
         [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        [ProducesResponseType(500)]
-        public IActionResult DeleteAutori(string autoriId)
+
+        public IActionResult DeleteAutori(int autoriId)
         {
             if (!_autoriRepository.AutoriExists(autoriId))
             {
                 return NotFound();
             }
 
-
-            var libriToDelete = _autoriRepository.GetAutori(autoriId);
+            var autoriToDelete = _autoriRepository.GetAutori(autoriId);
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             if (!_autoriRepository.DeleteAutori(autoriToDelete))
             {
-                ModelState.AddModelError("", "Something went erong deleting Autori");
+                ModelState.AddModelError("", "Something went wrong deleting autori");
             }
+
             return NoContent();
         }
 
     }
 }
+   
+

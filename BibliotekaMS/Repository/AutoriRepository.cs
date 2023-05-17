@@ -9,10 +9,14 @@ namespace BibliotekaMS.Repository
 {
     public class AutoriRepository : IAutoriRepository
     {
-        private readonly DataContext _context;
+        private DataContext _context;
         public AutoriRepository(DataContext context)
         {
             _context = context;
+        }
+        public bool AutoriExists(int autoriId)
+        {
+            return _context.Autori.Any(a => a.AutoriId == autoriId);
         }
 
         public bool CreateAutori(Autori autori)
@@ -21,30 +25,25 @@ namespace BibliotekaMS.Repository
             return Save();
         }
 
-        public bool DeleteAutori(int autoriId)
+        public bool DeleteAutori(Autori autori)
         {
-            var autorToDelete = _context.Autori.FirstOrDefault(a => a.AutoriID == autoriId);
-            if (autorToDelete == null)
-            {
-                return false;
-            }
-            _context.Remove(autorToDelete);
+            _context.Remove(autori);
             return Save();
         }
 
-        public Autori GetAutori(int id)
-        {
-            return _context.Autori.Where(k => k.AutoriID == id).FirstOrDefault();
-        }
-
-        public ICollection<Autori> GetAutori()
+        public ICollection<Autori> GetAutoret()
         {
             return _context.Autori.ToList();
         }
 
-        public bool AutoriExists(int autoriId)
+        public Autori GetAutori(int autoriId)
         {
-            return _context.Autori.Any(k => k.AutoriID == autoriId);
+            return _context.Autori.Where(a => a.AutoriId == autoriId).FirstOrDefault();
+        }
+
+        public ICollection<Libri> GetLibriNgaAutori(int autoriId)
+        {
+            return _context.AutoriILibrit.Where(a => a.Autori.AutoriId == autoriId).Select(l => l.Libri).ToList();
         }
 
         public bool Save()
@@ -58,97 +57,5 @@ namespace BibliotekaMS.Repository
             _context.Update(autori);
             return Save();
         }
-
-        public Libri GetLibri(string isbn)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Libri GetLibriEmri(string emri)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool LibriExists(string isbn)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool CreateAutori(Autori autori, int[] kategoriaIds)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool UpdateAutori(int autoriId, Autori autori)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Libri GetAutori(string isbn)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Libri GetAutoriEmri(string emri)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool AutoriExists(string autoriId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool DeleteAutori(Autori autori)
-        {
-            throw new NotImplementedException();
-        }
-
-        Autori IAutoriRepository.GetAutori(string isbn)
-        {
-            throw new NotImplementedException();
-        }
-
-        Autori IAutoriRepository.GetAutoriEmri(string emri)
-        {
-            throw new NotImplementedException();
-        }
-
-        object IAutoriRepository.GetAutori(int autoriId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteAutori(object autoriEntity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AddAutori(Autori autori)
-        {
-            throw new NotImplementedException();
-        }
-
-        public object GetAutor(int autoriId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UpdateAutori(object autoriEntity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool AutoriExists(string autoriId, string mbiemri)
-        {
-            throw new NotImplementedException();
-        }
-
-        public object GetAutori(object autoriId)
-        {
-            throw new NotImplementedException();
-        }
-
-     
     }
 }

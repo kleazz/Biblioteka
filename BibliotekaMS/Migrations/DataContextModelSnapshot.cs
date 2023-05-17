@@ -21,6 +21,42 @@ namespace BibliotekaMS.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("BibliotekaMS.Models.Autori", b =>
+                {
+                    b.Property<int>("AutoriId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AutoriId"));
+
+                    b.Property<string>("Emri")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Mbiemri")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("AutoriId");
+
+                    b.ToTable("Autori");
+                });
+
+            modelBuilder.Entity("BibliotekaMS.Models.AutoriILibrit", b =>
+                {
+                    b.Property<string>("Isbn")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AutoriId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Isbn", "AutoriId");
+
+                    b.HasIndex("AutoriId");
+
+                    b.ToTable("AutoriILibrit");
+                });
+
             modelBuilder.Entity("BibliotekaMS.Models.Kategoria", b =>
                 {
                     b.Property<int>("KategoriaId")
@@ -75,6 +111,25 @@ namespace BibliotekaMS.Migrations
                     b.ToTable("Libri");
                 });
 
+            modelBuilder.Entity("BibliotekaMS.Models.AutoriILibrit", b =>
+                {
+                    b.HasOne("BibliotekaMS.Models.Autori", "Autori")
+                        .WithMany("AutoriILibrit")
+                        .HasForeignKey("AutoriId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BibliotekaMS.Models.Libri", "Libri")
+                        .WithMany("AutoriILibrit")
+                        .HasForeignKey("Isbn")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Autori");
+
+                    b.Navigation("Libri");
+                });
+
             modelBuilder.Entity("BibliotekaMS.Models.KategoriaELibrit", b =>
                 {
                     b.HasOne("BibliotekaMS.Models.Libri", "Libri")
@@ -94,6 +149,11 @@ namespace BibliotekaMS.Migrations
                     b.Navigation("Libri");
                 });
 
+            modelBuilder.Entity("BibliotekaMS.Models.Autori", b =>
+                {
+                    b.Navigation("AutoriILibrit");
+                });
+
             modelBuilder.Entity("BibliotekaMS.Models.Kategoria", b =>
                 {
                     b.Navigation("KategoriaELibrit");
@@ -101,6 +161,8 @@ namespace BibliotekaMS.Migrations
 
             modelBuilder.Entity("BibliotekaMS.Models.Libri", b =>
                 {
+                    b.Navigation("AutoriILibrit");
+
                     b.Navigation("KategoriaELibrit");
                 });
 #pragma warning restore 612, 618

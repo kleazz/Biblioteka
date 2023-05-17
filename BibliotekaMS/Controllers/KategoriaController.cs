@@ -55,6 +55,10 @@ namespace BibliotekaMS.Controllers
 
         public IActionResult GetLibriNgaKategoria(int kategoriaId)
         {
+            if (!_kategoriaRepository.KategoriaExists(kategoriaId))
+            {
+                return NotFound();
+            }
             var librat = _mapper.Map<List<LibriDto>>(
                 _kategoriaRepository.GetLibriNgaKategoria(kategoriaId));
 
