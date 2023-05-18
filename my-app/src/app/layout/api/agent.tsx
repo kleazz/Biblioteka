@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { ILibri } from '../models/libri';
 import { IKategoria } from '../models/kategoria';
+import { IAutori } from '../models/autori';
 
 axios.defaults.baseURL = 'https://localhost:7226/api';
 
@@ -28,6 +29,14 @@ const Kategorite ={
 
 }
 
+const Autoret ={
+    list: (): Promise<IAutori[]> => requests.get('/Autori'),
+    create: (autori: IAutori) => requests.post('/Autori', autori),
+    update: (autori: IAutori) => requests.put(`/Autori/${autori.autoriId}`, autori),
+    delete: (autoriId: number) => requests.del(`/Autori/${autoriId}`)
+
+}
+
 export default {
-    Librat, Kategorite
+    Librat, Kategorite, Autoret
 }

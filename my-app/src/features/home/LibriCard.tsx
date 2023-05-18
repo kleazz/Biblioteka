@@ -20,9 +20,8 @@ const LibriCard: React.FC<IProps> = ({ librat }) => {
             <div className="flip-card-front">
               <Card
                 style={{
-                  width: '19rem',
-                  height: '27rem',
-                  margin: '1em',
+                  width: '16rem',
+                  height: '26rem',
                   padding: '20px',
                   position: 'relative', 
                 }}
@@ -30,7 +29,7 @@ const LibriCard: React.FC<IProps> = ({ librat }) => {
                 <Card.Img
                   variant="top"
                   src={libri.fotoja}
-                  style={{paddingTop:'15px', height: '300px', width: '200px' }}
+                  style={{paddingTop:'5px', height: '300px', width: '200px' }}
                   className="mx-auto"
                 />
                 <Card.Body>
@@ -42,15 +41,14 @@ const LibriCard: React.FC<IProps> = ({ librat }) => {
             <div className="flip-card-back">
               <Card
                 style={{
-                  width: '19rem',
-                  height: '27rem',
-                  margin: '1em',
+                  width: '17rem',
+                  height: '26rem',
                   padding: '20px',
                 }}
               >
                 <Card.Text>{libri.pershkrimi}</Card.Text>
                 <div className="button-container"> 
-                    <Button variant="success" className="card-button">Huazo</Button> {/* Added */}
+                    <Button variant="success" className="card-button">Huazo</Button> 
                   </div>
               </Card>
             </div>

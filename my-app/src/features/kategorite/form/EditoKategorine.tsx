@@ -47,7 +47,7 @@ const EditoKategorine: React.FC<IProps> = ({
       </Modal.Header>
       <Modal.Body>
         <Form>
-          <Form.Group controlId="formTitulliE">
+          <Form.Group controlId="formKategoriaE">
             <Form.Label>Emri</Form.Label>
             <Form.Control
               type="text"

@@ -50,7 +50,7 @@ body{
 
 .button-container {
   position: absolute;
-  width:16rem;
+  width:15rem;
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);

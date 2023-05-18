@@ -34,7 +34,7 @@ const KrijoKategorine: React.FC<IProps> = ({ show, onHide, createKategoria }) =>
       </Modal.Header>
       <Modal.Body>
         <Form>
-          <Form.Group controlId="formEmriE">
+          <Form.Group controlId="formKategoriaE">
             <Form.Label>Emri</Form.Label>
             <Form.Control
               type="text"
