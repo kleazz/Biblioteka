@@ -1,9 +1,12 @@
-﻿using BibliotekaMS.Models;
+﻿using BibliotekaMS.Identity;
+using BibliotekaMS.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace BibliotekaMS.Data
 {
-    public class DataContext : DbContext
+    public class DataContext : IdentityDbContext<AppUser>
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
@@ -18,6 +21,7 @@ namespace BibliotekaMS.Data
         public DbSet<AutoriILibrit> AutoriILibrit { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Libri>()
             .HasKey(l => l.Isbn);
             modelBuilder.Entity<KategoriaELibrit>()
@@ -41,6 +45,7 @@ namespace BibliotekaMS.Data
                 .HasOne(l => l.Autori)
                 .WithMany(al => al.AutoriILibrit)
                 .HasForeignKey(l => l.AutoriId);
+
 
         }
     }

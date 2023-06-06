@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using System.Text.Json.Serialization;
 using System.IO;
+using BibliotekaMS.Identity;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +35,7 @@ builder.Services.AddControllers().AddJsonOptions(x =>
 builder.Services.AddScoped<ILibriRepository, LibriRepository>();
 builder.Services.AddScoped<IKategoriaRepository, KategoriaRepository>();
 builder.Services.AddScoped<IAutoriRepository, AutoriRepository>();
+builder.Services.AddScoped<IUserAuthenticationRepository, UserAuthenticationRepository>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -41,6 +44,13 @@ builder.Services.AddDbContext<DataContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
+//for identity
+builder.Services.AddIdentity<AppUser, IdentityRole>()
+    .AddEntityFrameworkStores<DataContext>()
+    .AddDefaultTokenProviders();
+
+builder.Services.ConfigureApplicationCookie(op => op.LoginPath = "/UserAuthentication/Login");
 
 var app = builder.Build();
 
@@ -55,14 +65,16 @@ app.UseHttpsRedirection();
 
 app.UseCors("CORSPolicy");
 
+app.UseRouting();
+app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseStaticFiles(new StaticFileOptions
-{
-    FileProvider = new PhysicalFileProvider(
-        Path.Combine(Directory.GetCurrentDirectory(), "Images")),
-    RequestPath = "/Images"
-});
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=UserAuthentication}/{action=Login}/{id?}"
+    ) ;
+
+app.UseStaticFiles();
 
 app.MapControllers();
 

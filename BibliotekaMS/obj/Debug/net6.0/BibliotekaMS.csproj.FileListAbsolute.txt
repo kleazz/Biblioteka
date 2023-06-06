@@ -633,3 +633,8 @@ C:\Users\kasap\Desktop\LMS\BibliotekaMS\obj\Debug\net6.0\refint\BibliotekaMS.dll
 C:\Users\kasap\Desktop\LMS\BibliotekaMS\obj\Debug\net6.0\BibliotekaMS.pdb
 C:\Users\kasap\Desktop\LMS\BibliotekaMS\obj\Debug\net6.0\BibliotekaMS.genruntimeconfig.cache
 C:\Users\kasap\Desktop\LMS\BibliotekaMS\obj\Debug\net6.0\ref\BibliotekaMS.dll
+C:\Users\kasap\Desktop\LMS\BibliotekaMS\bin\Debug\net6.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+C:\Users\kasap\Desktop\LMS\BibliotekaMS\bin\Debug\net6.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+C:\Users\kasap\Desktop\LMS\BibliotekaMS\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\kasap\Desktop\LMS\BibliotekaMS\bin\Debug\net6.0\Microsoft.Extensions.Identity.Core.dll
+C:\Users\kasap\Desktop\LMS\BibliotekaMS\bin\Debug\net6.0\Microsoft.Extensions.Identity.Stores.dll

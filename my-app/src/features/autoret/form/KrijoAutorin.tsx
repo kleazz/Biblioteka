@@ -31,7 +31,7 @@ const KrijoAutorin: React.FC<IProps> = ({ show, onHide, createAutori }) => {
   return (
     <Modal show={show} onHide={onHide}>
       <Modal.Header closeButton>
-        <Modal.Title>{"Krijo Kategorine"}</Modal.Title>
+        <Modal.Title>{"Krijo Autorin"}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form>
