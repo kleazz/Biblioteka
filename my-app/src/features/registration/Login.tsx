@@ -1,35 +1,82 @@
-import React, { useState } from 'react';
-import { ILogin } from '../../app/layout/models/login';
+import { useRef, useState, useEffect, useContext } from "react";
+import { Button, Col, Form } from "react-bootstrap";
+import axios from "axios";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
-interface IProps {
- login: ILogin;
- createLogin: (login: ILogin) => void;
-}
+const Login = () => {
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
 
-const Login: React.FC<IProps> = ({createLogin }) => {
-  const [login, setLogin]=useState<ILogin>({
-    username: "",
-    password: ""
-  });
+  const navigate = useNavigate();
 
-  const handleSubmit =() =>{
-    let newLogin ={
-        ...login,
+  const handleSubmit = async (e: { preventDefault: () => void; }) => {
+    e.preventDefault();
+
+    try {
+      const res = await axios.post(
+        "https://localhost:7226/api/Authenticate/login/",
+        {
+          username,
+          password,
+        }
+      );
+
+      const token = res?.data?.token;
+      localStorage.setItem("token", token);
+      navigate("/");
+      window.location.reload();
+    } catch (err) {
+      console.log(err);
     }
-    createLogin(newLogin);
-  }
   };
 
+
   return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={handleLogin}>
-        <input type="text" value={login.username} onChange={(e) => setUsername(e.target.value)} placeholder="Username" />
-        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
-        <button type="submit">Login</button>
-      </form>
-    </div>
+    <>
+      <div className="container d-flex justify-content-center align-items-center loginContainer">
+        <Col>
+          <Form onSubmit={handleSubmit}>
+            <Form.Group className="mb-3">
+              <Form.Label>Username</Form.Label>
+              <Form.Control
+                type="text"
+                name="username"
+                placeholder="Enter username"
+                required
+                onChange={(e) => setUsername(e.target.value)}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                name="password"
+                placeholder="Password"
+                required
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </Form.Group>
+
+            <Button
+              type="submit"
+              id="loginBtn"
+              className="btn btn-primary btn-block loginBtn"
+            >
+              Login
+            </Button>
+          </Form>
+          <div className="d-flex flex-column align-items-center mt-4">
+            <span style={{ fontSize: "14px", color: "#61605d" }}>
+              Don't have an account?
+            </span>
+            <a href="/register" className="registerLink">
+              Register
+            </a>
+          </div>
+        </Col>
+      </div>
+    </>
   );
 };
-
 export default Login;

@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 import { ILibri } from '../models/libri';
 import { IKategoria } from '../models/kategoria';
 import { IAutori } from '../models/autori';
-import Registration from '../../../features/registration/Registration';
+import Registration from '../../../features/registration/Register';
 import { IRegistration } from '../models/registration';
 
 axios.defaults.baseURL = 'https://localhost:7226/api';

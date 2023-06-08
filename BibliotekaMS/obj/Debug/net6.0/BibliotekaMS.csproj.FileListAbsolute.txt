@@ -638,3 +638,7 @@ C:\Users\kasap\Desktop\LMS\BibliotekaMS\bin\Debug\net6.0\Microsoft.AspNetCore.Cr
 C:\Users\kasap\Desktop\LMS\BibliotekaMS\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 C:\Users\kasap\Desktop\LMS\BibliotekaMS\bin\Debug\net6.0\Microsoft.Extensions.Identity.Core.dll
 C:\Users\kasap\Desktop\LMS\BibliotekaMS\bin\Debug\net6.0\Microsoft.Extensions.Identity.Stores.dll
+C:\Users\kasap\Desktop\LMS\BibliotekaMS\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\kasap\Desktop\LMS\BibliotekaMS\bin\Debug\net6.0\BibliotekaMS.staticwebassets.runtime.json
+C:\Users\kasap\Desktop\LMS\BibliotekaMS\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.UI.dll
+C:\Users\kasap\Desktop\LMS\BibliotekaMS\bin\Debug\net6.0\Microsoft.Extensions.FileProviders.Embedded.dll
