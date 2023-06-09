@@ -2,8 +2,6 @@ import axios, { AxiosResponse } from 'axios';
 import { ILibri } from '../models/libri';
 import { IKategoria } from '../models/kategoria';
 import { IAutori } from '../models/autori';
-import Registration from '../../../features/registration/Register';
-import { IRegistration } from '../models/registration';
 
 axios.defaults.baseURL = 'https://localhost:7226/api';
 
@@ -39,14 +37,6 @@ const Autoret ={
 
 }
 
-const Register ={
-    create: (register: IRegistration) => requests.post('',register)
-}
-
-const Login ={
-    create: (register: IRegistration) => requests.post('',register)
-}
-  
 export default {
-    Librat, Kategorite, Autoret, Register, Login
+    Librat, Kategorite, Autoret
 }

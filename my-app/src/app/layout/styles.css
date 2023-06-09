@@ -60,3 +60,26 @@ body{
   width: 100%;
 }
 
+.registrationdiv{
+  height: 15cm;
+  width:30cm;
+  margin: 2cm auto;
+  display: flex;
+  flex-direction: row;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.biblologo{
+  height: 15cm;
+  width:15cm;
+  background-color: #343a40;
+  border-bottom-left-radius: 10px;
+  border-top-left-radius: 10px;
+}
+
+.container.d-flex.justify-content-center.align-items-center.loginContainer{
+  height:14cm;
+  width:10cm;
+}

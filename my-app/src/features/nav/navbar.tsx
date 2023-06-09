@@ -1,16 +1,24 @@
-import React from "react";
+
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/esm/NavDropdown";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 function NavBar() {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/");
+    window.location.reload()
+  };
   return (
     <>
       <Navbar fixed="top" bg="dark" variant="dark">
         <Container>
-          <Navbar.Brand as={Link} to ='/'>
+          <Navbar.Brand as={Link} to ='/home'>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="27"
@@ -29,7 +37,9 @@ function NavBar() {
               <NavDropdown.Item as={Link} to ='/kategorite'>Kategoria</NavDropdown.Item>
               <NavDropdown.Item as={Link} to ='/autoret'>Autori</NavDropdown.Item>
             </NavDropdown>
-            <Nav.Link href="#pricing">Log out</Nav.Link>
+            <Nav.Link as={Link} to="#" onClick={handleLogout}>
+              Log out
+            </Nav.Link>
           </Nav>
         </Container>
       </Navbar>
