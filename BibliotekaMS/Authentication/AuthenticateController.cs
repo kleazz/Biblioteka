@@ -146,5 +146,19 @@ namespace BibliotekaMS.Authentication
 
             return token;
         }
+
+        [HttpGet("role/{username}")]
+        public async Task<IActionResult> GetRoleByUsername(string username)
+        {
+            var user = await _userManager.FindByNameAsync(username);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var roles = await _userManager.GetRolesAsync(user);
+
+            return Ok(new { role = roles.FirstOrDefault() });
+        }
     }
 }

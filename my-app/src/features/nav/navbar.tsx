@@ -6,8 +6,10 @@ import NavDropdown from "react-bootstrap/esm/NavDropdown";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
+
 function NavBar() {
   const navigate = useNavigate();
+  const role = localStorage.getItem("role");
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -32,11 +34,13 @@ function NavBar() {
             Biblioteka
           </Navbar.Brand>
           <Nav className="justify-content-end">
+          {role === "admin" &&(
             <NavDropdown title="Dashboard" id="basic-nav-dropdown">
               <NavDropdown.Item as={Link} to ='/librat'>Libri</NavDropdown.Item>
               <NavDropdown.Item as={Link} to ='/kategorite'>Kategoria</NavDropdown.Item>
               <NavDropdown.Item as={Link} to ='/autoret'>Autori</NavDropdown.Item>
             </NavDropdown>
+          )}
             <Nav.Link as={Link} to="#" onClick={handleLogout}>
               Log out
             </Nav.Link>

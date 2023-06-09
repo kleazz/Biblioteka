@@ -1,8 +1,8 @@
-import { useRef, useState, useEffect, useContext } from "react";
+import { useState } from "react";
 import { Button, Col, Form } from "react-bootstrap";
 import axios from "axios";
-import { Link, useNavigate, useLocation } from "react-router-dom";
-import MediaRight from "react-bootstrap/lib/MediaRight";
+import { useNavigate } from "react-router-dom";
+
 
 const Login = () => {
     const [username, setUsername] = useState("");
@@ -24,13 +24,22 @@ const Login = () => {
 
       const token = res?.data?.token;
       localStorage.setItem("token", token);
+      await fetchUserRole(username);
       navigate("/home");
       window.location.reload();
     } catch (err) {
       console.log(err);
     }
   };
-
+  const fetchUserRole = async (username:string) => {
+    try {
+      const response = await axios.get(`https://localhost:7226/api/Authenticate/role/${username}`);
+      const { role } = response.data;
+      localStorage.setItem('role', role);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
