@@ -11,5 +11,6 @@ namespace BibliotekaMS.Models
 
         public ICollection<KategoriaELibrit> KategoriaELibrit { get; set; }
         public ICollection<AutoriILibrit> AutoriILibrit { get; set; }
+        public ICollection<Rezervimi> Rezervimet { get; set; }
     }
 }

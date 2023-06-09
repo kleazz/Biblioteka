@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BibliotekaMS.Data
 {
-    public class DataContext : IdentityDbContext<IdentityUser>
+    public class DataContext : IdentityDbContext<ApplicationUser>
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
@@ -19,6 +19,7 @@ namespace BibliotekaMS.Data
         public DbSet<Autori> Autori { get; set; }
 
         public DbSet<AutoriILibrit> AutoriILibrit { get; set; }
+        public DbSet<Rezervimi> Rezervimi { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -45,7 +46,17 @@ namespace BibliotekaMS.Data
                 .HasOne(l => l.Autori)
                 .WithMany(al => al.AutoriILibrit)
                 .HasForeignKey(l => l.AutoriId);
-
+            modelBuilder.Entity<Libri>()
+            .HasMany(e => e.Rezervimet)
+            .WithOne(e=>e.Libri)
+            .HasForeignKey(e => e.Isbn)
+            .IsRequired();
+            
+            modelBuilder.Entity<ApplicationUser>()
+                .HasMany(e=> e.Rezervimet)
+                .WithOne(e=>e.ApplicationUser)
+                .HasForeignKey(r => r.Id)
+                .IsRequired();
 
         }
     }
