@@ -26,7 +26,10 @@ const AutoriTabela: React.FC<IProps> = ({
           <h3>Lista e autorëve</h3>
         </Col>
         <Col xs="auto">
-          <Button onClick={() => setCreateAutMode(true)} variant="outline-success">
+          <Button
+            onClick={() => setCreateAutMode(true)}
+            variant="outline-success"
+          >
             Create
           </Button>
         </Col>
@@ -34,7 +37,7 @@ const AutoriTabela: React.FC<IProps> = ({
       <table className="table table-striped">
         <thead>
           <tr>
-          <th scope="col">ID</th>
+            <th scope="col">ID</th>
             <th scope="col">Emri</th>
             <th scope="col">Mbiemri</th>
             <th></th>

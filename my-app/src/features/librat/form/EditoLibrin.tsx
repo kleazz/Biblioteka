@@ -25,7 +25,7 @@ const EditoLibrin: React.FC<IProps> = ({
         isbn: "",
         titulli: "",
         pershkrimi: "",
-        fotoja: ""
+        fotoja: "",
       };
     }
   };
@@ -90,24 +90,23 @@ const EditoLibrin: React.FC<IProps> = ({
             />
           </Form.Group>
           <Form.Group controlId="formFotojaE">
-  <Form.Label>Kopertina</Form.Label>
-  <div>
-    <Button variant="outline-primary" onClick={handleChooseFile}>
-      Choose File
-    </Button>
-  </div>
-  <div>
-    <Form.Control
-      type="file"
-      ref={fileInputRef}
-      style={{ display: "none" }}
-      accept=".png,.jpg,.jpeg"
-      onChange={handleFotojaChange}
-      autoComplete="off"
-    />
-  </div>
-</Form.Group>
-
+            <Form.Label>Kopertina</Form.Label>
+            <div>
+              <Button variant="outline-primary" onClick={handleChooseFile}>
+                Choose File
+              </Button>
+            </div>
+            <div>
+              <Form.Control
+                type="file"
+                ref={fileInputRef}
+                style={{ display: "none" }}
+                accept=".png,.jpg,.jpeg"
+                onChange={handleFotojaChange}
+                autoComplete="off"
+              />
+            </div>
+          </Form.Group>
         </Form>
       </Modal.Body>
       <Modal.Footer>

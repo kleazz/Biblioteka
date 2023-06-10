@@ -8,6 +8,8 @@ import Autoret from "../../features/autoret/dashboard/Autoret";
 import Login from "../../features/registration/Login";
 import Registration from "../../features/registration/Register";
 import LibriDetails from "../../features/libridetails/LibriDetails";
+import Profili from "../../features/profili/Profili";
+import Lexuesit from "../../features/lexuesit/dashboard/Lexuesit";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -32,12 +34,6 @@ const App = () => {
     }
   }, []);
 
-  useEffect(() => {
-    if (!isLoggedIn) {
-      navigate("/home");
-    }
-  }, [isLoggedIn, navigate]);
-
   return (
     <Fragment>
       {isLoggedIn && <NavBar />}
@@ -46,11 +42,13 @@ const App = () => {
           <>
             <Route path="/home" element={<HomePage />} />
             <Route path="/details/:libriIsbn" element={<LibriDetails />} />
+            <Route path="profili" element={<Profili />} />
             {isAdmin ? (
               <>
                 <Route path="/librat" element={<Librat />} />
                 <Route path="/kategorite" element={<Kategorite />} />
                 <Route path="/autoret" element={<Autoret />} />
+                <Route path="/lexuesit" element={<Lexuesit />} />
               </>
             ) : (
               <Route path="*" element={<Navigate to="/home" />} />

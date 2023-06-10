@@ -22,8 +22,8 @@ const EditoKategorine: React.FC<IProps> = ({
       return initialFormState;
     } else {
       return {
-        kategoriaId:0,
-        emriKategorise:""
+        kategoriaId: 0,
+        emriKategorise: "",
       };
     }
   };

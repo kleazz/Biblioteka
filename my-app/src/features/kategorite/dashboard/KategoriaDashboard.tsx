@@ -3,14 +3,13 @@ import EditoKategorine from "../form/EditoKategorine";
 import KrijoKategorine from "../form/KrijoKategorine";
 import KategoriaTabela from "./KategoriaTabela";
 
-
 interface IProps {
   kategorite: IKategoria[];
   selectKategoria: (kategoriaId: number) => void;
   selectedKategoria: IKategoria;
   editKatMode: boolean;
   setEditKatMode: (editMode: boolean) => void;
-  setSelectedKategoria: (kategoria: IKategoria| null) => void;
+  setSelectedKategoria: (kategoria: IKategoria | null) => void;
   createKategoria: (kategoria: IKategoria) => void;
   editKategoria: (kategoria: IKategoria) => void;
   deleteKategoria: (kategoriaId: number) => void;

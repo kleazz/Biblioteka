@@ -12,10 +12,14 @@ interface IProps {
   onHide: () => void;
 }
 
-const KrijoKategorine: React.FC<IProps> = ({ show, onHide, createKategoria }) => {
+const KrijoKategorine: React.FC<IProps> = ({
+  show,
+  onHide,
+  createKategoria,
+}) => {
   const [kategoria, setKategoria] = useState<IKategoria>({
-    kategoriaId:0,
-    emriKategorise: ""
+    kategoriaId: 0,
+    emriKategorise: "",
   });
 
   const handleSubmit = () => {
@@ -40,7 +44,9 @@ const KrijoKategorine: React.FC<IProps> = ({ show, onHide, createKategoria }) =>
               type="text"
               placeholder="Shkruaj emrin"
               value={kategoria.emriKategorise}
-              onChange={(e) => setKategoria({ ...kategoria, emriKategorise: e.target.value })}
+              onChange={(e) =>
+                setKategoria({ ...kategoria, emriKategorise: e.target.value })
+              }
               autoComplete="off"
             />
           </Form.Group>
@@ -59,5 +65,3 @@ const KrijoKategorine: React.FC<IProps> = ({ show, onHide, createKategoria }) =>
 };
 
 export default KrijoKategorine;
-
-

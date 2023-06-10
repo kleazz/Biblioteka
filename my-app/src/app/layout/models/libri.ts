@@ -1,4 +1,4 @@
-export interface ILibri{
+export interface ILibri {
   isbn: string;
   titulli: string;
   pershkrimi: string;

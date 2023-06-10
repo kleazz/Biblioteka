@@ -1,8 +1,8 @@
-import { Col, Container, Row } from 'react-bootstrap';
-import LibriCard from './LibriCard';
-import { useEffect, useState } from 'react';
-import { ILibri } from '../../app/layout/models/libri';
-import agent from '../../app/layout/api/agent';
+import { Col, Container, Row } from "react-bootstrap";
+import LibriCard from "./LibriCard";
+import { useEffect, useState } from "react";
+import { ILibri } from "../../app/layout/models/libri";
+import agent from "../../app/layout/api/agent";
 
 const HomePage = () => {
   const [librat, setLibrat] = useState<ILibri[]>([]);
@@ -31,7 +31,7 @@ const HomePage = () => {
   };
 
   return (
-    <Container style={{marginTop:'100px', marginLeft:'17px'}}>
+    <Container style={{ marginTop: "100px", marginLeft: "17px" }}>
       {renderLibriCards(librat)}
     </Container>
   );

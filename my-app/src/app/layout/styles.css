@@ -1,17 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300&display=swap");
 
-@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300&display=swap');
-
-
-body{
-  font-family: 'Source Sans Pro', sans-serif;
-  padding-left: 200px;  
+body {
+  font-family: "Source Sans Pro", sans-serif;
+  padding-left: 200px;
   padding-right: 200px;
   background-color: rgb(234, 234, 234) !important;
 }
 .modal-content {
   background-color: rgb(234, 234, 234) !important;
 }
-.flip-card{
+.flip-card {
   width: 17rem;
   height: 30rem;
   margin: 1em;
@@ -32,7 +30,8 @@ body{
   transform: rotateY(180deg);
 }
 
-.flip-card-front, .flip-card-back {
+.flip-card-front,
+.flip-card-back {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -50,7 +49,7 @@ body{
 
 .button-container {
   position: absolute;
-  width:15rem;
+  width: 15rem;
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
@@ -60,9 +59,9 @@ body{
   width: 100%;
 }
 
-.registrationdiv{
+.registrationdiv {
   height: 15cm;
-  width:30cm;
+  width: 30cm;
   margin: 2cm auto;
   display: flex;
   flex-direction: row;
@@ -71,15 +70,28 @@ body{
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.biblologo{
+.biblologo {
   height: 15cm;
-  width:15cm;
+  width: 15cm;
   background-color: #343a40;
   border-bottom-left-radius: 10px;
   border-top-left-radius: 10px;
 }
 
-.container.d-flex.justify-content-center.align-items-center.loginContainer{
-  height:14cm;
-  width:10cm;
+.container.d-flex.justify-content-center.align-items-center.loginContainer {
+  height: 14cm;
+  width: 10cm;
+}
+
+.reservation-card {
+  background-color: white;
+  padding: 0.5cm;
+  border-radius: 10px;
+  height: 9.4cm;
+  width: 30cm;
+  margin: 0.5cm;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }

@@ -140,6 +140,22 @@ namespace BibliotekaMS.Authentication
             return token;
         }
 
+        [HttpGet]
+        [Route("users")]
+        //[Authorize(Roles = UserRoles.Admin)]
+        public async Task<IActionResult> GetUsersWithUserRole()
+        {
+            var users = await _userManager.GetUsersInRoleAsync(UserRoles.User);
+
+            var userDTOs = users.Select(user => new
+            {
+                Username = user.UserName,
+                Email = user.Email
+            });
+
+            return Ok(userDTOs);
+        }
+
         [HttpGet("role/{username}")]
         public async Task<IActionResult> GetRoleByUsername(string username)
         {
@@ -165,7 +181,7 @@ namespace BibliotekaMS.Authentication
 
             return Ok(new { id = user.Id });
         }
-       
+
         [HttpGet]
         [Route("join/{userId}")]
         public async Task<IActionResult> GetJoinedData(string userId)
@@ -184,10 +200,30 @@ namespace BibliotekaMS.Authentication
                     libri => libri.Isbn,
                     (joinResult, libri) => new { joinResult.User, joinResult.Rezervimi, Libri = libri }
                 )
+                .OrderBy(joinResult => joinResult.Rezervimi.DueDate) 
                 .ToListAsync();
 
             return Ok(joinedData);
         }
+
+        [HttpDelete("user/{username}")]
+        public async Task<IActionResult> DeleteUserByUsername(string username)
+        {
+            var user = await _userManager.FindByNameAsync(username);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var result = await _userManager.DeleteAsync(user);
+            if (!result.Succeeded)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User deletion failed!" });
+            }
+
+            return Ok(new Response { Status = "Success", Message = "User deleted successfully!" });
+        }
+
 
     }
 }

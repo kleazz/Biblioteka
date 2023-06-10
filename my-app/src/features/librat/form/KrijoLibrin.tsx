@@ -17,7 +17,7 @@ const KrijoLibrin: React.FC<IProps> = ({ show, onHide, createLibri }) => {
     isbn: "",
     titulli: "",
     pershkrimi: "",
-    fotoja: ""
+    fotoja: "",
   });
 
   const handleSubmit = () => {
@@ -36,7 +36,7 @@ const KrijoLibrin: React.FC<IProps> = ({ show, onHide, createLibri }) => {
         const imageUrl = ev.target?.result as string;
         setLibri({ ...libri, fotoja: imageUrl });
       };
-  
+
       reader.readAsDataURL(fileRef);
     }
   }
@@ -81,13 +81,15 @@ const KrijoLibrin: React.FC<IProps> = ({ show, onHide, createLibri }) => {
             />
           </Form.Group>
           <Form.Group controlId="formFotojaE">
-  <Form.Label>Fotoja</Form.Label>
-  <Form.Control
-    type="file"
-    accept=".png,.jpg,.jpeg"
-    onChange={(e) => convertFile((e.target as HTMLInputElement).files)}
-  />
-</Form.Group>
+            <Form.Label>Fotoja</Form.Label>
+            <Form.Control
+              type="file"
+              accept=".png,.jpg,.jpeg"
+              onChange={(e) =>
+                convertFile((e.target as HTMLInputElement).files)
+              }
+            />
+          </Form.Group>
         </Form>
       </Modal.Body>
       <Modal.Footer>
@@ -103,5 +105,3 @@ const KrijoLibrin: React.FC<IProps> = ({ show, onHide, createLibri }) => {
 };
 
 export default KrijoLibrin;
-
-

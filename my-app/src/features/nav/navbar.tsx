@@ -1,11 +1,9 @@
-
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/esm/NavDropdown";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-
 
 function NavBar() {
   const navigate = useNavigate();
@@ -14,13 +12,13 @@ function NavBar() {
   const handleLogout = () => {
     localStorage.removeItem("token");
     navigate("/");
-    window.location.reload()
+    window.location.reload();
   };
   return (
     <>
       <Navbar fixed="top" bg="dark" variant="dark">
         <Container>
-          <Navbar.Brand as={Link} to ='/home'>
+          <Navbar.Brand as={Link} to="/home">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="27"
@@ -34,13 +32,41 @@ function NavBar() {
             Biblioteka
           </Navbar.Brand>
           <Nav className="justify-content-end">
-          {role === "admin" &&(
-            <NavDropdown title="Dashboard" id="basic-nav-dropdown">
-              <NavDropdown.Item as={Link} to ='/librat'>Libri</NavDropdown.Item>
-              <NavDropdown.Item as={Link} to ='/kategorite'>Kategoria</NavDropdown.Item>
-              <NavDropdown.Item as={Link} to ='/autoret'>Autori</NavDropdown.Item>
-            </NavDropdown>
-          )}
+            {role === "admin" ? (
+              <NavDropdown title="Dashboard" id="basic-nav-dropdown">
+                <NavDropdown.Item as={Link} to="/librat">
+                  Librat
+                </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/kategorite">
+                  Kategoritë
+                </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/autoret">
+                  Autorët
+                </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/lexuesit">
+                  Lexuesit
+                </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/autoret">
+                  Huazimet
+                </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/autoret">
+                  Rezervimet
+                </NavDropdown.Item>
+              </NavDropdown>
+            ) : (
+              <Nav.Link as={Link} to="/profili">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="27"
+                  height="27"
+                  fill="currentColor"
+                  className="bi bi-person"
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z" />
+                </svg>
+              </Nav.Link>
+            )}
             <Nav.Link as={Link} to="#" onClick={handleLogout}>
               Log out
             </Nav.Link>

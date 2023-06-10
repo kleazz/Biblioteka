@@ -1,5 +1,5 @@
-export interface IAutori{
-    autoriId: number,
-    emri: string, 
-    mbiemri: string
+export interface IAutori {
+  autoriId: number;
+  emri: string;
+  mbiemri: string;
 }

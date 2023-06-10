@@ -15,16 +15,16 @@ const EditoAutorin: React.FC<IProps> = ({
   show,
   onHide,
   autori: initialFormState,
-  editAutori
+  editAutori,
 }) => {
   const initializeForm = () => {
     if (initialFormState) {
       return initialFormState;
     } else {
       return {
-        autoriId:0,
-        emri:"",
-        mbiemri:""
+        autoriId: 0,
+        emri: "",
+        mbiemri: "",
       };
     }
   };

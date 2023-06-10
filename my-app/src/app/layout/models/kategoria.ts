@@ -1,4 +1,4 @@
-export interface IKategoria{
-    kategoriaId: number,
-    emriKategorise: string; 
+export interface IKategoria {
+  kategoriaId: number;
+  emriKategorise: string;
 }

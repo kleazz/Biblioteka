@@ -26,7 +26,10 @@ const KategoriaTabela: React.FC<IProps> = ({
           <h3>Lista e kategorive</h3>
         </Col>
         <Col xs="auto">
-          <Button onClick={() => setCreateKatMode(true)} variant="outline-success">
+          <Button
+            onClick={() => setCreateKatMode(true)}
+            variant="outline-success"
+          >
             Create
           </Button>
         </Col>
@@ -34,7 +37,7 @@ const KategoriaTabela: React.FC<IProps> = ({
       <table className="table table-striped">
         <thead>
           <tr>
-          <th scope="col">ID</th>
+            <th scope="col">ID</th>
             <th scope="col">Emri</th>
             <th></th>
             <th></th>

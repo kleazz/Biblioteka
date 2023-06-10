@@ -14,9 +14,9 @@ interface IProps {
 
 const KrijoAutorin: React.FC<IProps> = ({ show, onHide, createAutori }) => {
   const [autori, setAutori] = useState<IAutori>({
-    autoriId:0,
+    autoriId: 0,
     emri: "",
-    mbiemri: ""
+    mbiemri: "",
   });
 
   const handleSubmit = () => {
@@ -51,7 +51,9 @@ const KrijoAutorin: React.FC<IProps> = ({ show, onHide, createAutori }) => {
               type="text"
               placeholder="Shkruaj mbiemrin"
               value={autori.mbiemri}
-              onChange={(e) => setAutori({ ...autori, mbiemri: e.target.value })}
+              onChange={(e) =>
+                setAutori({ ...autori, mbiemri: e.target.value })
+              }
               autoComplete="off"
             />
           </Form.Group>
@@ -70,5 +72,3 @@ const KrijoAutorin: React.FC<IProps> = ({ show, onHide, createAutori }) => {
 };
 
 export default KrijoAutorin;
-
-
