@@ -196,6 +196,10 @@ namespace BibliotekaMS.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("RezervimiId");
 
                     b.HasIndex("Id");

@@ -8,6 +8,8 @@ namespace BibliotekaMS.Models
     {
         [Key]
         public int RezervimiId { get; set; }
+
+        public string Username { get; set; }
         public DateTime DueDate { get; set; }
 
         [ForeignKey("Isbn")]

@@ -32,6 +32,7 @@ namespace BibliotekaMS.Controllers
 
             var rezervimi = new Rezervimi
             {
+                Username = rezervimiDto.Username,
                 DueDate = rezervimiDto.DueDate,
                 Id = rezervimiDto.Id,
                 Isbn = rezervimiDto.Isbn

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using BibliotekaMS.Data;
+using BibliotekaMS.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -6,24 +8,27 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+
 namespace BibliotekaMS.Authentication
 {
     [Route("api/[controller]")]
     [ApiController]
     public class AuthenticateController : ControllerBase
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _configuration;
+        private readonly DataContext _dataContext;
 
         public AuthenticateController(
-            UserManager<IdentityUser> userManager,
+            UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole> roleManager,
-            IConfiguration configuration)
+            IConfiguration configuration, DataContext dataContext)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _configuration = configuration;
+            _dataContext = dataContext;
         }
 
         [HttpPost]
@@ -66,7 +71,7 @@ namespace BibliotekaMS.Authentication
             if (userExists != null)
                 return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User already exists!" });
 
-            IdentityUser user = new()
+            ApplicationUser user = new()
             {
                 Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
@@ -96,7 +101,7 @@ namespace BibliotekaMS.Authentication
             if (userExists != null)
                 return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User already exists!" });
 
-            IdentityUser user = new()
+            ApplicationUser user = new()
             {
                 Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
@@ -118,19 +123,7 @@ namespace BibliotekaMS.Authentication
             return Ok(new Response { Status = "Success", Message = "User created successfully!" });
         }
 
-        [Authorize]
-        [HttpGet("currentUser")]
-        public async Task<ActionResult<UserDto>> GetCurrentUser()
-        {
-            var user = await _userManager.Users.FirstOrDefaultAsync(x => x.UserName == User.FindFirstValue(ClaimTypes.Name));
-            var role = await _roleManager.Roles.FirstOrDefaultAsync(x => x.Name == User.FindFirstValue(ClaimTypes.Role));
-
-            return new UserDto
-            {
-                Username = user.UserName,
-                Role = role.Name
-            };
-        }
+       
 
         private JwtSecurityToken GetToken(List<Claim> authClaims)
         {
@@ -160,5 +153,41 @@ namespace BibliotekaMS.Authentication
 
             return Ok(new { role = roles.FirstOrDefault() });
         }
+
+        [HttpGet("id/{username}")]
+        public async Task<IActionResult> GetUserIdByUsername(string username)
+        {
+            var user = await _userManager.FindByNameAsync(username);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(new { id = user.Id });
+        }
+       
+        [HttpGet]
+        [Route("join/{userId}")]
+        public async Task<IActionResult> GetJoinedData(string userId)
+        {
+            var joinedData = await _userManager.Users
+                .Where(user => user.Id == userId)
+                .Join(
+                    _dataContext.Rezervimi,
+                    user => user.Id,
+                    rezervimi => rezervimi.Id,
+                    (user, rezervimi) => new { User = user, Rezervimi = rezervimi }
+                )
+                .Join(
+                    _dataContext.Libri,
+                    joinResult => joinResult.Rezervimi.Isbn,
+                    libri => libri.Isbn,
+                    (joinResult, libri) => new { joinResult.User, joinResult.Rezervimi, Libri = libri }
+                )
+                .ToListAsync();
+
+            return Ok(joinedData);
+        }
+
     }
 }

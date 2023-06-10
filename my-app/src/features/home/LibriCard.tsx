@@ -1,21 +1,24 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Card from 'react-bootstrap/Card';
 import { ILibri } from '../../app/layout/models/libri';
-import { Button } from 'react-bootstrap';
-
+import { Link } from 'react-router-dom';
 
 interface IProps {
   librat: ILibri[];
 }
 
 const LibriCard: React.FC<IProps> = ({ librat }) => {
+  const truncateText = (text: string, maxLength: number) => {
+    if (text.length <= maxLength) {
+      return text;
+    }
+    return text.substring(0, maxLength) + '...';
+  };
+
   return (
     <>
       {librat.map((libri: ILibri) => (
-        <div
-          key={libri.isbn}
-          className="flip-card"
-        >
+        <div key={libri.isbn} className="flip-card">
           <div className="flip-card-inner">
             <div className="flip-card-front">
               <Card
@@ -23,33 +26,29 @@ const LibriCard: React.FC<IProps> = ({ librat }) => {
                   width: '16rem',
                   height: '26rem',
                   padding: '20px',
-                  position: 'relative', 
+                  position: 'relative',
                 }}
               >
                 <Card.Img
                   variant="top"
                   src={libri.fotoja}
-                  style={{paddingTop:'5px', height: '300px', width: '200px' }}
+                  style={{ paddingTop: '5px', height: '300px', width: '200px' }}
                   className="mx-auto"
                 />
                 <Card.Body>
-                  <Card.Title style={{fontWeight:'bold'}}>{libri.titulli}</Card.Title>
-                  <Card.Title style={{color:'#198754'}}>Autori</Card.Title>
+                  <Card.Title style={{ fontWeight: 'bold' }}>{libri.titulli}</Card.Title>
+                  <Card.Title style={{ color: '#198754' }}>Autori</Card.Title>
                 </Card.Body>
               </Card>
             </div>
             <div className="flip-card-back">
-              <Card
-                style={{
-                  width: '17rem',
-                  height: '26rem',
-                  padding: '20px',
-                }}
-              >
-                <Card.Text>{libri.pershkrimi}</Card.Text>
-                <div className="button-container"> 
-                    <Button variant="success" className="card-button">Huazo</Button> 
-                  </div>
+              <Card style={{ width: '17rem', height: '26rem', padding: '20px' }}>
+                <Card.Text>{truncateText(libri.pershkrimi, 400)}</Card.Text>
+                <div className="button-container">
+                  <Link to={`/details/${libri.isbn}`} className="link-success">
+                    Shiko më shumë ➜
+                  </Link>
+                </div>
               </Card>
             </div>
           </div>

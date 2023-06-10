@@ -9,6 +9,8 @@ namespace BibliotekaMS.Dto
     {
         [Key]
         public int RezervimiId { get; set; }
+
+        public string Username { get; set; }
         public DateTime DueDate { get; set; }
 
         public string Isbn { get; set; }

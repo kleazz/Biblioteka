@@ -36,11 +36,17 @@ const Login = () => {
       const response = await axios.get(`https://localhost:7226/api/Authenticate/role/${username}`);
       const { role } = response.data;
       localStorage.setItem('role', role);
+
+      const idResponse = await axios.get(`https://localhost:7226/api/Authenticate/id/${username}`);
+      const { id } = idResponse.data;
+      localStorage.setItem('userId', id);
+  
+      localStorage.setItem('username', username);
     } catch (error) {
       console.log(error);
     }
   };
-
+  
   return (
     <>
     <div className="registrationdiv">
