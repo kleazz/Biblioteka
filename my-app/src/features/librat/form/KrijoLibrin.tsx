@@ -18,6 +18,7 @@ const KrijoLibrin: React.FC<IProps> = ({ show, onHide, createLibri }) => {
     titulli: "",
     pershkrimi: "",
     fotoja: "",
+    sasia:0
   });
 
   const handleSubmit = () => {
@@ -90,6 +91,19 @@ const KrijoLibrin: React.FC<IProps> = ({ show, onHide, createLibri }) => {
               }
             />
           </Form.Group>
+          <Form.Group controlId="formSasiaE">
+  <Form.Label>Sasia</Form.Label>
+  <Form.Control
+    type="number" 
+    value={libri.sasia}
+    onChange={(e) => {
+      const inputValue = parseInt(e.target.value, 10);
+      if (!isNaN(inputValue)) { 
+        setLibri({ ...libri, sasia: inputValue });
+      }
+    }}    
+  />
+</Form.Group>
         </Form>
       </Modal.Body>
       <Modal.Footer>

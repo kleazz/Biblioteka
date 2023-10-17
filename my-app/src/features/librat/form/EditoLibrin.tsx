@@ -26,6 +26,7 @@ const EditoLibrin: React.FC<IProps> = ({
         titulli: "",
         pershkrimi: "",
         fotoja: "",
+        sasia: 0
       };
     }
   };
@@ -106,6 +107,16 @@ const EditoLibrin: React.FC<IProps> = ({
                 autoComplete="off"
               />
             </div>
+          </Form.Group>
+          <Form.Group controlId="formSasia">
+            <Form.Label>Sasia</Form.Label>
+            <Form.Control
+              type="number"
+              name="sasia"
+              value={libri.sasia}
+              onChange={handleInputChange}
+              autoComplete="off"
+            />
           </Form.Group>
         </Form>
       </Modal.Body>

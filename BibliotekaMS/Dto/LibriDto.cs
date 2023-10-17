@@ -10,5 +10,7 @@ namespace BibliotekaMS.Dto
         public string Pershkrimi { get; set; }
         public string Fotoja { get; set; }
 
+        public int Sasia {get; set;}
+
     }
 }

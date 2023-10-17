@@ -3,4 +3,5 @@ export interface ILibri {
   titulli: string;
   pershkrimi: string;
   fotoja: string;
+  sasia: number;
 }

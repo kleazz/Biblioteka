@@ -9,6 +9,8 @@ namespace BibliotekaMS.Models
         public string Pershkrimi { get; set; }
         public string Fotoja { get; set; }
 
+        public int Sasia { get; set; }
+
         public ICollection<KategoriaELibrit> KategoriaELibrit { get; set; }
         public ICollection<AutoriILibrit> AutoriILibrit { get; set; }
         public ICollection<Rezervimi> Rezervimet { get; set; }

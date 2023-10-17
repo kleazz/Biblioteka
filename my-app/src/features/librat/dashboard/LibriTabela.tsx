@@ -44,6 +44,7 @@ const LibriTabela: React.FC<IProps> = ({
             <th scope="col">Titulli</th>
             <th scope="col">Përshkrimi</th>
             <th scope="col">Kopertina</th>
+            <th scope="col">Sasia</th>
             <th></th>
             <th></th>
           </tr>
@@ -55,6 +56,7 @@ const LibriTabela: React.FC<IProps> = ({
               <td>{libri.titulli}</td>
               <td>{truncateText(libri.pershkrimi, 50)}</td>
               <td>{truncateText(libri.fotoja, 50)}</td>
+              <td>{libri.sasia}</td>
               <td>
                 <Button
                   onClick={() => selectLibri(libri.isbn)}

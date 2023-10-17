@@ -168,6 +168,9 @@ namespace BibliotekaMS.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Sasia")
+                        .HasColumnType("int");
+
                     b.Property<string>("Titulli")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
