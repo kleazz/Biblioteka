@@ -6,6 +6,8 @@ namespace BibliotekaMS.Interfaces
     {
         ICollection<Kategoria> GetKategorite();
         Kategoria GetKategoria(int id);
+
+        int GetKategoriaId(string emriKategorise);
         ICollection<Libri> GetLibriNgaKategoria(int kategoriaId);
         bool KategoriaExists(int kategoriaId);
 

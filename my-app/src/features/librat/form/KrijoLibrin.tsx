@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { ILibri } from "../../../app/layout/models/libri";
+import { IKategoria } from "../../../app/layout/models/kategoria";
+import { IAutori } from "../../../app/layout/models/autori";
+import agent from "../../../app/layout/api/agent";
 
 interface IProps {
   libri: ILibri;
-  createLibri: (libri: ILibri) => void;
-  editLibri: (libri: ILibri) => void;
+  createLibri: (libri: ILibri, autoret: IAutori[], kategorite: IKategoria[]) => void;
   show: boolean;
   onHide: () => void;
 }
@@ -18,14 +20,31 @@ const KrijoLibrin: React.FC<IProps> = ({ show, onHide, createLibri }) => {
     titulli: "",
     pershkrimi: "",
     fotoja: "",
-    sasia:0
+    sasia: 0,
   });
+
+  const [autoret, setAutoret] = useState<IAutori[]>([]);
+  const [kategorite, setKategorite] = useState<IKategoria[]>([]);
+  const [selectedKategories, setSelectedKategories] = useState<number[]>([]);
+
+  // Fetch Kategoria options from your server and update the state
+  useEffect(() => {
+    // Make an API call to fetch Kategoria options from your server
+    agent.Kategorite.list()
+      .then((response: IKategoria[]) => {
+        setKategorite(response);
+      })
+      .catch((error) => {
+        // Handle any errors from the API call
+        console.error("Error fetching Kategoria options: ", error);
+      });
+  }, []);
 
   const handleSubmit = () => {
     let newLibri = {
       ...libri,
     };
-    createLibri(newLibri);
+    createLibri(newLibri, autoret, kategorite);
     onHide();
   };
 
@@ -41,6 +60,8 @@ const KrijoLibrin: React.FC<IProps> = ({ show, onHide, createLibri }) => {
       reader.readAsDataURL(fileRef);
     }
   }
+
+  console.log(kategorite)
 
   return (
     <Modal show={show} onHide={onHide}>
@@ -104,6 +125,27 @@ const KrijoLibrin: React.FC<IProps> = ({ show, onHide, createLibri }) => {
     }}    
   />
 </Form.Group>
+<Form.Group controlId="formKategoriteE">
+            <Form.Label>Zgjedh Kategorite</Form.Label>
+            {kategorite.map((kategoria) => (
+              <Form.Check
+                key={kategoria.kategoriaId}
+                type="checkbox" // Use checkboxes for multiple selections
+                id={`kategoria-${kategoria.kategoriaId}`}
+                label={kategoria.emriKategorise}
+                checked={selectedKategories.includes(kategoria.kategoriaId)}
+                onChange={() => {
+                  // Toggle selection of Kategoria
+                  if (selectedKategories.includes(kategoria.kategoriaId)) {
+                    setSelectedKategories(selectedKategories.filter((id) => id !== kategoria.kategoriaId));
+                  } else {
+                    setSelectedKategories([...selectedKategories, kategoria.kategoriaId]);
+                  }
+                }}
+              />
+            ))}
+          </Form.Group>
+
         </Form>
       </Modal.Body>
       <Modal.Footer>

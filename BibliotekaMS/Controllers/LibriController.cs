@@ -2,6 +2,7 @@
 using BibliotekaMS.Dto;
 using BibliotekaMS.Interfaces;
 using BibliotekaMS.Models;
+using BibliotekaMS.Repository;
 using Microsoft.AspNetCore.Mvc;
 using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 
@@ -12,11 +13,15 @@ namespace BibliotekaMS.Controllers
     public class LibriController : Controller
     {
         private readonly ILibriRepository _libriRepository;
+        private readonly IKategoriaELibritRepository _kategoriaELibritRepository;
+        private readonly IKategoriaRepository _kategoriaRepository;
         private readonly IMapper _mapper;
 
-        public LibriController(ILibriRepository libriRepository, IMapper mapper)
+        public LibriController(ILibriRepository libriRepository, IKategoriaELibritRepository kategoriaELibritRepository,IKategoriaRepository kategoriaRepository, IMapper mapper)
         {
             _libriRepository = libriRepository;
+            _kategoriaELibritRepository = kategoriaELibritRepository;
+            _kategoriaRepository = kategoriaRepository;
             _mapper = mapper;
         }
 
@@ -52,7 +57,7 @@ namespace BibliotekaMS.Controllers
         [HttpPost]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
-        public IActionResult CreateLibri([FromBody] LibriDto libriCreate)
+        public IActionResult CreateLibri([FromQuery] string[] kategorite, [FromRoute] string[] autoret, [FromBody] LibriDto libriCreate)
         {
             if (libriCreate == null)
                 return BadRequest(ModelState);
@@ -72,14 +77,38 @@ namespace BibliotekaMS.Controllers
 
             var libriMap = _mapper.Map<Libri>(libriCreate);
 
+            // Create and save the Libri
             if (!_libriRepository.CreateLibri(libriMap))
             {
                 ModelState.AddModelError("", "Something went wrong while saving");
                 return StatusCode(500, ModelState);
             }
 
+            // Create and save KategoriaELibrit records for each Kategoria in kategorite
+            if (kategorite != null)
+            {
+                foreach (string kategoriaName in kategorite)
+                {
+                    // Get the KategoriaId from the KategoriaRepository based on emriKategorise
+                    int kategoriaId = _kategoriaRepository.GetKategoriaId(kategoriaName);
+
+                    if (kategoriaId != 0)
+                    {
+                        var kategoriaELibrit = new KategoriaELibrit
+                        {
+                            Isbn = libriMap.Isbn, // Assuming Isbn is the primary key of the Libri
+                            KategoriaId = kategoriaId // Use the fetched KategoriaId
+                        };
+
+                        // Save KategoriaELibrit record to the database
+                        _kategoriaELibritRepository.CreateKategoriaELibrit(kategoriaELibrit);
+                    }
+                }
+            }
+
             return Ok("Successfully created");
         }
+
         [HttpPut("{libriIsbn}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]

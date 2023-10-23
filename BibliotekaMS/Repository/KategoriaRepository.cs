@@ -30,6 +30,16 @@ namespace BibliotekaMS.Repository
             return _context.Kategoria.Where(k => k.KategoriaId == id).FirstOrDefault();
         }
 
+        public int GetKategoriaId(string emriKategorise)
+        {
+            var kategoria = _context.Kategoria.Where(k => k.EmriKategorise == emriKategorise).FirstOrDefault();
+            if (kategoria != null)
+            {
+                return kategoria.KategoriaId;
+            }
+            return 0;
+        }
+
         public ICollection<Kategoria> GetKategorite()
         {
             return _context.Kategoria.ToList();
@@ -57,5 +67,7 @@ namespace BibliotekaMS.Repository
             _context.Update(kategoria);
             return Save();
         }
+
+      
     }
 }

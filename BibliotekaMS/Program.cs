@@ -35,6 +35,7 @@ builder.Services.AddControllers().AddJsonOptions(x =>
 builder.Services.AddScoped<ILibriRepository, LibriRepository>();
 builder.Services.AddScoped<IKategoriaRepository, KategoriaRepository>();
 builder.Services.AddScoped<IAutoriRepository, AutoriRepository>();
+builder.Services.AddScoped<IKategoriaELibritRepository, KategoriaELibritRepository>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

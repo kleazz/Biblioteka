@@ -45,8 +45,7 @@ const LibriDashboard: React.FC<IProps> = ({
           onHide={() => setCreateMode(false)}
           key={(selectedLibri && selectedLibri.isbn) || 0}
           libri={selectedLibri!}
-          createLibri={createLibri}
-          editLibri={editLibri}
+          createLibri={createLibri}           //editLibri={editLibri}
         />
       )}
       {editMode && selectedLibri && (
