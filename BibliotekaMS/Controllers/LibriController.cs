@@ -4,6 +4,7 @@ using BibliotekaMS.Interfaces;
 using BibliotekaMS.Models;
 using BibliotekaMS.Repository;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 
 namespace BibliotekaMS.Controllers
@@ -14,14 +15,18 @@ namespace BibliotekaMS.Controllers
     {
         private readonly ILibriRepository _libriRepository;
         private readonly IKategoriaELibritRepository _kategoriaELibritRepository;
+        private readonly IAutoriILibritRepository _autoriILibritRepository;
         private readonly IKategoriaRepository _kategoriaRepository;
+        private readonly IAutoriRepository _autoriRepository;
         private readonly IMapper _mapper;
 
-        public LibriController(ILibriRepository libriRepository, IKategoriaELibritRepository kategoriaELibritRepository,IKategoriaRepository kategoriaRepository, IMapper mapper)
+        public LibriController(ILibriRepository libriRepository, IKategoriaELibritRepository kategoriaELibritRepository, IAutoriILibritRepository autoriILibritRepository, IKategoriaRepository kategoriaRepository, IAutoriRepository autoriRepository, IMapper mapper)
         {
             _libriRepository = libriRepository;
             _kategoriaELibritRepository = kategoriaELibritRepository;
+            _autoriILibritRepository = autoriILibritRepository;
             _kategoriaRepository = kategoriaRepository;
+            _autoriRepository = autoriRepository;
             _mapper = mapper;
         }
 
@@ -57,7 +62,7 @@ namespace BibliotekaMS.Controllers
         [HttpPost]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
-        public IActionResult CreateLibri([FromQuery] string[] kategorite, [FromRoute] string[] autoret, [FromBody] LibriDto libriCreate)
+        public IActionResult CreateLibri([FromBody] LibriDto libriCreate, [FromQuery] KategoriaAutoriRequest request)
         {
             if (libriCreate == null)
                 return BadRequest(ModelState);
@@ -84,10 +89,10 @@ namespace BibliotekaMS.Controllers
                 return StatusCode(500, ModelState);
             }
 
-            // Create and save KategoriaELibrit records for each Kategoria in kategorite
-            if (kategorite != null)
+            // Create and save KategoriaELibrit records for each Kategoria in request.kategorite
+            if (request.kategorite != null)
             {
-                foreach (string kategoriaName in kategorite)
+                foreach (string kategoriaName in request.kategorite)
                 {
                     // Get the KategoriaId from the KategoriaRepository based on emriKategorise
                     int kategoriaId = _kategoriaRepository.GetKategoriaId(kategoriaName);
@@ -106,6 +111,39 @@ namespace BibliotekaMS.Controllers
                 }
             }
 
+            if (request.autoret != null)
+            {
+                foreach (string autoriFullName in request.autoret)
+                {
+                    string[] parts = autoriFullName.Split(' ');
+                    if (parts.Length == 2) // Ensure there are two parts
+                    {
+                        string autoriName = parts[0];
+                        string autoriLastName = parts[1];
+
+                        // Get the AutoriId from the AutoriRepository based on autoriName and autoriLastName
+                        int autoriId = _autoriRepository.GetAutoriId(autoriName, autoriLastName);
+
+                        if (autoriId != 0)
+                        {
+                            var autoriILibrit = new AutoriILibrit
+                            {
+                                Isbn = libriMap.Isbn, // Assuming Isbn is the primary key of the Libri
+                                AutoriId = autoriId // Use the fetched AutoriId
+                            };
+
+                            // Save AutoriILibrit record to the database
+                            _autoriILibritRepository.CreateAutoriILibrit(autoriILibrit);
+                        }
+                    }
+                    else
+                    {
+                        // Handle invalid format for autoriFullName
+                        ModelState.AddModelError("", "Invalid format for autoriFullName: " + autoriFullName);
+                        return BadRequest(ModelState);
+                    }
+                }
+            }
             return Ok("Successfully created");
         }
 

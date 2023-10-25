@@ -8,6 +8,8 @@ namespace BibliotekaMS.Interfaces
 
         Autori GetAutori(int autoriId);
 
+        int GetAutoriId(string emri, string mbiemri);
+
         ICollection<Libri> GetLibriNgaAutori(int autoriId);
 
         bool AutoriExists(int autoriId);

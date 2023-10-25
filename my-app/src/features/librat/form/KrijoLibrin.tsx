@@ -9,7 +9,7 @@ import agent from "../../../app/layout/api/agent";
 
 interface IProps {
   libri: ILibri;
-  createLibri: (libri: ILibri, autoret: IAutori[], kategorite: IKategoria[]) => void;
+  createLibri: (libri: ILibri) => void;
   show: boolean;
   onHide: () => void;
 }
@@ -23,7 +23,7 @@ const KrijoLibrin: React.FC<IProps> = ({ show, onHide, createLibri }) => {
     sasia: 0,
   });
 
-  const [autoret, setAutoret] = useState<IAutori[]>([]);
+  const [autoret, setAutoret] = useState<String[]>([]);
   const [kategorite, setKategorite] = useState<IKategoria[]>([]);
   const [selectedKategories, setSelectedKategories] = useState<number[]>([]);
 
@@ -44,7 +44,7 @@ const KrijoLibrin: React.FC<IProps> = ({ show, onHide, createLibri }) => {
     let newLibri = {
       ...libri,
     };
-    createLibri(newLibri, autoret, kategorite);
+    createLibri(newLibri);
     onHide();
   };
 
@@ -126,7 +126,7 @@ const KrijoLibrin: React.FC<IProps> = ({ show, onHide, createLibri }) => {
   />
 </Form.Group>
 <Form.Group controlId="formKategoriteE">
-            <Form.Label>Zgjedh Kategorite</Form.Label>
+            <Form.Label>Zgjedh Kategoritë</Form.Label>
             {kategorite.map((kategoria) => (
               <Form.Check
                 key={kategoria.kategoriaId}
@@ -145,7 +145,21 @@ const KrijoLibrin: React.FC<IProps> = ({ show, onHide, createLibri }) => {
               />
             ))}
           </Form.Group>
-
+          <Form.Group controlId="formAutoretE">
+  <Form.Label>Autort</Form.Label>
+  <Form.Control
+  type="text"
+  placeholder="Shkruaj emrat e autorëve (ndaj me presje, p.sh., Autori 1, Autori 2)"
+  //value={autoret.join(', ')} // Convert the array to a comma-separated string for display
+  onChange={(e) => {
+    const input = e.target.value;
+    // Split the input string into an array using a comma as the delimiter
+    const autoretArray = input.split(',').map((item) => item.trim());
+    setAutoret(autoretArray);
+  }}
+  autoComplete="off"
+/>
+</Form.Group>
         </Form>
       </Modal.Body>
       <Modal.Footer>

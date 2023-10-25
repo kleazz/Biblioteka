@@ -46,6 +46,20 @@ namespace BibliotekaMS.Repository
             return _context.AutoriILibrit.Where(a => a.Autori.AutoriId == autoriId).Select(l => l.Libri).ToList();
         }
 
+        public int GetAutoriId(string emriAutorit, string mbiemriAutorit)
+        {
+            var autori = _context.Autori
+                .Where(a => a.Emri == emriAutorit && a.Mbiemri == mbiemriAutorit)
+                .FirstOrDefault();
+
+            if (autori != null)
+            {
+                return autori.AutoriId;
+            }
+
+            return 0;
+        }
+
         public bool Save()
         {
             var saved = _context.SaveChanges();
