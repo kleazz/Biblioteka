@@ -6,6 +6,7 @@ import { ILibri } from "../../../app/layout/models/libri";
 import { IKategoria } from "../../../app/layout/models/kategoria";
 import { IAutori } from "../../../app/layout/models/autori";
 import agent from "../../../app/layout/api/agent";
+import Select from "react-select";
 
 interface IProps {
   libri: ILibri;
@@ -23,10 +24,22 @@ const KrijoLibrin: React.FC<IProps> = ({ show, onHide, createLibri }) => {
     sasia: 0,
   });
 
-  const [autoret, setAutoret] = useState<String[]>([]);
+  const [autoret, setAutoret] = useState<IAutori[]>([]);
   const [kategorite, setKategorite] = useState<IKategoria[]>([]);
   const [selectedKategories, setSelectedKategories] = useState<number[]>([]);
+  const [selectedAuthors, setSelectedAuthors] = useState<IAutori[]>([]);
 
+  useEffect(() => {
+    // Make an API call to fetch the list of authors from your server
+    agent.Autoret.list()
+      .then((response: IAutori[]) => {
+        setAutoret(response);
+      })
+      .catch((error) => {
+        // Handle any errors from the API call
+        console.error("Error fetching authors: ", error);
+      });
+  }, []);
   // Fetch Kategoria options from your server and update the state
   useEffect(() => {
     // Make an API call to fetch Kategoria options from your server
@@ -60,8 +73,6 @@ const KrijoLibrin: React.FC<IProps> = ({ show, onHide, createLibri }) => {
       reader.readAsDataURL(fileRef);
     }
   }
-
-  console.log(kategorite)
 
   return (
     <Modal show={show} onHide={onHide}>
@@ -146,20 +157,22 @@ const KrijoLibrin: React.FC<IProps> = ({ show, onHide, createLibri }) => {
             ))}
           </Form.Group>
           <Form.Group controlId="formAutoretE">
-  <Form.Label>Autort</Form.Label>
-  <Form.Control
-  type="text"
-  placeholder="Shkruaj emrat e autorëve (ndaj me presje, p.sh., Autori 1, Autori 2)"
-  //value={autoret.join(', ')} // Convert the array to a comma-separated string for display
-  onChange={(e) => {
-    const input = e.target.value;
-    // Split the input string into an array using a comma as the delimiter
-    const autoretArray = input.split(',').map((item) => item.trim());
-    setAutoret(autoretArray);
-  }}
-  autoComplete="off"
-/>
-</Form.Group>
+            <Form.Label>Autorët</Form.Label>
+            <Select
+              isMulti
+              options={autoret.map((author) => ({
+                value: author.autoriId,
+                label: author.emri + ' ' + author.mbiemri,
+              }))}
+              value={selectedAuthors.map((author) => ({
+                value: author.autoriId,
+                label: author.emri + ' ' + author.mbiemri,
+              }))}
+              onChange={(selectedOptions) => {
+                setSelectedAuthors(selectedOptions.map((option) => autoret.find((author) => author.autoriId === option.value) as IAutori));
+              }}
+            />
+          </Form.Group>
         </Form>
       </Modal.Body>
       <Modal.Footer>
