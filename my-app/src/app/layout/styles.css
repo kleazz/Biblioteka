@@ -1,13 +1,13 @@
-@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300&display=swap");
+/* @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap'); */
 
 body {
-  font-family: "Source Sans Pro", sans-serif;
+  font-family: "Roboto";
   padding-left: 200px;
   padding-right: 200px;
-  background-color: rgb(234, 234, 234) !important;
+  background-color: white !important;
 }
 .modal-content {
-  background-color: rgb(234, 234, 234) !important;
+  background-color: white !important;
 }
 .flip-card {
   width: 17rem;
@@ -95,3 +95,230 @@ body {
   flex-direction: row;
   justify-content: space-between;
 }
+
+/* shtim */
+
+
+/* .center{
+  width: 500px;
+  background:#e9e8e4;
+  border-radius: 10px;
+  margin-left: 100px;
+  margin-top: 50px;
+  }
+  
+  #logincenter{
+    margin-top:90px;
+  }
+  .center h1{
+  text-align: center;
+  color:#13765b;
+  padding: 20px 0;
+  border-bottom: 1px solid silver;
+  }
+  .center form{
+  padding: 0 40px;
+  box-sizing: border-box;
+  } */
+  /* #login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  } */
+  
+  /* .login_form {
+    max-width: 400px;
+  }
+
+  form .txt_field{
+  position: relative;
+  border-bottom: 2px solid #adadad;
+  margin: 30px 0;
+  }
+  .txt_field input{
+  width: 100%;
+  padding: 0 5px;
+  height: 40px;
+  font-size: 16px;
+  border: none;
+  background: none;
+  outline: none;
+  }
+  .txt_field label{
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  color: #adadad;
+  transform: translateY(-50%);
+  font-size: 16px;
+  pointer-events: none;
+  transition: .5s;
+  }
+  .txt_field span::before{
+  content: '';
+  position: absolute;
+  top: 40px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background:#1c2c3c;
+  transition: .5s;
+  }
+  .txt_field input:focus ~ label,
+  .txt_field input:valid ~ label{
+  top: -5px;
+  color: #1c2c3c;
+  }
+  .txt_field input:focus ~ span::before,
+  .txt_field input:valid ~ span::before{
+  width: 100%;
+  }
+  input[type="submit"]{
+  width: 100%;
+  height: 50px;
+  border: 1px solid;
+  border-radius: 5px;
+  background:white;
+  font-size: 18px;
+  border:3px solid #1c2c3c;
+  color: #1c2c3c;
+  font-weight: 700;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.5s;
+  }
+  input[type="submit"]:hover{
+  background-color:#1c2c3c;
+  color:white;
+  }
+  .signup_link{
+  margin: 30px 0;
+  text-align: center;
+  font-size: 16px;
+  color: #666666;
+  }
+  .signup_link a{
+  color: #1c2c3c;
+  text-decoration: none;
+  }
+  .signup_link a:hover{
+  text-decoration: underline;
+  } */
+
+  .login-box{
+    position: relative;
+    width: 470px;
+    height: 520px;
+    padding: 10px 30px;
+    background: white;
+  }
+
+  .login-header{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin: 20px 0 50px 0;
+  }
+  
+  .login-header header{
+    color: #333;
+    font-size: 30px;
+    margin-bottom: 5px;
+  }
+
+  .login-header p{
+    color: #555;
+  }
+
+  .input-box{
+    position: relative;
+    width:100%;
+  }
+
+  .input-box label{
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    color: #555;
+    transition: .15s ease-in-out;
+  }
+
+  .input-box input{
+    width: 100%;
+    height: 50px;
+  }
+
+  .input-box .input-field{
+    font-size: 1em;
+    color: #333;
+    padding-left: 15px;
+    margin-bottom: 25px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    outline: none;
+  }
+
+  .input-box input[type="password"]{
+    margin-bottom: 10px;
+  }
+
+  .input-box .input-field:focus{
+    border: 2px solid #8749F2;
+  }
+  .input-field:focus ~ label, .input-field:valid ~ label{
+    top:-8px;
+    left:12px;
+    font-size: 12px;
+    color:#8749F2;
+    background: white;
+    padding: 0 5px;
+  }
+  .input-field:valid ~ label{
+    color: #555;
+  }
+  .submitbtn {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    font-size: 15px;
+    color: #fff;
+    background: #8749F2;
+    border: none;
+    border-radius: 5px;
+    transition-duration: 0.4s;
+    text-decoration: none;
+    overflow: hidden;
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    perspective: 1000px; /* Apply 3D perspective */
+  }
+  
+  .submitbtn:after {
+    content: "";
+    position: absolute;
+    background: #f1f1f1;
+    border-radius: 10%; 
+    /* Make it round */
+    /* transform: scale(3);   */
+    /* Initially small */
+    transform-origin: center;
+    transition: transform 0.8s, opacity 0.5s;
+    width: 100%; /* Initially small width */
+    height: 0; /* Initially no height */
+    opacity: 0.4;
+    top: 0;
+    left: 0;
+  }
+  
+  .submitbtn:active:after {
+    transform: scale(2); /* Expand to cover the button */
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    opacity: 0;
+  }
+  
+  

@@ -52,7 +52,62 @@ const Login = () => {
 
   return (
     <>
-      <div className="registrationdiv">
+    <div className="login-box">
+      <div className="login-header">
+        <header>Welcome</header>
+        <p>We are happy to have you back</p>
+      </div>
+      <div className="input-box">
+        <input type="text" className="input-field" id="username" required></input>
+        <label>Username</label>
+      </div>
+      <div className="input-box">
+        <input type="password" className="input-field" id="password" required></input>
+        <label>Password</label>
+      </div>
+      <div className="input-box">
+        <button className="submitbtn">Sign In</button>
+      </div>
+      <div className="sign-up">
+        <p>Don't have account? <a>Sign up</a></p>
+      </div>
+    </div>
+    {/* <div id="loginpage">
+    <div id="login">
+  <form className="login_form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form" onSubmit={handleSubmit}>
+              <div className="txt_field">
+              <input
+  type="text"
+  name="username"
+  id="username"
+  required
+  value={username}
+  onChange={(e) => setUsername(e.target.value)}
+/>
+                <span></span>
+                <label>Username</label>
+              </div>
+              <div className="txt_field">
+              <input
+  type="password"
+  name="password"
+  id="pass"
+  required
+  value={password}
+  onChange={(e) => setPassword(e.target.value)}
+/>
+                <span></span>
+                <label>Password</label>
+              </div>
+              <input type="submit" name="login-btn" value="SIGN IN"></input>
+              <div className="signup_link">
+                Don't have an account? <a href="/register">Register</a>
+              </div>
+            </form>
+            <div id="coverfoto">
+              <img></img>
+            </div> */}
+      {/* <div className="registrationdiv">
         <div className="biblologo">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -110,7 +165,9 @@ const Login = () => {
             </div>
           </Col>
         </div>
-      </div>
+      </div> */}
+      {/* </div>
+      </div> */}
     </>
   );
 };
