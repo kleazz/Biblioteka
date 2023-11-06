@@ -40,18 +40,18 @@ const LibriCard: React.FC<IProps> = ({ librat }) => {
                   <Card.Title style={{ fontWeight: "bold" }}>
                     {libri.titulli}
                   </Card.Title>
-                  <Card.Title style={{ color: "#198754" }}>Autori</Card.Title>
+                  <Card.Title style={{ color: "#8b9496" }}>Autori</Card.Title>
                 </Card.Body>
               </Card>
             </div>
             <div className="flip-card-back">
               <Card
-                style={{ width: "17rem", height: "26rem", padding: "20px" }}
+                style={{ width: "17rem", height: "26rem", padding: "20px", backgroundColor: "#1c2c3c", color:"white" }}
               >
                 <Card.Text>{truncateText(libri.pershkrimi, 400)}</Card.Text>
                 <div className="button-container">
-                  <Link to={`/details/${libri.isbn}`} className="link-success">
-                    Shiko më shumë
+                  <Link to={`/details/${libri.isbn}`} id="card-link" >
+                    Shiko më shumë &gt;
                   </Link>
                 </div>
               </Card>

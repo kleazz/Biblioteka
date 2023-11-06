@@ -39,7 +39,7 @@ body {
   position: absolute;
   width: 100%;
   height: 100%;
-  -webkit-backface-visibility: hidden; /* Safari */
+  -webkit-backface-visibility: hidden; 
   backface-visibility: hidden;
 }
 
@@ -384,7 +384,16 @@ body {
       margin-left: -8px; 
       margin-top: -10px;
     } 
-
+    #card-link {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+    
+    #card-link:hover {
+      color: #8b9496; /* Replace 'darker-color' with the desired darker color */
+    }
     
     @media (max-width: 1200px) {
       /* Reduce the width of the login-wrapper to make the image go below the form */

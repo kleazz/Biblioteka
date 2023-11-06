@@ -31,7 +31,7 @@ const HomePage = () => {
   };
 
   return (
-    <Container style={{ marginTop: "100px", marginLeft: "17px" }}>
+    <Container style={{ marginTop: "100px" }}>
       {renderLibriCards(librat)}
     </Container>
   );
