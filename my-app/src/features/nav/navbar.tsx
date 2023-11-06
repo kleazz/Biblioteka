@@ -17,7 +17,7 @@ function NavBar() {
   return (
     <>
       <Navbar fixed="top" bg="dark" variant="dark">
-        <Container>
+        <Container style={{padding: "5px"}}>
           <Navbar.Brand as={Link} to="/home">
             <svg
               xmlns="http://www.w3.org/2000/svg"

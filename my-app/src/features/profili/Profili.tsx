@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { IRezervimi } from "../../app/layout/models/rezervimi";
+import { Avatar } from "primereact/avatar";
+import "primereact/resources/themes/lara-light-indigo/theme.css";
 
 const Profili: React.FC = () => {
   const [reservations, setReservations] = useState<IRezervimi[]>([]);
@@ -43,18 +45,12 @@ const Profili: React.FC = () => {
   };
 
   return (
-    <div style={{ marginTop: "2.5cm" }}>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="35"
-        height="35"
-        fill="currentColor"
-        className="bi bi-person-fill"
-        viewBox="0 0 16 16"
-      >
-        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
-      </svg>
-      <h3>{e}</h3>
+    <div style={{marginTop:"30px", padding: "90px"}}>
+      <div className="profile-logo">
+      <Avatar label={e ? e.charAt(0).toUpperCase() : ""} size="xlarge" shape="circle" />
+    <h3 style={{marginTop: "20px", marginLeft: "20px"}}>{e}</h3>
+    </div>
+    <hr></hr>
       <h4 className="text-success">Rezervimet</h4>
       {reservations.map((reservation) => {
         const { libri, rezervimi } = reservation;

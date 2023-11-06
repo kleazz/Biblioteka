@@ -2,8 +2,9 @@
 
 body {
   font-family: "Roboto";
-  /* padding-left: 200px;
-  padding-right: 200px; */
+  /* padding-top: 80px;
+  padding-right: 80px;
+  padding-left: 80px; */
   background-color: white !important;
 }
 .modal-content {
@@ -46,7 +47,13 @@ body {
 .flip-card-back {
   transform: rotateY(180deg);
 }
-
+.details-container{
+  margin-top: 70px;
+  display: flex;
+  justify-content: center;
+  align-items:center;
+  min-height: 90vh; /* Center vertically within the viewport */
+}
 .button-container {
   position: absolute;
   width: 15rem;
@@ -394,6 +401,10 @@ body {
     #card-link:hover {
       color: #8b9496; /* Replace 'darker-color' with the desired darker color */
     }
+
+    .ui-calendar {
+      border: 2px solid red;
+    }
     
     @media (max-width: 1200px) {
       /* Reduce the width of the login-wrapper to make the image go below the form */
@@ -420,5 +431,12 @@ body {
         margin: 0 auto; /* Horizontally center the form */
       }
     }
+
+    .profile-logo{
+      display: flex;
+      flex-direction: row;
+    }
+
+    
 
   

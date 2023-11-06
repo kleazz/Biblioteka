@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { Calendar } from 'primereact/calendar';
 import { Row, Col, Button, Modal, Form } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { ILibri } from "../../app/layout/models/libri";
+import { Dialog } from 'primereact/dialog';
+import "primereact/resources/themes/lara-light-indigo/theme.css";
+import { Nullable } from "primereact/ts-helpers";
+
 
 const LibriDetails: React.FC = () => {
   const { libriIsbn } = useParams<{ libriIsbn: string }>();
@@ -9,6 +14,7 @@ const LibriDetails: React.FC = () => {
   const [libri, setLibri] = useState<ILibri | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [selectedDueDate, setSelectedDueDate] = useState<string>("");
+
 
   const handleShowModal = () => {
     setShowModal(true);
@@ -18,6 +24,8 @@ const LibriDetails: React.FC = () => {
     setShowModal(false);
     console.log(getMinDate());
   };
+
+  const [visible, setVisible] = useState<boolean>(false)
 
   const handleSave = async () => {
     if (libri) {
@@ -89,20 +97,20 @@ const LibriDetails: React.FC = () => {
     const day = maxDate.getDate();
     return `${year}-${month.toString().padStart(2, "0")}-${day.toString().padStart(2, "0")}`;
   };
+  const [date, setDate] = useState<Nullable<Date>>(null);
 
   return (
-    <div className="container">
+    <div className="details-container">
       {libri ? (
         <div
           style={{
             height: "600px",
             width: "32cm",
             backgroundColor: "white",
-            marginTop: "2.5cm",
-            marginLeft: "-1.2cm",
+            // marginTop: "2.5cm",
             padding: "1cm",
             borderRadius: "10px",
-            boxShadow: " 0 2px 4px rgba(0, 0, 0, 0.2)",
+            boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
           }}
         >
           <Row>
@@ -123,19 +131,22 @@ const LibriDetails: React.FC = () => {
             <Col
               xs={12}
               md={8}
-              style={{ marginTop: "1cm", overflow: "hidden" }}
+              style={{ marginTop: "1cm", overflow: "hidden",   display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              }}
             >
-              <h2>{libri.titulli}</h2>
-              <p className="text-success">Autori</p>
-              <p>Kategoria</p>
-              <div style={{ maxHeight: "300px", overflowY: "scroll" }}>
+              <h1>{libri.titulli}</h1>
+              <h4>Autori</h4>
+              <h6>Kategoria</h6>
+              <div style={{maxHeight: "300px", overflowY: "scroll" }}>
                 <p>{libri.pershkrimi}</p>
               </div>
               {localStorage.getItem("role") !== "admin" && (
                 <div>
-                  <Button variant="success" onClick={handleShowModal}>
+                  <button className="submitbtn" onClick={() => setVisible(true)}>
                     Rezervo
-                  </Button>
+                  </button>
                 </div>
               )}
             </Col>
@@ -145,7 +156,25 @@ const LibriDetails: React.FC = () => {
         <p>Loading...</p>
       )}
 
-      <Modal show={showModal} onHide={handleCloseModal}>
+        <Dialog header="Rezervo Librin" visible={visible} style={{ width: '30vw' }} onHide={() => setVisible(false)}>
+                <p className="m-0">
+                <label>Due Date</label>
+                <div className="card flex justify-content-center">
+            <Calendar value={date} onChange={(e) => setDate(e.value)} />
+        </div>
+                {/* <Form.Group>
+            <Form.Label>Due Date</Form.Label>
+            <Form.Control
+              type="date"
+              min={getMinDate()}
+              max={getMaxDate()}
+              value={selectedDueDate}
+              onChange={(e) => setSelectedDueDate(e.target.value)}
+            />
+          </Form.Group> */}
+                </p>
+            </Dialog>
+      {/* <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
           <Modal.Title>Rezervo Librin</Modal.Title>
         </Modal.Header>
@@ -169,7 +198,7 @@ const LibriDetails: React.FC = () => {
             Ruaj
           </Button>
         </Modal.Footer>
-      </Modal>
+      </Modal> */}
     </div>
   );
 };
