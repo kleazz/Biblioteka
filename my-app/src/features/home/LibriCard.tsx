@@ -27,6 +27,7 @@ const LibriCard: React.FC<IProps> = ({ librat }) => {
                   height: "26rem",
                   padding: "20px",
                   position: "relative",
+                  boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
                 }}
               >
                 <Card.Img
@@ -50,7 +51,7 @@ const LibriCard: React.FC<IProps> = ({ librat }) => {
                 <Card.Text>{truncateText(libri.pershkrimi, 400)}</Card.Text>
                 <div className="button-container">
                   <Link to={`/details/${libri.isbn}`} className="link-success">
-                    Shiko më shumë ➜
+                    Shiko më shumë
                   </Link>
                 </div>
               </Card>
