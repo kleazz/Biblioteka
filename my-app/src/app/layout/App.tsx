@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useState } from "react";
-import NavBar from "../../features/nav/navbar";
+import NavBar from "../../features/nav/NavBar";
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import HomePage from "../../features/home/HomePage";
 import Librat from "../../features/librat/dashboard/Librat";
@@ -10,6 +10,7 @@ import Registration from "../../features/registration/Register";
 import LibriDetails from "../../features/libridetails/LibriDetails";
 import Profili from "../../features/profili/Profili";
 import Lexuesit from "../../features/lexuesit/dashboard/Lexuesit";
+import Footer from "../../features/footer/Footer";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -63,6 +64,7 @@ const App = () => {
           </>
         )}
       </Routes>
+      <Footer />
     </Fragment>
   );
 };

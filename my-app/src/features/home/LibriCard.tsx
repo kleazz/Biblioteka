@@ -50,7 +50,7 @@ const LibriCard: React.FC<IProps> = ({ librat }) => {
               >
                 <Card.Text>{truncateText(libri.pershkrimi, 400)}</Card.Text>
                 <div className="button-container">
-                  <Link to={`/details/${libri.isbn}`} id="card-link" >
+                  <Link to={`/details/${libri.isbn}`} id="card-link">
                     Shiko më shumë &gt;
                   </Link>
                 </div>

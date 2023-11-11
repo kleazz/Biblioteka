@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Calendar } from 'primereact/calendar';
+import { addLocale } from 'primereact/api';
 import { Row, Col, Button, Modal, Form } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { ILibri } from "../../app/layout/models/libri";
 import { Dialog } from 'primereact/dialog';
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import { Nullable } from "primereact/ts-helpers";
+import { ScrollPanel } from "primereact/scrollpanel";
 
 
 const LibriDetails: React.FC = () => {
@@ -13,8 +15,7 @@ const LibriDetails: React.FC = () => {
 
   const [libri, setLibri] = useState<ILibri | null>(null);
   const [showModal, setShowModal] = useState(false);
-  const [selectedDueDate, setSelectedDueDate] = useState<string>("");
-
+  const [selectedDueDate, setSelectedDueDate] = useState<Nullable<Date>>(null);
 
   const handleShowModal = () => {
     setShowModal(true);
@@ -81,23 +82,17 @@ const LibriDetails: React.FC = () => {
     fetchBookDetails();
   }, [libriIsbn]);
 
-  const getMinDate = (): string => {
+  const getMinDate = (): Date => {
     const today = new Date();
-    const year = today.getFullYear();
-    const month = today.getMonth() + 1; // Months are zero-based
-    const day = today.getDate();
-    return `${year}-${month.toString().padStart(2, "0")}-${day.toString().padStart(2, "0")}`;
+    return today;
   };
-
-  const getMaxDate = (): string => {
+  
+  const getMaxDate = (): Date => {
     const maxDate = new Date();
     maxDate.setDate(maxDate.getDate() + 7);
-    const year = maxDate.getFullYear();
-    const month = maxDate.getMonth() + 1; // Months are zero-based
-    const day = maxDate.getDate();
-    return `${year}-${month.toString().padStart(2, "0")}-${day.toString().padStart(2, "0")}`;
+    return maxDate;
   };
-  const [date, setDate] = useState<Nullable<Date>>(null);
+  // const [date, setDate] = useState<Nullable<Date>>(null);
 
   return (
     <div className="details-container">
@@ -105,12 +100,12 @@ const LibriDetails: React.FC = () => {
         <div
           style={{
             height: "600px",
-            width: "32cm",
+            width: "35cm",
             backgroundColor: "white",
             // marginTop: "2.5cm",
             padding: "1cm",
-            borderRadius: "10px",
-            boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
+            // borderRadius: "10px",
+            // boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
           }}
         >
           <Row>
@@ -139,11 +134,16 @@ const LibriDetails: React.FC = () => {
               <h1>{libri.titulli}</h1>
               <h4>Autori</h4>
               <h6>Kategoria</h6>
-              <div style={{maxHeight: "300px", overflowY: "scroll" }}>
+              <ScrollPanel style={{ width: '100%', height: '190px' }} className="custombar2">
+    <p>
+    {libri.pershkrimi}
+    </p>
+</ScrollPanel>
+              {/* <div style={{maxHeight: "300px", overflowY: "scroll" }}>
                 <p>{libri.pershkrimi}</p>
-              </div>
+              </div> */}
               {localStorage.getItem("role") !== "admin" && (
-                <div>
+                <div className="modal-btn">
                   <button className="submitbtn" onClick={() => setVisible(true)}>
                     Rezervo
                   </button>
@@ -153,14 +153,21 @@ const LibriDetails: React.FC = () => {
           </Row>
         </div>
       ) : (
-        <p>Loading...</p>
+       <div></div>
       )}
 
         <Dialog header="Rezervo Librin" visible={visible} style={{ width: '30vw' }} onHide={() => setVisible(false)}>
-                <p className="m-0">
                 <label>Due Date</label>
-                <div className="card flex justify-content-center">
-            <Calendar value={date} onChange={(e) => setDate(e.value)} />
+                <div className="modal-flex">
+            <Calendar 
+              className="custom-calendar" 
+              minDate={getMinDate()}
+              maxDate={getMaxDate()}
+              value={selectedDueDate}
+              onChange={(e) => setSelectedDueDate(e.value)} />
+              </div>
+              <div className="modal-btn">
+            <button className="submitbtn" onClick={() => { handleSave(); setVisible(false); }}>Ruaj</button>
         </div>
                 {/* <Form.Group>
             <Form.Label>Due Date</Form.Label>
@@ -172,7 +179,6 @@ const LibriDetails: React.FC = () => {
               onChange={(e) => setSelectedDueDate(e.target.value)}
             />
           </Form.Group> */}
-                </p>
             </Dialog>
       {/* <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>

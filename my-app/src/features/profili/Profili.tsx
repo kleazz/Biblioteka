@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { IRezervimi } from "../../app/layout/models/rezervimi";
 import { Avatar } from "primereact/avatar";
+import { Fieldset } from "primereact/fieldset";
+import { TabPanel, TabView } from "primereact/tabview";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 
 const Profili: React.FC = () => {
@@ -51,7 +53,6 @@ const Profili: React.FC = () => {
     <h3 style={{marginTop: "20px", marginLeft: "20px"}}>{e}</h3>
     </div>
     <hr></hr>
-      <h4 className="text-success">Rezervimet</h4>
       {reservations.map((reservation) => {
         const { libri, rezervimi } = reservation;
         return (

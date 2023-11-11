@@ -5,6 +5,7 @@ import App from "./app/layout/App";
 import "./app/layout/styles.css"
 import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.min.css";
+import 'primereact/resources/themes/viva-light/theme.css';
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
