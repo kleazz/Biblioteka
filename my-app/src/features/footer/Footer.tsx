@@ -2,10 +2,11 @@ function Footer() {
    
     return (
       <>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"></link>
      <footer className="footer">
         <div className="footer-container">
             <div className="footer-row">
-                <div className="footer-col">
+                {/* <div className="footer-col">
                     <h4>Navigo</h4>
                     <ul>
                         <li><a href="index.php">Faqja Kryesore</a></li>
@@ -13,13 +14,11 @@ function Footer() {
                         <li><a href="aboutUs.php">Rreth nesh</a></li>
                         <li><a href="news.php">Të rejat</a></li>
                     </ul>
-                </div>
-                
+                </div> */}
                 <div className="footer-col" id="contact">
                     <h4>Na kontaktoni</h4>
                     <ul>
-                        <li>Biznesi + Partneritetet: brand@haneul.com</li>
-                        <li>Press: press@haneul.com</li>
+                        <li>Info: biblioteka@biblo.com</li>
                         <li>Numri Kontaktues: +38349900900</li>
                         <li>HQ Address:Lagjja Kalabria, 10000 Prishtinë, Kosovë</li>
                     </ul>
@@ -36,6 +35,9 @@ function Footer() {
                 </div>
             </div>
         </div>
+        <div className="footer-secondrow">
+            <label>© Biblioteka</label>
+            </div>
    </footer>
       </>
     );

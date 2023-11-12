@@ -423,10 +423,11 @@ body {
 .footer-container{
 	max-width: 100%;
 	margin:auto;
-  margin-left: 230px;
+  /* margin-left: 230px; */
 }
 .footer-row{
 	display: flex;
+  justify-content: space-around;
 	flex-wrap: wrap;
 }
 .footer-col ul{
@@ -436,8 +437,9 @@ body {
     color: #f3f3ec;
 }
 .footer{
-	background-color: #1c2c3c;
-    padding: 70px 0;
+	  background-color: #1c2c3c;
+    padding-top: 70px;
+    padding-bottom: 10px;
     height: 10m;
 }
 .footer-col{
@@ -504,6 +506,19 @@ body {
 	background-color: #f3f3ec;
 }
 
+.footer-secondrow {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+}
+
+.footer-secondrow label {
+  color: white;
+}
+
+.flex.align-items-center {
+  padding: 3px 0px;
+}
 
 @media only screen and (max-width: 768px) {
     .footer{
