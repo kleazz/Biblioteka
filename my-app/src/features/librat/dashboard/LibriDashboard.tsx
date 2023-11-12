@@ -2,6 +2,7 @@ import { ILibri } from "../../../app/layout/models/libri";
 import LibriTabela from "./LibriTabela";
 import KrijoLibrin from "../form/KrijoLibrin";
 import EditoLibrin from "../form/EditoLibrin";
+import { ILibriRequest } from "../../../app/layout/models/LibriRequest";
 
 interface IProps {
   librat: ILibri[];
@@ -10,7 +11,7 @@ interface IProps {
   editMode: boolean;
   setEditMode: (editMode: boolean) => void;
   setSelectedLibri: (libri: ILibri | null) => void;
-  createLibri: (libri: ILibri) => void;
+  createLibri: (libri: ILibriRequest) => void;
   editLibri: (libri: ILibri) => void;
   deleteLibri: (isbn: string) => void;
 

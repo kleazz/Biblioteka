@@ -7,10 +7,11 @@ import { IKategoria } from "../../../app/layout/models/kategoria";
 import { IAutori } from "../../../app/layout/models/autori";
 import agent from "../../../app/layout/api/agent";
 import Select from "react-select";
+import { ILibriRequest } from "../../../app/layout/models/LibriRequest";
 
 interface IProps {
   libri: ILibri;
-  createLibri: (libri: ILibri) => void;
+  createLibri: (libri: ILibriRequest) => void;
   show: boolean;
   onHide: () => void;
 }
@@ -26,7 +27,7 @@ const KrijoLibrin: React.FC<IProps> = ({ show, onHide, createLibri }) => {
 
   const [autoret, setAutoret] = useState<IAutori[]>([]);
   const [kategorite, setKategorite] = useState<IKategoria[]>([]);
-  const [selectedKategories, setSelectedKategories] = useState<number[]>([]);
+  const [selectedKategories, setSelectedKategories] = useState<IKategoria[]>([]);
   const [selectedAuthors, setSelectedAuthors] = useState<IAutori[]>([]);
 
   useEffect(() => {
@@ -54,11 +55,16 @@ const KrijoLibrin: React.FC<IProps> = ({ show, onHide, createLibri }) => {
   }, []);
 
   const handleSubmit = () => {
-    let newLibri = {
-      ...libri,
+    const libriRequest: ILibriRequest = {
+      libri: { ...libri },
+      kategorite: selectedKategories.map((kategoria) => kategoria.emriKategorise),
+      autoret: selectedAuthors.map((autori) => autori.emri + ' ' + autori.mbiemri),
     };
-    createLibri(newLibri);
-    onHide();
+
+    // Send the LibriRequest to the createLibri function
+    createLibri(libriRequest);
+
+        onHide();
   };
 
   function convertFile(files: FileList | null) {
@@ -137,25 +143,25 @@ const KrijoLibrin: React.FC<IProps> = ({ show, onHide, createLibri }) => {
   />
 </Form.Group>
 <Form.Group controlId="formKategoriteE">
-            <Form.Label>Zgjedh Kategoritë</Form.Label>
-            {kategorite.map((kategoria) => (
-              <Form.Check
-                key={kategoria.kategoriaId}
-                type="checkbox" // Use checkboxes for multiple selections
-                id={`kategoria-${kategoria.kategoriaId}`}
-                label={kategoria.emriKategorise}
-                checked={selectedKategories.includes(kategoria.kategoriaId)}
-                onChange={() => {
-                  // Toggle selection of Kategoria
-                  if (selectedKategories.includes(kategoria.kategoriaId)) {
-                    setSelectedKategories(selectedKategories.filter((id) => id !== kategoria.kategoriaId));
-                  } else {
-                    setSelectedKategories([...selectedKategories, kategoria.kategoriaId]);
-                  }
-                }}
-              />
-            ))}
-          </Form.Group>
+  <Form.Label>Zgjedh Kategoritë</Form.Label>
+  {kategorite.map((kategoria) => (
+    <Form.Check
+      key={kategoria.kategoriaId}
+      type="checkbox"
+      id={`kategoria-${kategoria.kategoriaId}`}
+      label={kategoria.emriKategorise}
+      checked={selectedKategories.some((selected) => selected.kategoriaId === kategoria.kategoriaId)}
+      onChange={() => {
+        // Toggle selection of Kategoria
+        if (selectedKategories.some((selected) => selected.kategoriaId === kategoria.kategoriaId)) {
+          setSelectedKategories(selectedKategories.filter((selected) => selected.kategoriaId !== kategoria.kategoriaId));
+        } else {
+          setSelectedKategories([...selectedKategories, kategoria]);
+        }
+      }}
+    />
+  ))}
+</Form.Group>
           <Form.Group controlId="formAutoretE">
             <Form.Label>Autorët</Form.Label>
             <Select

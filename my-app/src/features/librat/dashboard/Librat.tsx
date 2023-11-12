@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { ILibri } from "../../../app/layout/models/libri";
 import agent from "../../../app/layout/api/agent";
 import LibriDashboard from "./LibriDashboard";
+import { ILibriRequest } from "../../../app/layout/models/LibriRequest";
 
 const Librat = () => {
   const [librat, setLibrat] = useState<ILibri[]>([]);
@@ -12,10 +13,10 @@ const Librat = () => {
 
   const [editMode, setEditMode] = useState(false);
 
-  const handleCreateLibri = (libri: ILibri) => {
+  const handleCreateLibri = (libri: ILibriRequest) => {
     agent.Librat.create(libri).then(() => {
-      setLibrat([...librat, libri]);
-      setSelectedLibri(libri);
+      setLibrat([...librat, libri.libri]);
+      setSelectedLibri(libri.libri);
       setEditMode(false);
     });
   };

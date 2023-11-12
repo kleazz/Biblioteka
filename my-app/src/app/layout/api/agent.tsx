@@ -3,6 +3,7 @@ import { ILibri } from "../models/libri";
 import { IKategoria } from "../models/kategoria";
 import { IAutori } from "../models/autori";
 import { ILexuesi } from "../models/lexuesi";
+import { ILibriRequest } from "../models/LibriRequest";
 
 axios.defaults.baseURL = "https://localhost:7226/api";
 
@@ -17,7 +18,7 @@ const requests = {
 
 const Librat = {
   list: (): Promise<ILibri[]> => requests.get("/Libri"),
-  create: (libri: ILibri) => requests.post("/Libri", libri),
+  create: (libriRequest: ILibriRequest) => requests.post("/Libri", libriRequest),
   update: (libri: ILibri) => requests.put(`/Libri/${libri.isbn}`, libri),
   delete: (isbn: string) => requests.del(`/Libri/${isbn}`),
 };

@@ -59,10 +59,11 @@ namespace BibliotekaMS.Controllers
             return Ok(libri);
         }
 
+        /*
         [HttpPost]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
-        public IActionResult CreateLibri([FromBody] LibriDto libriCreate, [FromQuery] KategoriaAutoriRequest request)
+        public IActionResult CreateLibri([FromQuery] KategoriaAutoriRequest request, [FromBody] LibriDto libriCreate)
         {
             if (libriCreate == null)
                 return BadRequest(ModelState);
@@ -145,7 +146,102 @@ namespace BibliotekaMS.Controllers
                 }
             }
             return Ok("Successfully created");
+        }*/
+        [HttpPost]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        public IActionResult CreateLibri([FromBody] LibriRequest libriRequest)
+        {
+            if (libriRequest == null || libriRequest.libri == null)
+                return BadRequest(ModelState);
+
+            var librat = _libriRepository.GetLibrat()
+                .Where(c => c.Titulli.Trim().ToUpper() == libriRequest.libri.Titulli.TrimEnd().ToUpper())
+                .FirstOrDefault();
+
+            if (librat != null)
+            {
+                ModelState.AddModelError("", "Libri already exists");
+                return StatusCode(422, ModelState);
+            }
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            // Extract data from LibriRequest
+            var libriData = libriRequest.libri;
+            var kategorite = libriRequest.kategorite;
+            var autoret = libriRequest.autoret;
+
+            var libriMap = _mapper.Map<Libri>(libriData);
+
+            // Create and save the Libri
+            if (!_libriRepository.CreateLibri(libriMap))
+            {
+                ModelState.AddModelError("", "Something went wrong while saving");
+                return StatusCode(500, ModelState);
+            }
+
+            // Create and save KategoriaELibrit records for each Kategoria in kategorite
+            if (kategorite != null)
+            {
+                foreach (string kategoriaName in kategorite)
+                {
+                    // Get the KategoriaId from the KategoriaRepository based on emriKategorise
+                    int kategoriaId = _kategoriaRepository.GetKategoriaId(kategoriaName);
+
+                    if (kategoriaId != 0)
+                    {
+                        var kategoriaELibrit = new KategoriaELibrit
+                        {
+                            Isbn = libriMap.Isbn, // Assuming Isbn is the primary key of the Libri
+                            KategoriaId = kategoriaId // Use the fetched KategoriaId
+                        };
+
+                        // Save KategoriaELibrit record to the database
+                        _kategoriaELibritRepository.CreateKategoriaELibrit(kategoriaELibrit);
+                    }
+                }
+            }
+
+            // Create and save AutoriILibrit records for each Autori in autoret
+            if (autoret != null)
+            {
+                foreach (string autoriFullName in autoret)
+                {
+                    string[] parts = autoriFullName.Split(' ');
+                    if (parts.Length == 2) // Ensure there are two parts
+                    {
+                        string autoriName = parts[0];
+                        string autoriLastName = parts[1];
+
+                        // Get the AutoriId from the AutoriRepository based on autoriName and autoriLastName
+                        int autoriId = _autoriRepository.GetAutoriId(autoriName, autoriLastName);
+
+                        if (autoriId != 0)
+                        {
+                            var autoriILibrit = new AutoriILibrit
+                            {
+                                Isbn = libriMap.Isbn, // Assuming Isbn is the primary key of the Libri
+                                AutoriId = autoriId // Use the fetched AutoriId
+                            };
+
+                            // Save AutoriILibrit record to the database
+                            _autoriILibritRepository.CreateAutoriILibrit(autoriILibrit);
+                        }
+                    }
+                    else
+                    {
+                        // Handle invalid format for autoriFullName
+                        ModelState.AddModelError("", "Invalid format for autoriFullName: " + autoriFullName);
+                        return BadRequest(ModelState);
+                    }
+                }
+            }
+            return Ok("Successfully created");
         }
+
+
 
         [HttpPut("{libriIsbn}")]
         [ProducesResponseType(400)]

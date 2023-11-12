@@ -1,7 +1,7 @@
 import { ILibri } from "./libri";
 
 export interface ILibriRequest {
-    newLibri: ILibri;
-    autoret: string[];  
-    kategorite: string[];
-  }
+  libri: ILibri;
+  kategorite: string [];
+  autoret: string [];
+}
