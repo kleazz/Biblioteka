@@ -3,6 +3,8 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { Modal } from "react-bootstrap";
 import { IAutori } from "../../../app/layout/models/autori";
+import { Dialog } from "primereact/dialog";
+import { AutoComplete } from "primereact/autocomplete";
 
 interface IProps {
   autori: IAutori;
@@ -25,11 +27,24 @@ const KrijoAutorin: React.FC<IProps> = ({ show, onHide, createAutori }) => {
     };
     createAutori(newAutori);
     onHide();
-    window.location.reload();
   };
 
   return (
-    <Modal show={show} onHide={onHide}>
+    <>
+     <Dialog header="Krijo Autorin" visible={show} style={{ width: '30vw' }} onHide={onHide}>
+      <label>Emri</label>
+      <div className="modal-flex">
+    <AutoComplete value={autori.emri} onChange={(e) => setAutori({ ...autori, emri: e.target.value })} />
+    </div>
+    <label>Mbiemri</label>
+    <div className="modal-flex">
+    <AutoComplete value={autori.mbiemri} onChange={(e) => setAutori({ ...autori, mbiemri: e.target.value })} />
+    </div>
+    <div className="modal-btn">
+            <button className="submitbtn" onClick={handleSubmit}>Ruaj</button>
+        </div>
+    </Dialog>
+     {/* <Modal show={show} onHide={onHide}>
       <Modal.Header closeButton>
         <Modal.Title>{"Krijo Autorin"}</Modal.Title>
       </Modal.Header>
@@ -67,7 +82,8 @@ const KrijoAutorin: React.FC<IProps> = ({ show, onHide, createAutori }) => {
           Krijo
         </Button>
       </Modal.Footer>
-    </Modal>
+    </Modal> */}
+    </>
   );
 };
 

@@ -520,6 +520,30 @@ body {
   padding: 3px 0px;
 }
 
+input.p-inputtext.p-component.p-autocomplete-input.p-autocomplete-input{
+  width: 26vw;
+}
+span.p-button.p-component.p-fileupload-choose {
+  /* width: 26.7vw; */
+  background: #1c2c3c;
+  border: 2px solid #1c2c3c;
+}
+
+input.p-inputtext.p-component.p-inputnumber-input.p-inputnumber-input{
+  width: 26vw;
+}
+
+.w-full.md\:w-20rem.p-multiselect.p-component.p-inputwrapper{
+  width: 26vw;
+}
+
+input.form-control:focus {
+  color: #212529;
+  background-color: #fff;
+  border-color: white;
+  outline: 0;
+  box-shadow:none;
+}
 @media only screen and (max-width: 768px) {
     .footer{
         height:auto;

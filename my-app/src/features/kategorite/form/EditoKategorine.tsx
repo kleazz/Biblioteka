@@ -3,6 +3,8 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { useState } from "react";
 import { IKategoria } from "../../../app/layout/models/kategoria";
+import { Dialog } from "primereact/dialog";
+import { AutoComplete } from "primereact/autocomplete";
 
 interface IProps {
   kategoria: IKategoria;
@@ -30,9 +32,8 @@ const EditoKategorine: React.FC<IProps> = ({
 
   const [kategoria, setKategoria] = useState<IKategoria>(initializeForm);
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setKategoria({ ...kategoria, [name]: value });
+  const handleInputChange = (e: { value: string }) => {
+    setKategoria({ ...kategoria, emriKategorise: e.value });
   };
 
   const handleSubmit = () => {
@@ -41,7 +42,17 @@ const EditoKategorine: React.FC<IProps> = ({
   };
 
   return (
-    <Modal show={show} onHide={onHide}>
+    <>
+    <Dialog header="Edito Kategorinë" visible={show} style={{ width: '30vw' }} onHide={onHide}>
+      <label>Emri</label>
+      <div className="modal-flex">
+    <AutoComplete value={kategoria.emriKategorise} onChange={handleInputChange} />
+    </div>
+    <div className="modal-btn">
+            <button className="submitbtn" onClick={handleSubmit}>Ruaj Ndryshimet</button>
+        </div>
+    </Dialog>
+    {/* <Modal show={show} onHide={onHide}>
       <Modal.Header closeButton>
         <Modal.Title>{"Edito Kategorine"}</Modal.Title>
       </Modal.Header>
@@ -67,7 +78,8 @@ const EditoKategorine: React.FC<IProps> = ({
           {"Ruaj Ndryshimet"}
         </Button>
       </Modal.Footer>
-    </Modal>
+    </Modal> */}
+    </>
   );
 };
 

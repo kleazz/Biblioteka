@@ -8,6 +8,12 @@ import { IAutori } from "../../../app/layout/models/autori";
 import agent from "../../../app/layout/api/agent";
 import Select from "react-select";
 import { ILibriRequest } from "../../../app/layout/models/LibriRequest";
+import { Dialog } from "primereact/dialog";
+import { AutoComplete } from "primereact/autocomplete";
+import { InputTextarea } from "primereact/inputtextarea";
+import { FileUpload, FileUploadUploadEvent } from "primereact/fileupload";
+import { InputNumber } from "primereact/inputnumber";
+import { MultiSelect } from "primereact/multiselect";
 
 interface IProps {
   libri: ILibri;
@@ -22,7 +28,7 @@ const KrijoLibrin: React.FC<IProps> = ({ show, onHide, createLibri }) => {
     titulli: "",
     pershkrimi: "",
     fotoja: "",
-    sasia: 0,
+    sasia: 0 as number,
   });
 
   const [autoret, setAutoret] = useState<IAutori[]>([]);
@@ -66,7 +72,6 @@ const KrijoLibrin: React.FC<IProps> = ({ show, onHide, createLibri }) => {
 
         onHide();
   };
-
   function convertFile(files: FileList | null) {
     if (files && files.length > 0) {
       const fileRef = files[0];
@@ -79,9 +84,93 @@ const KrijoLibrin: React.FC<IProps> = ({ show, onHide, createLibri }) => {
       reader.readAsDataURL(fileRef);
     }
   }
-
+  // function handleFileUpload(event: FileUploadUploadEvent) {
+  //   const files = event.files;
+  
+  //   if (files && files.length > 0) {
+  //     const fileRef = files[0];
+  //     const reader = new FileReader();
+  
+  //     reader.onload = (ev: ProgressEvent<FileReader>) => {
+  //       const base64String = ev.target?.result as string;
+  //       console.log(base64String);
+  //       setLibri({ ...libri, fotoja: base64String });
+  //     };
+  
+  //     reader.readAsDataURL(fileRef);
+  //   }
+  // }
   return (
-    <Modal show={show} onHide={onHide}>
+    <>
+        <Dialog header="Krijo Librin" visible={show} style={{ width: '30vw' }} onHide={onHide}>
+      <label>ISBN</label>
+      <div className="modal-flex">
+    <AutoComplete value={libri.isbn} onChange={(e) => setLibri({ ...libri, isbn: e.target.value })} />
+    </div>
+    <label>Titulli</label>
+      <div className="modal-flex">
+    <AutoComplete value={libri.titulli} onChange={(e) => setLibri({ ...libri, titulli: e.target.value })} />
+    </div>
+        <label>Përshkrimi</label>
+      <div className="modal-flex">
+      <InputTextarea value={libri.pershkrimi} onChange={(e) => setLibri({ ...libri, pershkrimi: e.target.value })} rows={5} cols={50} />
+      </div>
+    {/* <label>Kopertina</label> */}
+    {/* <div className="modal-flex"> 
+    { <FileUpload mode="basic" name="kopertina" accept=".png,.jpg,.jpeg" maxFileSize={1000000} onUpload={onUpload} /> */}
+
+      {/* </div> */}
+      <Form.Label>Kopertina</Form.Label>
+            <Form.Control
+              type="file"
+              accept=".png,.jpg,.jpeg"
+              onChange={(e) =>
+                convertFile((e.target as HTMLInputElement).files)
+              }
+            /> 
+      <label>Sasia</label>
+      <div className="modal-flex">
+      <InputNumber value={libri.sasia} onValueChange={(e) => setLibri({ ...libri, sasia: e.target.value as number })} />
+      </div>
+      <label>Kategoritë</label>
+<div className="modal-flex">
+<MultiSelect
+  value={selectedKategories}
+  onChange={(e) => setSelectedKategories(e.value)}
+  options={kategorite.map((kategoria) => ({
+    label: kategoria.emriKategorise,
+    value: kategoria,
+    key: kategoria.kategoriaId, // Add a unique key
+  }))}
+  optionLabel="label"
+  display="chip"
+  placeholder="Selekto kategoritë"
+  maxSelectedLabels={3}
+  className="w-full md:w-20rem"
+/>
+</div>
+<label>Autorët</label>
+<div className="modal-flex">
+<MultiSelect
+  value={selectedAuthors}
+  onChange={(e) => setSelectedAuthors(e.value)}
+  options={autoret.map((autori) => ({
+    label: autori.emri + ' ' + autori.mbiemri,
+    value: autori,
+    key: autori.autoriId, // Add a unique key
+  }))}
+  optionLabel="label"
+  filter
+  placeholder="Selekto Autorët"
+  maxSelectedLabels={3}
+  className="w-full md:w-20rem"
+/>
+</div>
+      <div className="modal-btn">
+            <button className="submitbtn" onClick={handleSubmit}>Ruaj</button>
+        </div>
+    </Dialog>
+    {/* <Modal show={show} onHide={onHide}>
       <Modal.Header closeButton>
         <Modal.Title>{"Krijo Librin"}</Modal.Title>
       </Modal.Header>
@@ -189,7 +278,8 @@ const KrijoLibrin: React.FC<IProps> = ({ show, onHide, createLibri }) => {
           Krijo
         </Button>
       </Modal.Footer>
-    </Modal>
+    </Modal> */}
+    </>
   );
 };
 

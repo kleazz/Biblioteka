@@ -1,8 +1,9 @@
 import React from "react";
-import Button from "react-bootstrap/esm/Button";
 import Col from "react-bootstrap/esm/Col";
 import Row from "react-bootstrap/esm/Row";
 import { IKategoria } from "../../../app/layout/models/kategoria";
+import { Table } from "react-bootstrap";
+import { Button } from "primereact/button";
 
 interface IProps {
   kategorite: IKategoria[];
@@ -19,25 +20,19 @@ const KategoriaTabela: React.FC<IProps> = ({
   deleteKategoria,
 }) => {
   return (
-    <div style={{ marginTop: "7em" }}>
+    <div style={{ padding:"100px" }}>
       {" "}
       <Row className="align-items-center justify-content-between">
         <Col>
           <h3>Lista e kategorive</h3>
         </Col>
         <Col xs="auto">
-          <Button
-            onClick={() => setCreateKatMode(true)}
-            variant="outline-success"
-          >
-            Create
-          </Button>
+          <Button label="New" text onClick={() => setCreateKatMode(true)}></Button>
         </Col>
       </Row>
-      <table className="table table-striped">
+      <Table striped bordered hover>
         <thead>
           <tr>
-            <th scope="col">ID</th>
             <th scope="col">Emri</th>
             <th></th>
             <th></th>
@@ -46,28 +41,17 @@ const KategoriaTabela: React.FC<IProps> = ({
         <tbody>
           {kategorite.map((kategoria) => (
             <tr key={kategoria.kategoriaId}>
-              <td>{kategoria.kategoriaId}</td>
               <td>{kategoria.emriKategorise}</td>
               <td>
-                <Button
-                  onClick={() => selectKategoria(kategoria.kategoriaId)}
-                  variant="outline-primary"
-                >
-                  Edit
-                </Button>
+                <Button label="Edit" severity="secondary" text onClick={() => selectKategoria(kategoria.kategoriaId)}/>
               </td>
               <td>
-                <Button
-                  variant="outline-danger"
-                  onClick={() => deleteKategoria(kategoria.kategoriaId)}
-                >
-                  Delete
-                </Button>
+                <Button label="Delete" severity="danger" text onClick={() => deleteKategoria(kategoria.kategoriaId)} />
               </td>
             </tr>
           ))}
         </tbody>
-      </table>
+      </Table>
     </div>
   );
 };

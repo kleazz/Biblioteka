@@ -11,6 +11,7 @@ import LibriDetails from "../../features/libridetails/LibriDetails";
 import Profili from "../../features/profili/Profili";
 import Lexuesit from "../../features/lexuesit/dashboard/Lexuesit";
 import Footer from "../../features/footer/Footer";
+import "primereact/resources/themes/lara-light-indigo/theme.css";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);

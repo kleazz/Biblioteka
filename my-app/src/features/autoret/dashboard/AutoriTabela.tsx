@@ -1,8 +1,9 @@
 import React from "react";
-import Button from "react-bootstrap/esm/Button";
 import Col from "react-bootstrap/esm/Col";
 import Row from "react-bootstrap/esm/Row";
 import { IAutori } from "../../../app/layout/models/autori";
+import { Table } from "react-bootstrap";
+import { Button } from "primereact/button";
 
 interface IProps {
   autoret: IAutori[];
@@ -19,25 +20,19 @@ const AutoriTabela: React.FC<IProps> = ({
   deleteAutori,
 }) => {
   return (
-    <div style={{ marginTop: "7em" }}>
+    <div style={{padding:"100px" }}>
       {" "}
       <Row className="align-items-center justify-content-between">
         <Col>
           <h3>Lista e autorëve</h3>
         </Col>
         <Col xs="auto">
-          <Button
-            onClick={() => setCreateAutMode(true)}
-            variant="outline-success"
-          >
-            Create
-          </Button>
+          <Button label="New" text onClick={() => setCreateAutMode(true)}/>
         </Col>
       </Row>
-      <table className="table table-striped">
+      <Table striped bordered hover>
         <thead>
           <tr>
-            <th scope="col">ID</th>
             <th scope="col">Emri</th>
             <th scope="col">Mbiemri</th>
             <th></th>
@@ -47,29 +42,18 @@ const AutoriTabela: React.FC<IProps> = ({
         <tbody>
           {autoret.map((autori) => (
             <tr key={autori.autoriId}>
-              <td>{autori.autoriId}</td>
               <td>{autori.emri}</td>
               <td>{autori.mbiemri}</td>
               <td>
-                <Button
-                  onClick={() => selectAutori(autori.autoriId)}
-                  variant="outline-primary"
-                >
-                  Edit
-                </Button>
+                <Button label="Edit" severity="secondary" text onClick={() => selectAutori(autori.autoriId)}/>
               </td>
               <td>
-                <Button
-                  variant="outline-danger"
-                  onClick={() => deleteAutori(autori.autoriId)}
-                >
-                  Delete
-                </Button>
+                <Button label="Delete" severity="danger" text onClick={() => deleteAutori(autori.autoriId)} />
               </td>
             </tr>
           ))}
         </tbody>
-      </table>
+      </Table>
     </div>
   );
 };

@@ -17,14 +17,14 @@ const LibriDetails: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedDueDate, setSelectedDueDate] = useState<Nullable<Date>>(null);
 
-  const handleShowModal = () => {
-    setShowModal(true);
-  };
+  // const handleShowModal = () => {
+  //   setShowModal(true);
+  // };
 
-  const handleCloseModal = () => {
-    setShowModal(false);
-    console.log(getMinDate());
-  };
+  // const handleCloseModal = () => {
+  //   setShowModal(false);
+  //   console.log(getMinDate());
+  // };
 
   const [visible, setVisible] = useState<boolean>(false)
 

@@ -1,8 +1,11 @@
 import React from "react";
-import Button from "react-bootstrap/esm/Button";
 import Col from "react-bootstrap/esm/Col";
 import Row from "react-bootstrap/esm/Row";
 import { ILibri } from "../../../app/layout/models/libri";
+import { Table } from "react-bootstrap";
+import { Button } from "primereact/button";
+import { DataTable } from "primereact/datatable";
+import { Column } from "primereact/column";
 
 interface IProps {
   librat: ILibri[];
@@ -26,18 +29,25 @@ const LibriTabela: React.FC<IProps> = ({
   };
 
   return (
-    <div style={{ marginTop: "7em" }}>
+    <div style={{ padding:"100px" }}>
       <Row className="align-items-center justify-content-between">
         <Col>
           <h3>Lista e librave</h3>
         </Col>
         <Col xs="auto">
-          <Button onClick={() => setCreateMode(true)} variant="outline-success">
-            Create
-          </Button>
+          <Button label="New" text onClick={() => setCreateMode(true)}></Button>
         </Col>
       </Row>
-      <table className="table table-striped">
+      {/* <DataTable value={librat} tableStyle={{ minWidth: '50rem' }}>
+    <Column field="isbn" header="ISBN"></Column>
+    <Column field="titulli" header="Titulli"></Column>
+    <Column field="pershkrimi" header="Përshkrimi"></Column>
+    <Column field="kopertina" header="Kopertina"></Column>
+    <Column field="sasia" header="Sasia"></Column>
+    <Column field="edit"></Column>
+    <Column field="delete"></Column>
+</DataTable> */}
+      <Table striped bordered hover>
         <thead>
           <tr>
             <th scope="col">ISBN</th>
@@ -58,25 +68,15 @@ const LibriTabela: React.FC<IProps> = ({
               <td>{truncateText(libri.fotoja, 50)}</td>
               <td>{libri.sasia}</td>
               <td>
-                <Button
-                  onClick={() => selectLibri(libri.isbn)}
-                  variant="outline-primary"
-                >
-                  Edit
-                </Button>
+                <Button label="Edit" severity="secondary" text onClick={() => selectLibri(libri.isbn)}/>
               </td>
               <td>
-                <Button
-                  variant="outline-danger"
-                  onClick={() => deleteLibri(libri.isbn)}
-                >
-                  Delete
-                </Button>
+                <Button label="Delete" severity="danger" text onClick={() => deleteLibri(libri.isbn)} />
               </td>
             </tr>
           ))}
         </tbody>
-      </table>
+      </Table>
     </div>
   );
 };
