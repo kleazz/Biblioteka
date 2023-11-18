@@ -2,7 +2,7 @@ import React from "react";
 import Col from "react-bootstrap/esm/Col";
 import Row from "react-bootstrap/esm/Row";
 import { IKategoria } from "../../../app/layout/models/kategoria";
-import { Table } from "react-bootstrap";
+import { Container, Table } from "react-bootstrap";
 import { Button } from "primereact/button";
 
 interface IProps {
@@ -20,7 +20,7 @@ const KategoriaTabela: React.FC<IProps> = ({
   deleteKategoria,
 }) => {
   return (
-    <div style={{ padding:"100px" }}>
+    <div className="tabela">
       {" "}
       <Row className="align-items-center justify-content-between">
         <Col>

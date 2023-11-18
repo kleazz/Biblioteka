@@ -6,7 +6,7 @@ import { TabPanel, TabView } from "primereact/tabview";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 
 const Profili: React.FC = () => {
-  const [reservations, setReservations] = useState<IRezervimi[]>([]);
+  const [reservations, setReservations] = useState<any>([]);
   const e = localStorage.getItem("username");
 
   useEffect(() => {
@@ -53,7 +53,7 @@ const Profili: React.FC = () => {
     <h3 style={{marginTop: "20px", marginLeft: "20px"}}>{e}</h3>
     </div>
     <hr></hr>
-      {reservations.map((reservation) => {
+      {reservations.map((reservation: { libri: any; rezervimi: any; }) => {
         const { libri, rezervimi } = reservation;
         return (
           <div key={rezervimi.rezervimiId} className="reservation-card">
@@ -78,7 +78,7 @@ const Profili: React.FC = () => {
             </div>
           </div>
         );
-      })}
+      })} 
     </div>
   );
 };

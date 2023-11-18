@@ -20,7 +20,7 @@ const AutoriTabela: React.FC<IProps> = ({
   deleteAutori,
 }) => {
   return (
-    <div style={{padding:"100px" }}>
+    <div className="tabela">
       {" "}
       <Row className="align-items-center justify-content-between">
         <Col>

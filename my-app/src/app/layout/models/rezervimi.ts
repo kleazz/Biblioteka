@@ -1,10 +1,10 @@
 import { ILibri } from "./libri";
 
 export interface IRezervimi {
-  libri: ILibri;
-  rezervimi: {
     rezervimiId: number;
     dueDate: string;
+    isbn: string;
+    id: string;
     username: string;
   };
-}
+

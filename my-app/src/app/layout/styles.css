@@ -1,4 +1,4 @@
-/* @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap'); */
 
 body {
   font-family: "Roboto";
@@ -342,7 +342,6 @@ body {
     } 
 
     #login-wrapper{
-      width: 100vw; 
       height: 100vh;
       margin: 0;
       padding: 0;
@@ -419,7 +418,6 @@ body {
       margin-top: 20px;
     }
 
-
 .footer-container{
 	max-width: 100%;
 	margin:auto;
@@ -440,7 +438,7 @@ body {
 	  background-color: #1c2c3c;
     padding-top: 70px;
     padding-bottom: 10px;
-    height: 10m;
+    height: 10cm;
 }
 .footer-col{
    width: 25%;
@@ -544,30 +542,29 @@ input.form-control:focus {
   outline: 0;
   box-shadow:none;
 }
-@media only screen and (max-width: 768px) {
-    .footer{
-        height:auto;
-    }
-    .footer-col {
-        width: 50%;
-        margin-bottom: 30px;
-    }
-    .row{
-        margin-left: -100px;
-    }
-    #contact {
-        margin-right: 0;
-    }
-    #socials {
-        margin-left: 0;
-    }
+
+.tabela{
+  padding: 100px;
+  min-height: 100vh;
 }
 
+.paginator{
+  margin-bottom: 50px;
+}
+
+.profile-logo{
+  display: flex;
+  flex-direction: row;
+}
 
     @media (max-width: 1200px) {
+      .overflowHidden{
+        overflow: hidden;
+      }
       /* Reduce the width of the login-wrapper to make the image go below the form */
       #login-wrapper {
         flex-direction: column;
+        min-height: auto;
       }
     
       /* Adjust the width and padding of .part for better responsiveness */
@@ -590,10 +587,33 @@ input.form-control:focus {
       }
     }
 
-    .profile-logo{
-      display: flex;
-      flex-direction: row;
+    @media only screen and (max-width: 768px) {
+      #login-wrapper{
+
+        justify-content: center!important;
+      }
+      /* Hide Image in mobile login */
+ .hideMobile{
+  display: none!important ;
+}
+      .footer{
+        height:auto;
     }
+    .footer-col {
+        width: 50%;
+        margin-bottom: 30px;
+    }
+    .row{
+        margin-left: -100px;
+    }
+    #contact {
+        margin-right: 0;
+    }
+    #socials {
+        margin-left: 0;
+    }
+  }
+  
 
     
 

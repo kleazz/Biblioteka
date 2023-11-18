@@ -49,7 +49,7 @@ function NavBar() {
                 <NavDropdown.Item as={Link} to="/autoret">
                   Huazimet
                 </NavDropdown.Item>
-                <NavDropdown.Item as={Link} to="/autoret">
+                <NavDropdown.Item as={Link} to="/rezervimet">
                   Rezervimet
                 </NavDropdown.Item>
               </NavDropdown>

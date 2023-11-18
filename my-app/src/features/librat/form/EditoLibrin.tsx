@@ -3,6 +3,11 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { ILibri } from "../../../app/layout/models/libri";
+import { Dialog } from "primereact/dialog";
+import { InputNumber, InputNumberValueChangeEvent } from "primereact/inputnumber";
+import { InputTextarea } from "primereact/inputtextarea";
+import { AutoComplete } from "primereact/autocomplete";
+
 
 interface IProps {
   libri: ILibri;
@@ -34,9 +39,16 @@ const EditoLibrin: React.FC<IProps> = ({
   const [libri, setLibri] = useState<ILibri>(initializeForm);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setLibri({ ...libri, [name]: value });
+  const handleTitulliChange = (e: {value: string}) => {
+    setLibri({ ...libri, titulli: e.value});
+  };
+
+  const handlePershkrimiChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setLibri({ ...libri, pershkrimi: e.target.value });
+  };
+
+  const handleSasiaChange = (e: InputNumberValueChangeEvent) => {
+    setLibri({ ...libri, sasia: e.value as number});
   };
 
   const handleFotojaChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -64,7 +76,31 @@ const EditoLibrin: React.FC<IProps> = ({
   };
 
   return (
-    <Modal show={show} onHide={onHide}>
+    <>
+      <Dialog header="Edito Librin" visible={show} style={{ width: '30vw' }} onHide={onHide}>
+    <label>Titulli</label>
+      <div className="modal-flex">
+    <AutoComplete value={libri.titulli} onChange={handleTitulliChange} />
+    </div>
+        <label>Përshkrimi</label>
+      <div className="modal-flex">
+      <InputTextarea value={libri.pershkrimi} onChange={handlePershkrimiChange} rows={5} cols={50} />
+      </div>
+      <Form.Label>Kopertina</Form.Label>
+            <Form.Control
+              type="file"
+              accept=".png,.jpg,.jpeg"
+              onChange={handleFotojaChange}
+            /> 
+      <label>Sasia</label>
+      <div className="modal-flex">
+      <InputNumber value={libri.sasia} onValueChange={handleSasiaChange} />
+      </div>
+      <div className="modal-btn">
+            <button className="submitbtn" onClick={handleSubmit}>Ruaj Ndryshimet</button>
+        </div>
+      </Dialog>
+       {/* <Modal show={show} onHide={onHide}>
       <Modal.Header closeButton>
         <Modal.Title>Edito Librin</Modal.Title>
       </Modal.Header>
@@ -128,7 +164,8 @@ const EditoLibrin: React.FC<IProps> = ({
           Ruaj Ndryshimet
         </Button>
       </Modal.Footer>
-    </Modal>
+    </Modal> */}
+    </>
   );
 };
 

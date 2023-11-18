@@ -2,7 +2,7 @@ import React from "react";
 import Col from "react-bootstrap/esm/Col";
 import Row from "react-bootstrap/esm/Row";
 import { ILibri } from "../../../app/layout/models/libri";
-import { Table } from "react-bootstrap";
+import { Container, Table } from "react-bootstrap";
 import { Button } from "primereact/button";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
@@ -29,7 +29,7 @@ const LibriTabela: React.FC<IProps> = ({
   };
 
   return (
-    <div style={{ padding:"100px" }}>
+    <div className="tabela">
       <Row className="align-items-center justify-content-between">
         <Col>
           <h3>Lista e librave</h3>

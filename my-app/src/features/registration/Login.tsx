@@ -1,5 +1,5 @@
 import { useState } from "react";
- import { Button, Col, Form } from "react-bootstrap";
+ import { Button, Col, Container, Form } from "react-bootstrap";
  import axios from "axios";
  import { useNavigate } from "react-router-dom";
  import libratImage from '../../images/librat.jpg';
@@ -94,7 +94,7 @@ import { useState } from "react";
        </form>
      </div>
      </div>
-     <div className="part" id="cover">
+     <div className="part hideMobile" id="cover">
      <img src={libratImage} alt="Librat" />
      </div>
      </div>

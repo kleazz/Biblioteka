@@ -12,6 +12,7 @@ import Profili from "../../features/profili/Profili";
 import Lexuesit from "../../features/lexuesit/dashboard/Lexuesit";
 import Footer from "../../features/footer/Footer";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
+import Rezervimet from "../../features/rezervimet/dashboard/Rezervimet";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -51,6 +52,7 @@ const App = () => {
                 <Route path="/kategorite" element={<Kategorite />} />
                 <Route path="/autoret" element={<Autoret />} />
                 <Route path="/lexuesit" element={<Lexuesit />} />
+                <Route path="/rezervimet" element={<Rezervimet />} />
               </>
             ) : (
               <Route path="*" element={<Navigate to="/home" />} />
