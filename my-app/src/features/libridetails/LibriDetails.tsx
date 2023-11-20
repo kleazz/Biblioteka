@@ -8,13 +8,17 @@ import { Dialog } from 'primereact/dialog';
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import { Nullable } from "primereact/ts-helpers";
 import { ScrollPanel } from "primereact/scrollpanel";
+import agent from "../../app/layout/api/agent";
+import { IAutori } from "../../app/layout/models/autori";
+import { IKategoria } from "../../app/layout/models/kategoria";
 
 
 const LibriDetails: React.FC = () => {
   const { libriIsbn } = useParams<{ libriIsbn: string }>();
 
   const [libri, setLibri] = useState<ILibri | null>(null);
-  const [showModal, setShowModal] = useState(false);
+  const [autoret, setAutoret] = useState<string | null>(null);
+  const [kategorite, setKategorite] = useState<string | null>(null);
   const [selectedDueDate, setSelectedDueDate] = useState<Nullable<Date>>(null);
 
   // const handleShowModal = () => {
@@ -59,10 +63,23 @@ const LibriDetails: React.FC = () => {
       }
     }
 
-    setShowModal(false);
+    setVisible(false);
+  };
+
+  const getAutoretForLibri = async (isbn: string): Promise<string> => {
+    const autoretForLibri = await agent.Librat.getAutoriNgaLibri(isbn);
+    const autoretString = autoretForLibri.map((autori: IAutori) => `${autori.emri} ${autori.mbiemri}`).join(" & ");
+    return autoretString;
+  };
+
+  const getKategoriteForLibri = async (isbn: string): Promise<string> => {
+    const kategoriteForLibri = await agent.Librat.getKategoriaNgaLibri(isbn);
+    const kategoriteString = kategoriteForLibri.map((kategoria: IKategoria) => kategoria.emriKategorise).join(", ");
+    return kategoriteString;
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     const fetchBookDetails = async () => {
       try {
         const response = await fetch(
@@ -71,6 +88,12 @@ const LibriDetails: React.FC = () => {
         if (response.ok) {
           const bookData = await response.json();
           setLibri(bookData);
+
+          const autoretString = await getAutoretForLibri(bookData.isbn);
+          setAutoret(autoretString);
+
+          const kategoriteString = await getKategoriteForLibri(bookData.isbn);
+          setKategorite(kategoriteString);
         } else {
           console.log("Error fetching book details");
         }
@@ -97,17 +120,7 @@ const LibriDetails: React.FC = () => {
   return (
     <div className="details-container">
       {libri ? (
-        <div
-          style={{
-            height: "600px",
-            width: "35cm",
-            backgroundColor: "white",
-            // marginTop: "2.5cm",
-            padding: "1cm",
-            // borderRadius: "10px",
-            // boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
-          }}
-        >
+        <div style={{ height: "600px", width: "35cm", backgroundColor: "white", padding: "1cm" }}>
           <Row>
             <Col xs={12} md={4}>
               <img
@@ -126,22 +139,14 @@ const LibriDetails: React.FC = () => {
             <Col
               xs={12}
               md={8}
-              style={{ marginTop: "1cm", overflow: "hidden",   display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
-              }}
+              style={{ marginTop: "1cm", overflow: "hidden", display: "flex", flexDirection: "column", justifyContent: "space-between" }}
             >
-              <h1>{libri.titulli}</h1>
-              <h4>Autori</h4>
-              <h6>Kategoria</h6>
+              <h1 className="details-h1">{libri.titulli}</h1>
+              <h4>{autoret}</h4>
+              <h6 className="details-h6">{kategorite}</h6>
               <ScrollPanel style={{ width: '100%', height: '190px' }} className="custombar2">
-    <p>
-    {libri.pershkrimi}
-    </p>
-</ScrollPanel>
-              {/* <div style={{maxHeight: "300px", overflowY: "scroll" }}>
                 <p>{libri.pershkrimi}</p>
-              </div> */}
+              </ScrollPanel>
               {localStorage.getItem("role") !== "admin" && (
                 <div className="modal-btn">
                   <button className="submitbtn" onClick={() => setVisible(true)}>
@@ -153,7 +158,7 @@ const LibriDetails: React.FC = () => {
           </Row>
         </div>
       ) : (
-       <div></div>
+        <div></div>
       )}
 
         <Dialog header="Rezervo Librin" visible={visible} style={{ width: '30vw' }} onHide={() => setVisible(false)}>

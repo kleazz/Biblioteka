@@ -54,7 +54,7 @@ import { useState } from "react";
    return (
      <>
      <div id="login-wrapper" >
-       <div className="part">
+       <div className="part overflowHidden">
      <div className="login-box">
      <div id="main-logo">
        <svg

@@ -9,6 +9,10 @@ namespace BibliotekaMS.Interfaces
 
         Libri GetLibriTitulli(string titulli);
 
+        ICollection<Autori> GetAutoriNgaLibri(string isbn);
+
+        ICollection<Kategoria> GetKategoriaNgaLibri(string isbn);
+
         bool LibriExists(String libriId);
 
         bool CreateLibri(Libri libri);

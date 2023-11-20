@@ -59,6 +59,44 @@ namespace BibliotekaMS.Controllers
             return Ok(libri);
         }
 
+        [HttpGet("kategoria/{isbn}")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Kategoria>))]
+        [ProducesResponseType(400)]
+
+        public IActionResult GetKategoriaNgaLibri(string isbn)
+        {
+            if (!_libriRepository.LibriExists(isbn))
+            {
+                return NotFound();
+            }
+            var kategorite = _mapper.Map<List<KategoriaDto>>(
+                _libriRepository.GetKategoriaNgaLibri(isbn));
+
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            return Ok(kategorite);
+        }
+
+        [HttpGet("autori/{isbn}")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Autori>))]
+        [ProducesResponseType(400)]
+
+        public IActionResult GetAutoriNgaLibri(string isbn)
+        {
+            if (!_libriRepository.LibriExists(isbn))
+            {
+                return NotFound();
+            }
+            var autoret = _mapper.Map<List<AutoriDto>>(
+                _libriRepository.GetAutoriNgaLibri(isbn));
+
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            return Ok(autoret);
+        }
+
         /*
         [HttpPost]
         [ProducesResponseType(204)]

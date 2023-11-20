@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import Col from "react-bootstrap/esm/Col";
 import Row from "react-bootstrap/esm/Row";
 import { ILibri } from "../../../app/layout/models/libri";
 import { Container, Table } from "react-bootstrap";
 import { Button } from "primereact/button";
-import { DataTable } from "primereact/datatable";
-import { Column } from "primereact/column";
+import { Paginator } from "primereact/paginator";
+import { PaginatorPageChangeEvent } from "primereact/paginator";
 
 interface IProps {
   librat: ILibri[];
@@ -21,6 +21,10 @@ const LibriTabela: React.FC<IProps> = ({
   selectLibri,
   deleteLibri,
 }) => {
+  const [first, setFirst] = useState<number>(0);
+
+  const itemsPerPage = 15; // Set the number of items per page
+
   const truncateText = (text: string, maxLength: number) => {
     if (text.length > maxLength) {
       return text.substring(0, maxLength) + "...";
@@ -28,7 +32,33 @@ const LibriTabela: React.FC<IProps> = ({
     return text;
   };
 
+  const onPageChange = (event: PaginatorPageChangeEvent) => {
+    setFirst(event.first);
+  };
+
+  const renderTabelaRows = () => {
+    const startIndex = first;
+    const endIndex = first + itemsPerPage;
+
+    return librat.slice(startIndex, endIndex).map((libri) => (
+      <tr key={libri.isbn}>
+        <td>{libri.isbn}</td>
+        <td>{libri.titulli}</td>
+        <td>{truncateText(libri.pershkrimi, 50)}</td>
+        <td><img src={libri.fotoja} style={{height: "60px", width: "40px"}}></img></td>
+        <td>{libri.sasia}</td>
+        <td>
+          <Button label="Edit" severity="secondary" text onClick={() => selectLibri(libri.isbn)} />
+        </td>
+        <td>
+          <Button label="Delete" severity="danger" text onClick={() => deleteLibri(libri.isbn)} />
+        </td>
+      </tr>
+    ));
+  };
+
   return (
+    <>
     <div className="tabela">
       <Row className="align-items-center justify-content-between">
         <Col>
@@ -38,15 +68,7 @@ const LibriTabela: React.FC<IProps> = ({
           <Button label="New" text onClick={() => setCreateMode(true)}></Button>
         </Col>
       </Row>
-      {/* <DataTable value={librat} tableStyle={{ minWidth: '50rem' }}>
-    <Column field="isbn" header="ISBN"></Column>
-    <Column field="titulli" header="Titulli"></Column>
-    <Column field="pershkrimi" header="Përshkrimi"></Column>
-    <Column field="kopertina" header="Kopertina"></Column>
-    <Column field="sasia" header="Sasia"></Column>
-    <Column field="edit"></Column>
-    <Column field="delete"></Column>
-</DataTable> */}
+
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -59,25 +81,18 @@ const LibriTabela: React.FC<IProps> = ({
             <th></th>
           </tr>
         </thead>
-        <tbody>
-          {librat.map((libri) => (
-            <tr key={libri.isbn}>
-              <td>{libri.isbn}</td>
-              <td>{libri.titulli}</td>
-              <td>{truncateText(libri.pershkrimi, 50)}</td>
-              <td>{truncateText(libri.fotoja, 50)}</td>
-              <td>{libri.sasia}</td>
-              <td>
-                <Button label="Edit" severity="secondary" text onClick={() => selectLibri(libri.isbn)}/>
-              </td>
-              <td>
-                <Button label="Delete" severity="danger" text onClick={() => deleteLibri(libri.isbn)} />
-              </td>
-            </tr>
-          ))}
-        </tbody>
+        <tbody>{renderTabelaRows()}</tbody>
       </Table>
     </div>
+     <Paginator
+     className="paginator"
+     first={first}
+     rows={itemsPerPage}
+     totalRecords={librat.length}
+     onPageChange={onPageChange}
+     template={{ layout: "PrevPageLink CurrentPageReport NextPageLink" }}
+   />
+   </>
   );
 };
 

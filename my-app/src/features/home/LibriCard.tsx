@@ -1,19 +1,48 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Card from "react-bootstrap/Card";
 import { ILibri } from "../../app/layout/models/libri";
 import { Link } from "react-router-dom";
+import { IKategoria } from "../../app/layout/models/kategoria";
+import { IAutori } from "../../app/layout/models/autori";
+import agent from "../../app/layout/api/agent";
 
 interface IProps {
   librat: ILibri[];
 }
 
 const LibriCard: React.FC<IProps> = ({ librat }) => {
+  const [fontSize, setFontSize] = useState<number>(16);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const [autoret, setAutoret] = useState<string | null>(null);
+
   const truncateText = (text: string, maxLength: number) => {
     if (text.length <= maxLength) {
       return text;
     }
     return text.substring(0, maxLength) + "...";
   };
+
+  const getAutoretForLibri = async (isbn: string): Promise<void> => {
+    const autoretForLibri = await agent.Librat.getAutoriNgaLibri(isbn);
+    const autoretString = autoretForLibri.map((autori) => `${autori.emri} ${autori.mbiemri}`).join(" & ");
+    setAutoret(autoretString);
+  };
+
+  useEffect(() => {
+    if (titleRef.current) {
+      const titleHeight = titleRef.current.clientHeight;
+      if (titleHeight > 40) {
+        setFontSize(16);
+      } else {
+        setFontSize(20);
+      }
+    }
+
+    // Fetch autoret when librat changes
+    librat.forEach((libri) => {
+      getAutoretForLibri(libri.isbn);
+    });
+  }, [librat]);
 
   return (
     <>
@@ -37,16 +66,16 @@ const LibriCard: React.FC<IProps> = ({ librat }) => {
                   className="mx-auto"
                 />
                 <Card.Body>
-                  <Card.Title style={{ fontWeight: "bold" }}>
+                  <Card.Title style={{ fontWeight: "bold", fontSize: `${fontSize}px` }} ref={titleRef}>
                     {libri.titulli}
                   </Card.Title>
-                  <Card.Title style={{ color: "#8b9496" }}>Autori</Card.Title>
+                  <Card.Title style={{ color: "#8b9496", fontSize: `${fontSize}px` }}>{autoret}</Card.Title>
                 </Card.Body>
               </Card>
             </div>
             <div className="flip-card-back">
               <Card
-                style={{ width: "17rem", height: "26rem", padding: "20px", backgroundColor: "#1c2c3c", color:"white" }}
+                style={{ width: "17rem", height: "26rem", padding: "20px", backgroundColor: "#1c2c3c", color: "white" }}
               >
                 <Card.Text>{truncateText(libri.pershkrimi, 400)}</Card.Text>
                 <div className="button-container">

@@ -17,6 +17,8 @@ const HomePage = () => {
   const [autoret, setAutoret] = useState<IAutori[]>([]);
   const [selectedAutoret, setSelectedAutoret] = useState<IAutori[]>([]);
   const [first, setFirst] = useState<number>(0);
+  const [showMoreKategorite, setShowMoreKategorite] = useState<boolean>(false);
+  const [showMoreAutoret, setShowMoreAutoret] = useState<boolean>(false);
 
   useEffect(() => {
     agent.Librat.list().then((response: ILibri[]) => {
@@ -30,8 +32,43 @@ const HomePage = () => {
     agent.Autoret.list().then((response: IAutori[]) => {
       setAutoret(response);
     })
-  }, []);
 
+    window.scrollTo(0, 0);
+  }, [first]);
+
+  const renderKategoriteCheckboxes = (kategoriteList: IKategoria[]) => {
+    const visibleItems = showMoreKategorite ? kategoriteList : kategoriteList.slice(0, 10);
+
+    return visibleItems.map((kategoria: IKategoria) => (
+      <div key={kategoria.kategoriaId} className="flex align-items-center">
+          <Checkbox 
+            inputId={kategoria.kategoriaId.toString()}
+            name="kategoria" 
+            value={kategoria} 
+            onChange={(e) => onKategoriaChange(e, kategoria)} 
+            checked={selectedKategorite.some((item) => item.kategoriaId === kategoria.kategoriaId)} 
+            />
+            <label htmlFor={kategoria.kategoriaId.toString()} className="ml-2"> {kategoria.emriKategorise}</label>
+      </div>
+    ));
+  };
+
+  const renderAutoretCheckboxes = (autoretList: IAutori[]) => {
+    const visibleItems = showMoreAutoret ? autoretList : autoretList.slice(0, 10);
+
+    return visibleItems.map((autori: IAutori) => (
+      <div key={autori.autoriId} className="flex align-items-center">
+          <Checkbox 
+            inputId={autori.autoriId.toString()}
+            name="autori" 
+            value={autori} 
+            onChange={(e) => onAutoriChange(e, autori)} 
+            checked={selectedAutoret.some((item) => item.autoriId === autori.autoriId)} 
+            />
+            <label htmlFor={autori.autoriId.toString()} className="ml-2"> {autori.emri} {autori.mbiemri}</label>
+      </div>
+    ));
+  };
   
   const onKategoriaChange = (event: any, kategoria: IKategoria) => {
     const updatedKategorite = event.checked
@@ -78,32 +115,20 @@ const renderLibriCards = (librat: ILibri[]) => {
     <Row>
       <Col style={{marginTop: "50px"}}>
       <Panel header="Kategoria" toggleable>
-      {kategorite.map((kategoria: IKategoria) => (
-      <div key={kategoria.kategoriaId} className="flex align-items-center">
-            <Checkbox 
-            inputId={kategoria.kategoriaId.toString()}
-            name="kategoria" 
-            value={kategoria} 
-            onChange={(e) => onKategoriaChange(e, kategoria)} 
-            checked={selectedKategorite.some((item) => item.kategoriaId === kategoria.kategoriaId)} 
-            />
-            <label htmlFor={kategoria.kategoriaId.toString()} className="ml-2"> {kategoria.emriKategorise}</label>
-        </div>
-      ))}
+      {renderKategoriteCheckboxes(kategorite)}
+            <div className="mt-2">
+              <button className="btn-link" onClick={() => setShowMoreKategorite(!showMoreKategorite)}>
+                {showMoreKategorite ? "Show Less" : "Show More"}
+              </button>
+            </div>
 </Panel>
 <Panel header="Autori" toggleable style={{marginTop: "20px"}}>
-{autoret.map((autori: IAutori) => (
-      <div key={autori.autoriId} className="flex align-items-center">
-            <Checkbox 
-            inputId={autori.autoriId.toString()}
-            name="autori" 
-            value={autori} 
-            onChange={(e) => onAutoriChange(e, autori)} 
-            checked={selectedAutoret.some((item) => item.autoriId === autori.autoriId)} 
-            />
-            <label htmlFor={autori.autoriId.toString()} className="ml-2"> {autori.emri} {autori.mbiemri}</label>
-        </div>
-      ))}
+{renderAutoretCheckboxes(autoret)}
+            <div className="mt-2">
+              <button className="btn-link" onClick={() => setShowMoreAutoret(!showMoreAutoret)}>
+                {showMoreAutoret ? "Show Less" : "Show More"}
+              </button>
+            </div>
 </Panel>
 </Col>
       <Col xs={9}>{renderLibriCards(librat)}</Col>

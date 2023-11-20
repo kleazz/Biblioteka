@@ -22,6 +22,8 @@ const Librat = {
   create: (libriRequest: ILibriRequest) => requests.post("/Libri", libriRequest),
   update: (libri: ILibri) => requests.put(`/Libri/${libri.isbn}`, libri),
   delete: (isbn: string) => requests.del(`/Libri/${isbn}`),
+  getKategoriaNgaLibri: (isbn: string): Promise<IKategoria[]> => requests.get(`/Libri/kategoria/${isbn}`),
+  getAutoriNgaLibri: (isbn: string): Promise<IAutori[]> => requests.get(`/Libri/autori/${isbn}`),
 };
 
 const Kategorite = {

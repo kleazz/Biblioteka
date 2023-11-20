@@ -3,6 +3,8 @@ import { ILibri } from "../../../app/layout/models/libri";
 import agent from "../../../app/layout/api/agent";
 import LibriDashboard from "./LibriDashboard";
 import { ILibriRequest } from "../../../app/layout/models/LibriRequest";
+import { IKategoria } from "../../../app/layout/models/kategoria";
+import { IAutori } from "../../../app/layout/models/autori";
 
 const Librat = () => {
   const [librat, setLibrat] = useState<ILibri[]>([]);

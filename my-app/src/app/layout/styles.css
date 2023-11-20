@@ -545,7 +545,7 @@ input.form-control:focus {
 
 .tabela{
   padding: 100px;
-  min-height: 100vh;
+  min-height: 90vh;
 }
 
 .paginator{
@@ -557,7 +557,26 @@ input.form-control:focus {
   flex-direction: row;
 }
 
+.details-h6{
+  color: #1c2c3c;
+}
+
+.btn-link {
+  background-color: white;
+  border: none;
+  color: #1c2c3c; /* Default text color */
+  font-weight: bold;
+}
+
     @media (max-width: 1200px) {
+      #login-wrapper{
+
+        justify-content: center!important;
+      }
+    
+ .hideMobile{
+  display: none!important ;
+}
       .overflowHidden{
         overflow: hidden;
       }
@@ -588,14 +607,6 @@ input.form-control:focus {
     }
 
     @media only screen and (max-width: 768px) {
-      #login-wrapper{
-
-        justify-content: center!important;
-      }
-      /* Hide Image in mobile login */
- .hideMobile{
-  display: none!important ;
-}
       .footer{
         height:auto;
     }

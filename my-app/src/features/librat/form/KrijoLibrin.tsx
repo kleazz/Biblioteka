@@ -67,6 +67,8 @@ const KrijoLibrin: React.FC<IProps> = ({ show, onHide, createLibri }) => {
       autoret: selectedAuthors.map((autori) => autori.emri + ' ' + autori.mbiemri),
     };
 
+    console.log(libriRequest);
+
     // Send the LibriRequest to the createLibri function
     createLibri(libriRequest);
 

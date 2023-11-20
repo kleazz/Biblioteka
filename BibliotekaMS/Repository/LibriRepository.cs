@@ -44,6 +44,15 @@ namespace BibliotekaMS.Repository
         {
             return _context.Libri.Where(p => p.Titulli == titulli).FirstOrDefault();
         }
+        public ICollection<Autori> GetAutoriNgaLibri(string isbn)
+        {
+            return _context.AutoriILibrit.Where(l => l.Libri.Isbn == isbn).Select(a => a.Autori).ToList();
+        }
+
+        public ICollection<Kategoria> GetKategoriaNgaLibri(string isbn)
+        {
+            return _context.KategoriaELibrit.Where(l => l.Libri.Isbn == isbn).Select(k => k.Kategoria).ToList();
+        }
 
         public bool LibriExists(string LibriId)
         {
