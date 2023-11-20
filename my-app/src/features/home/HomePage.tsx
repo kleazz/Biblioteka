@@ -36,6 +36,47 @@ const HomePage = () => {
     window.scrollTo(0, 0);
   }, [first]);
 
+  useEffect(() => {
+    // Fetch books based on selected categories and authors
+    const selectedKategoriaIds = selectedKategorite.map((kategoria) => kategoria.kategoriaId);
+    const selectedAutoriIds = selectedAutoret.map((autori) => autori.autoriId);
+  
+    // Check if any checkboxes are selected
+    const anyCheckboxSelected = selectedKategoriaIds.length > 0 || selectedAutoriIds.length > 0;
+  
+    if (anyCheckboxSelected) {
+      // Perform filtering based on selected categories and authors
+      const filteredLibratPromises: any[] = [];
+  
+      // Filter books based on selected categories
+      selectedKategoriaIds.forEach((kategoriaId) => {
+        const libratPromise = agent.Kategorite.getLibriNgaKategoria(kategoriaId);
+        filteredLibratPromises.push(libratPromise);
+      });
+  
+      // Filter books based on selected authors
+      selectedAutoriIds.forEach((autoriId) => {
+        const libratPromise = agent.Autoret.getLibriNgaAutori(autoriId);
+        filteredLibratPromises.push(libratPromise);
+      });
+  
+      // Combine all promises and update the state when all promises are resolved
+      Promise.all(filteredLibratPromises)
+      .then((filteredResponses) => {
+        const uniqueLibrat = Array.from(new Set(filteredResponses.flat().map((libri) => libri.isbn)))
+          .map((isbn) => filteredResponses.flat().find((libri) => libri.isbn === isbn));
+
+        setLibrat(uniqueLibrat);
+        });
+    } else {
+      // If no checkboxes are selected, fetch all books
+      agent.Librat.list().then((response: ILibri[]) => {
+        setLibrat(response);
+      });
+    }
+  }, [selectedKategorite, selectedAutoret]);
+  
+
   const renderKategoriteCheckboxes = (kategoriteList: IKategoria[]) => {
     const visibleItems = showMoreKategorite ? kategoriteList : kategoriteList.slice(0, 10);
 

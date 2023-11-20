@@ -11,8 +11,6 @@ interface IProps {
 }
 
 const LibriCard: React.FC<IProps> = ({ librat }) => {
-  const [fontSize, setFontSize] = useState<number>(16);
-  const titleRef = useRef<HTMLHeadingElement>(null);
   const [autoret, setAutoret] = useState<string | null>(null);
 
   const truncateText = (text: string, maxLength: number) => {
@@ -29,15 +27,6 @@ const LibriCard: React.FC<IProps> = ({ librat }) => {
   };
 
   useEffect(() => {
-    if (titleRef.current) {
-      const titleHeight = titleRef.current.clientHeight;
-      if (titleHeight > 40) {
-        setFontSize(16);
-      } else {
-        setFontSize(20);
-      }
-    }
-
     // Fetch autoret when librat changes
     librat.forEach((libri) => {
       getAutoretForLibri(libri.isbn);
@@ -66,10 +55,10 @@ const LibriCard: React.FC<IProps> = ({ librat }) => {
                   className="mx-auto"
                 />
                 <Card.Body>
-                  <Card.Title style={{ fontWeight: "bold", fontSize: `${fontSize}px` }} ref={titleRef}>
-                    {libri.titulli}
+                  <Card.Title style={{ fontWeight: "bold" }} >
+                  {truncateText(libri.titulli, 15)}
                   </Card.Title>
-                  <Card.Title style={{ color: "#8b9496", fontSize: `${fontSize}px` }}>{autoret}</Card.Title>
+                  <Card.Title style={{ color: "#8b9496" }}>{autoret}</Card.Title>
                 </Card.Body>
               </Card>
             </div>

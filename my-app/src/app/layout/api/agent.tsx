@@ -32,6 +32,7 @@ const Kategorite = {
   update: (kategoria: IKategoria) =>
     requests.put(`/Kategoria/${kategoria.kategoriaId}`, kategoria),
   delete: (kategoriaId: number) => requests.del(`/Kategoria/${kategoriaId}`),
+  getLibriNgaKategoria: (id: number) : Promise<ILibri[]> => requests.get(`/Kategoria/libri/${id}`)
 };
 
 const Autoret = {
@@ -40,6 +41,7 @@ const Autoret = {
   update: (autori: IAutori) =>
     requests.put(`/Autori/${autori.autoriId}`, autori),
   delete: (autoriId: number) => requests.del(`/Autori/${autoriId}`),
+  getLibriNgaAutori: (id: number) : Promise<ILibri[]> => requests.get(`/Autori/libri/${id}`)
 };
 
 const Rezervimet = {
