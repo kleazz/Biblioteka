@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Col from "react-bootstrap/esm/Col";
 import Row from "react-bootstrap/esm/Row";
 import { ILibri } from "../../../app/layout/models/libri";
-import { Container, Table } from "react-bootstrap";
+import { Table } from "react-bootstrap";
 import { Button } from "primereact/button";
 import { Paginator } from "primereact/paginator";
 import { PaginatorPageChangeEvent } from "primereact/paginator";
@@ -45,7 +45,7 @@ const LibriTabela: React.FC<IProps> = ({
         <td>{libri.isbn}</td>
         <td>{libri.titulli}</td>
         <td>{truncateText(libri.pershkrimi, 50)}</td>
-        <td><img src={libri.fotoja} style={{height: "60px", width: "40px"}}></img></td>
+        <td><img src={libri.fotoja} className="kopertina"></img></td>
         <td>{libri.sasia}</td>
         <td>
           <Button label="Edit" severity="secondary" text onClick={() => selectLibri(libri.isbn)} />

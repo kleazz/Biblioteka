@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { IRezervimi } from "../../../app/layout/models/rezervimi";
 import agent from "../../../app/layout/api/agent";
 import RezervimiDashboard from "./RezervimiDashboard";
-import { ILibriRequest } from "../../../app/layout/models/LibriRequest";
+import { ILibriRequest } from "../../../app/layout/models/libriRequest";
 import { ILibri } from "../../../app/layout/models/libri";
+import { IHuazimi } from "../../../app/layout/models/huazimi";
 
 const Rezervimet = () => {
   const [rezervimet, setRezervimet] = useState<IRezervimi[]>([]);
@@ -15,7 +16,6 @@ const Rezervimet = () => {
   const [createMode, setCreateMode] = useState(false);
 
   const [editMode, setEditMode] = useState(false);
-
 
   const handleEditRezervimi = (rezervimi: IRezervimi) => {
     agent.Rezervimet.update(rezervimi).then(() => {
@@ -57,8 +57,9 @@ const Rezervimet = () => {
       setSelectedRezervimi={setSelectedRezervimi}
       editRezervimi={handleEditRezervimi}
       deleteRezervimi={handleDeleteRezervimi}
-      createMode={createMode}
-      setCreateMode={setCreateMode}     />
+      createMode={createMode} 
+      setCreateMode={setCreateMode}
+      />
   );
 };
 

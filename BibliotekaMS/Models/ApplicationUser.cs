@@ -6,5 +6,7 @@ namespace BibliotekaMS.Models
     public class ApplicationUser : IdentityUser
     {
         public ICollection<Rezervimi> Rezervimet { get; set; }
+
+        public ICollection<Huazimi> Huazimet { get; set; }
     }
 }

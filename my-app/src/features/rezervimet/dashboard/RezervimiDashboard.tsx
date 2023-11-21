@@ -1,9 +1,8 @@
 import { ILibri } from "../../../app/layout/models/libri";
 import { IRezervimi } from "../../../app/layout/models/rezervimi";
-import Librat from "../../librat/dashboard/Librat";
 import RezervimiTabela from "./RezervimiTabela";
 // import KrijoRezervimin from "../form/KrijoRezervimin";
-// import EditoRezervimin from "../form/EditoRezervimin";
+import EditoRezervimin from "../form/EditoRezervimin";
 // import { ILibriRequest } from "../../../app/layout/models/LibriRequest";
 
 interface IProps {
@@ -30,7 +29,6 @@ const RezervimiDashboard: React.FC<IProps> = ({
   editRezervimi,
   deleteRezervimi,
   setCreateMode,
-  createMode,
 }) => {
   return (
     <>
@@ -42,23 +40,14 @@ const RezervimiDashboard: React.FC<IProps> = ({
         setEditMode={setEditMode}
         setCreateMode={setCreateMode}
       />
-      {/* {createMode && (
-        <KrijoRezervimin
-          show={true}
-          onHide={() => setCreateMode(false)}
-          key={(selectedRezervimi && selectedRezervimi.rezervimi.rezervimiId) || 0}
-          libri={selectedRezervimi!}
-          createLibri={createRezervimi}           //editLibri={editLibri}
-        />
-      )}
       {editMode && selectedRezervimi && (
         <EditoRezervimin
           show={true}
           onHide={() => setEditMode(false)}
-          libri={selectedRezervimi!}
-          editLibri={editRezervimi}
+          rezervimi={selectedRezervimi!}
+          editRezervimi={editRezervimi}
         />
-      )} */}
+      )} 
     </>
   );
 };

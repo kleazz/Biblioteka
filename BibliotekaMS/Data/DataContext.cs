@@ -20,6 +20,8 @@ namespace BibliotekaMS.Data
 
         public DbSet<AutoriILibrit> AutoriILibrit { get; set; }
         public DbSet<Rezervimi> Rezervimi { get; set; }
+
+        public DbSet<Huazimi> Huazimi { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -46,6 +48,7 @@ namespace BibliotekaMS.Data
                 .HasOne(l => l.Autori)
                 .WithMany(al => al.AutoriILibrit)
                 .HasForeignKey(l => l.AutoriId);
+
             modelBuilder.Entity<Libri>()
             .HasMany(e => e.Rezervimet)
             .WithOne(e=>e.Libri)
@@ -55,6 +58,18 @@ namespace BibliotekaMS.Data
             modelBuilder.Entity<ApplicationUser>()
                 .HasMany(e=> e.Rezervimet)
                 .WithOne(e=>e.ApplicationUser)
+                .HasForeignKey(r => r.Id)
+                .IsRequired();
+
+            modelBuilder.Entity<Libri>()
+           .HasMany(e => e.Huazimet)
+           .WithOne(e => e.Libri)
+           .HasForeignKey(e => e.Isbn)
+           .IsRequired();
+
+            modelBuilder.Entity<ApplicationUser>()
+                .HasMany(e => e.Huazimet)
+                .WithOne(e => e.ApplicationUser)
                 .HasForeignKey(r => r.Id)
                 .IsRequired();
 

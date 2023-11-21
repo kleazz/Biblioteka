@@ -7,6 +7,7 @@ import { Button } from "primereact/button";
 import { Paginator } from "primereact/paginator";
 import { PaginatorPageChangeEvent } from "primereact/paginator";
 import { ILibri } from "../../../app/layout/models/libri";
+import { IHuazimi } from "../../../app/layout/models/huazimi";
 
 interface IProps {
   rezervimet: IRezervimi[];
@@ -20,9 +21,8 @@ interface IProps {
 const RezervimiTabela: React.FC<IProps> = ({
   rezervimet,
   librat,
-  setCreateMode,
   selectRezervimi,
-  deleteRezervimi,
+  deleteRezervimi
 }) => {
   const [first, setFirst] = useState<number>(0);
   const itemsPerPage = 15;
@@ -32,9 +32,53 @@ const RezervimiTabela: React.FC<IProps> = ({
     return libri ? libri.titulli : "";
   };
 
+  const getLibriKopertina = (libriIsbn: string): string => {
+    const libri = librat.find((libri) => libri.isbn === libriIsbn);
+    return libri ? libri.fotoja : "";
+  };
+
   const onPageChange = (event: PaginatorPageChangeEvent) => {
     setFirst(event.first);
   };
+
+  const handleSave = async (rezervimi: IRezervimi) => {
+    const currentDate = new Date();
+    const dueDate = new Date(currentDate);
+    dueDate.setDate(dueDate.getDate() + 15);
+
+      const huazimiData = {
+        currentDate: currentDate,
+        dueDate: dueDate,
+        isbn: rezervimi.isbn,
+        id: rezervimi.id,
+        username: rezervimi.username
+      };
+
+      try {
+        const response = await fetch("https://localhost:7226/api/Huazimi", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(huazimiData),
+        });
+
+        if (response.ok) {
+          // Delete the reservation after successfully saving huazimi data
+          deleteRezervimi(rezervimi.rezervimiId);
+          console.log("Reservation created and deleted");
+        } else {
+          console.log("Error creating reservation");
+        }
+      } catch (error) {
+        console.log("Error creating reservation", error);
+      }
+  };
+
+  // const handleSubmit = (rezervimi: IRezervimi) => {
+  //   const huazimiInstance = createHuazimiInstance(rezervimi);
+  //   createHuazimi(huazimiInstance);
+  // };
 
   const renderTabelaRows = () => {
     const startIndex = first;
@@ -42,10 +86,11 @@ const RezervimiTabela: React.FC<IProps> = ({
 
     return rezervimet.slice(startIndex, endIndex).map((rezervimi) => (
       <tr key={rezervimi.rezervimiId}>
+        <td><img src={getLibriKopertina(rezervimi.isbn)} className="kopertina"></img></td>
         <td>{rezervimi.isbn}</td>
         <td>{getLibriTitle(rezervimi.isbn)}</td>
         <td>{rezervimi.username}</td>
-        <td>{rezervimi.dueDate}</td>
+        <td>{new Date(rezervimi.dueDate).toLocaleDateString()}</td>
         <td>
           <Button
             label="Edit"
@@ -55,15 +100,7 @@ const RezervimiTabela: React.FC<IProps> = ({
           />
         </td>
         <td>
-          <Button
-            label="Delete"
-            severity="danger"
-            text
-            onClick={() => deleteRezervimi(rezervimi.rezervimiId)}
-          />
-        </td>
-        <td>
-          <Button label="Huazo" severity="danger" text />
+          <Button label="Huazo" text onClick={() => handleSave(rezervimi)}/>
         </td>
       </tr>
     ));
@@ -80,11 +117,11 @@ const RezervimiTabela: React.FC<IProps> = ({
         <Table striped bordered hover>
           <thead>
             <tr>
+            <th scope="col">Huazimi</th>
               <th scope="col">ISBN</th>
               <th scope="col">Titulli</th>
               <th scope="col">Username</th>
               <th scope="col">DueDate</th>
-              <th></th>
               <th></th>
               <th></th>
             </tr>

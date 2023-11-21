@@ -7,7 +7,7 @@ import { IKategoria } from "../../../app/layout/models/kategoria";
 import { IAutori } from "../../../app/layout/models/autori";
 import agent from "../../../app/layout/api/agent";
 import Select from "react-select";
-import { ILibriRequest } from "../../../app/layout/models/LibriRequest";
+import { ILibriRequest } from "../../../app/layout/models/libriRequest";
 import { Dialog } from "primereact/dialog";
 import { AutoComplete } from "primereact/autocomplete";
 import { InputTextarea } from "primereact/inputtextarea";

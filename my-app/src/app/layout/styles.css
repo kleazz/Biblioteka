@@ -568,6 +568,12 @@ input.form-control:focus {
   font-weight: bold;
 }
 
+.kopertina{
+ height: 60px; 
+ width: 40px;
+}
+
+
     @media (max-width: 1200px) {
       #login-wrapper{
 

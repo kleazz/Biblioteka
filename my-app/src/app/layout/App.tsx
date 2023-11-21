@@ -7,12 +7,13 @@ import Kategorite from "../../features/kategorite/dashboard/Kategorite";
 import Autoret from "../../features/autoret/dashboard/Autoret";
 import Login from "../../features/registration/Login";
 import Registration from "../../features/registration/Register";
-import LibriDetails from "../../features/libridetails/LibriDetails";
+import LibriDetails from "../../features/librat/details/LibriDetails";
 import Profili from "../../features/profili/Profili";
 import Lexuesit from "../../features/lexuesit/dashboard/Lexuesit";
 import Footer from "../../features/footer/Footer";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import Rezervimet from "../../features/rezervimet/dashboard/Rezervimet";
+import Huazimet from "../../features/huazimet/dashboard/Huazimet";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -53,6 +54,7 @@ const App = () => {
                 <Route path="/autoret" element={<Autoret />} />
                 <Route path="/lexuesit" element={<Lexuesit />} />
                 <Route path="/rezervimet" element={<Rezervimet />} />
+                <Route path="/huazimet" element={<Huazimet />} />
               </>
             ) : (
               <Route path="*" element={<Navigate to="/home" />} />

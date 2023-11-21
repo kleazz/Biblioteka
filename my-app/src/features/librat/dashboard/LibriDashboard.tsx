@@ -2,7 +2,7 @@ import { ILibri } from "../../../app/layout/models/libri";
 import LibriTabela from "./LibriTabela";
 import KrijoLibrin from "../form/KrijoLibrin";
 import EditoLibrin from "../form/EditoLibrin";
-import { ILibriRequest } from "../../../app/layout/models/LibriRequest";
+import { ILibriRequest } from "../../../app/layout/models/libriRequest";
 
 interface IProps {
   librat: ILibri[];

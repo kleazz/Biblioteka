@@ -3,8 +3,9 @@ import { ILibri } from "../models/libri";
 import { IKategoria } from "../models/kategoria";
 import { IAutori } from "../models/autori";
 import { ILexuesi } from "../models/lexuesi";
-import { ILibriRequest } from "../models/LibriRequest";
+import { ILibriRequest } from "../models/libriRequest";
 import { IRezervimi } from "../models/rezervimi";
+import { IHuazimi } from "../models/huazimi";
 
 axios.defaults.baseURL = "https://localhost:7226/api";
 
@@ -52,6 +53,14 @@ const Rezervimet = {
   delete: (rezervimiId: number) => requests.del(`/Rezervimi/${rezervimiId}`),
 }
 
+const Huazimet = {
+  list: (): Promise<IHuazimi[]> => requests.get("/Huazimi"),
+  create: (huazimi: IHuazimi) => requests.post("/Huazimi", huazimi),
+  update: (huazimi: IHuazimi) =>
+    requests.put(`/Huazimi/${huazimi.huazimiId}`, huazimi),
+  delete: (huazimiId: number) => requests.del(`/Huazimi/${huazimiId}`),
+}
+
 const Lexuesit = {
   list: (): Promise<ILexuesi[]> => requests.get("Authenticate/users"),
   delete: (username: string) => requests.del(`/Authenticate/user/${username}`),
@@ -62,5 +71,6 @@ export default {
   Kategorite,
   Autoret,
   Rezervimet,
+  Huazimet,
   Lexuesit,
 };
