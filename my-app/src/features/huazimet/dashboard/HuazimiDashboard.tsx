@@ -38,8 +38,8 @@ const HuazimiDashboard: React.FC<IProps> = ({
         selectHuazimi={selectHuazimi}
         deleteHuazimi={deleteHuazimi}
         setEditMode={setEditMode}
-        setCreateMode={setCreateMode}
-      />
+        setCreateMode={setCreateMode} huazimi={selectedHuazimi} 
+        editHuazimi={editHuazimi}/>
       {editMode && selectedHuazimi && (
         <EditoHuazimin
           show={true}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import Col from "react-bootstrap/esm/Col";
 import Row from "react-bootstrap/esm/Row";
 import { IRezervimi } from "../../../app/layout/models/rezervimi";
@@ -11,20 +11,26 @@ import { IHuazimi } from "../../../app/layout/models/huazimi";
 import agent from "../../../app/layout/api/agent";
 
 interface IProps {
+  huazimi: IHuazimi;
   huazimet: IHuazimi[];
   librat: ILibri[];
   setEditMode: (editMode: boolean) => void;
   setCreateMode: (createMode: boolean) => void;
   selectHuazimi: (id: number) => void;
   deleteHuazimi: (id: number) => void;
+  editHuazimi: (huazimi: IHuazimi) => void;
 }
 
 const HuazimiTabela: React.FC<IProps> = ({
+  huazimi: initialFormState,
   huazimet,
   librat,
   selectHuazimi,
-  deleteHuazimi
+  deleteHuazimi,
+  editHuazimi
 }) => {
+  const INITIAL_RETURN_DATE = new Date('0001-01-01T00:00:00.000Z');
+
   const [first, setFirst] = useState<number>(0);
   const itemsPerPage = 15;
 
@@ -37,48 +43,6 @@ const HuazimiTabela: React.FC<IProps> = ({
     const libri = librat.find((libri) => libri.isbn === libriIsbn);
     return libri ? libri.fotoja : "";
   };
-
-  const handleReturnHuazimi = async (huazimiId: number) => {
-    try {
-      const currentDate = new Date();
-    
-      // Assuming huazimi is an array and you want to find the specific huazimi object
-      const huazimiToUpdate = huazimet.find((huazimi) => huazimi.huazimiId === huazimiId);
-    
-      if (!huazimiToUpdate) {
-        console.log("Huazimi not found");
-        return;
-      }
-    
-      // Create a deep copy of the huazimiToUpdate object
-      const updatedHuazimiData = JSON.parse(JSON.stringify(huazimiToUpdate));
-    
-      // Update the returnDate property
-      updatedHuazimiData.returnDate = currentDate.toISOString();
-    
-      // Stringify the updatedHuazimiData
-      const updatedHuazimiDataString = JSON.stringify(updatedHuazimiData);
-    
-      // Call the API to update the huazimi using the correct PUT method
-      const response = await fetch(`https://localhost:7226/api/Huazimi/${huazimiId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: updatedHuazimiDataString,
-      });
-    
-      if (response.ok) {
-        console.log("Huazimi updated successfully");
-        // You may want to update the state or fetch the updated data after a successful edit
-      } else {
-        console.log("Error updating Huazimi");
-      }
-    } catch (error) {
-      console.log("Error updating Huazimi", error);
-    }
-  };
-  
 
   const onPageChange = (event: PaginatorPageChangeEvent) => {
     setFirst(event.first);
@@ -96,7 +60,9 @@ const HuazimiTabela: React.FC<IProps> = ({
         <td>{huazimi.username}</td>
         <td>{new Date(huazimi.currentDate).toLocaleDateString()}</td>
         <td>{new Date(huazimi.dueDate).toLocaleDateString()}</td>
-        <td>{new Date(huazimi.returnDate).toLocaleDateString()}</td>
+        <td style={{ color: huazimi.isReturned ?'black': 'red' }}>
+          {huazimi.isReturned ? new Date(huazimi.returnDate).toLocaleDateString() :  'NOT RETURNED'}
+        </td>
         <td>
           <Button
             label="Edit"
@@ -104,9 +70,6 @@ const HuazimiTabela: React.FC<IProps> = ({
             text
             onClick={() => selectHuazimi(huazimi.huazimiId)}
           />
-        </td>
-        <td>
-          <Button label="Kthe" text onClick={() => handleReturnHuazimi(huazimi.huazimiId)}/>
         </td>
         <td>
           <Button label="Delete" text severity="danger" onClick={() => deleteHuazimi(huazimi.huazimiId)}/>
@@ -133,7 +96,6 @@ const HuazimiTabela: React.FC<IProps> = ({
               <th scope="col">Start date</th>
               <th scope="col">Due Date</th>
               <th scope="col">Return Date</th> 
-              <th></th>
               <th></th>
               <th></th>
             </tr>

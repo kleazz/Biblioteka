@@ -36,6 +36,7 @@ const Huazimet = () => {
     setEditMode(true);
   };
 
+
   useEffect(() => {
     agent.Huazimet.list().then((response: IHuazimi[]) => {
       setHuazimet(response);

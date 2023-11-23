@@ -2,7 +2,8 @@ export interface IHuazimi {
     huazimiId: number;
     currentDate: string;
     dueDate: string;
-    returnDate: string;
+    returnDate: Date;
+    isReturned: boolean;
     isbn: string;
     id: string;
     username: string;

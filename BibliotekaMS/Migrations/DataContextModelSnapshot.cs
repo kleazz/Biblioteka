@@ -131,6 +131,9 @@ namespace BibliotekaMS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("HuazimiId"));
 
+                    b.Property<DateTime>("CurrentDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime>("DueDate")
                         .HasColumnType("datetime2");
 
@@ -142,15 +145,15 @@ namespace BibliotekaMS.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<DateTime>("ReturnDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("currentDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("returnDate")
-                        .HasColumnType("datetime2");
+                    b.Property<bool>("isReturned")
+                        .HasColumnType("bit");
 
                     b.HasKey("HuazimiId");
 

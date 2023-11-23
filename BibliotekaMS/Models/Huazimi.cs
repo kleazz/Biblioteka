@@ -14,6 +14,8 @@ namespace BibliotekaMS.Models
         public DateTime DueDate { get; set; }
         public DateTime ReturnDate { get; set; }
 
+        public Boolean isReturned { get; set; }
+
         [ForeignKey("Isbn")]
         public string Isbn { get; set; }
         public Libri Libri { get; set; }

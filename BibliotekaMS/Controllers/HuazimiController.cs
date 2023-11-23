@@ -54,6 +54,8 @@ namespace BibliotekaMS.Controllers
                 return BadRequest("Rezervimi not found");
 
             update.DueDate = huazimiDto.DueDate;
+            update.ReturnDate = huazimiDto.ReturnDate;
+            update.isReturned = huazimiDto.isReturned;
 
             _context.Huazimi.Update(update);
             await _context.SaveChangesAsync();
