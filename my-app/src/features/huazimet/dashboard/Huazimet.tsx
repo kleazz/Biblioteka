@@ -16,6 +16,13 @@ const Huazimet = () => {
   const [createMode, setCreateMode] = useState(false);
 
   const [editMode, setEditMode] = useState(false);
+  const handleCreateHuazimi = (huazimi: IHuazimi) => {
+    agent.Huazimet.create(huazimi).then(() => {
+      setHuazimet([...huazimet, huazimi]);
+      setSelectedHuazimi(huazimi);
+      setEditMode(false);
+    });
+  };
 
   const handleEditHuazimi = (huazimi: IHuazimi) => {
     agent.Huazimet.update(huazimi).then(() => {
@@ -35,7 +42,6 @@ const Huazimet = () => {
     setSelectedHuazimi(huazimet.filter((h) => h.huazimiId === id)[0]);
     setEditMode(true);
   };
-
 
   useEffect(() => {
     agent.Huazimet.list().then((response: IHuazimi[]) => {
@@ -58,9 +64,10 @@ const Huazimet = () => {
       setSelectedHuazimi={setSelectedHuazimi}
       editHuazimi={handleEditHuazimi}
       deleteHuazimi={handleDeleteHuazimi}
-      createMode={createMode} 
-      setCreateMode={setCreateMode}
-      />
+      createMode={createMode}
+      setCreateMode={setCreateMode} 
+      createHuazimi={handleCreateHuazimi}
+             />
   );
 };
 

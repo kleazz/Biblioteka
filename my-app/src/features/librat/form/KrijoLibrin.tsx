@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from "react";
-import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
 import { ILibri } from "../../../app/layout/models/libri";
 import { IKategoria } from "../../../app/layout/models/kategoria";
 import { IAutori } from "../../../app/layout/models/autori";
 import agent from "../../../app/layout/api/agent";
-import Select from "react-select";
 import { ILibriRequest } from "../../../app/layout/models/libriRequest";
 import { Dialog } from "primereact/dialog";
 import { AutoComplete } from "primereact/autocomplete";
 import { InputTextarea } from "primereact/inputtextarea";
-import { FileUpload, FileUploadUploadEvent } from "primereact/fileupload";
 import { InputNumber } from "primereact/inputnumber";
 import { MultiSelect } from "primereact/multiselect";
 
@@ -46,11 +42,8 @@ const KrijoLibrin: React.FC<IProps> = ({ show, onHide, createLibri }) => {
         // Handle any errors from the API call
         console.error("Error fetching authors: ", error);
       });
-  }, []);
-  // Fetch Kategoria options from your server and update the state
-  useEffect(() => {
-    // Make an API call to fetch Kategoria options from your server
-    agent.Kategorite.list()
+
+      agent.Kategorite.list()
       .then((response: IKategoria[]) => {
         setKategorite(response);
       })
@@ -59,6 +52,7 @@ const KrijoLibrin: React.FC<IProps> = ({ show, onHide, createLibri }) => {
         console.error("Error fetching Kategoria options: ", error);
       });
   }, []);
+  // Fetch Kategoria options from your server and update the state
 
   const handleSubmit = () => {
     const libriRequest: ILibriRequest = {

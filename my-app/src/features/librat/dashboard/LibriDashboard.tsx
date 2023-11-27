@@ -14,7 +14,6 @@ interface IProps {
   createLibri: (libri: ILibriRequest) => void;
   editLibri: (libri: ILibri) => void;
   deleteLibri: (isbn: string) => void;
-
   createMode: boolean;
   setCreateMode: (createMode: boolean) => void;
 }

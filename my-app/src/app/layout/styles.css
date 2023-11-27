@@ -80,7 +80,7 @@ body {
   font-family: "Roboto", sans-serif;
 }
 
-div#pr_id_6_content {
+.p-dialog-content {
   font-family: "Roboto", sans-serif;
 }
 
@@ -110,6 +110,30 @@ span.p-paginator-current {
 
 .p-avatar.p-component.p-avatar-circle.p-avatar-xl {
   font-family: 'Roboto', sans-serif;
+}
+span.p-dropdown-label.p-inputtext {
+  font-family: 'Roboto', sans-serif;
+}
+
+ul.p-dropdown-items {
+  font-family: 'Roboto', sans-serif;
+}
+input.p-inputtext.p-component.p-filled.p-inputnumber-input.p-inputnumber-input {
+  font-family: 'Roboto', sans-serif;
+}
+ul.p-multiselect-items.p-component {
+  font-family: 'Roboto', sans-serif;
+}
+.p-multiselect-label.p-placeholder {
+  font-family: 'Roboto', sans-serif;
+}
+input.form-control {
+  font-family: 'Roboto', sans-serif;
+}
+.dropdown-item.active, .dropdown-item:active {
+  color: var(--bs-dropdown-link-active-color);
+  text-decoration: none;
+  background-color: #0a58ca;
 }
 /* .registrationdiv {
   height: 15cm;

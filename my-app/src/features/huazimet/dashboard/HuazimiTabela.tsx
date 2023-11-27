@@ -9,6 +9,7 @@ import { PaginatorPageChangeEvent } from "primereact/paginator";
 import { ILibri } from "../../../app/layout/models/libri";
 import { IHuazimi } from "../../../app/layout/models/huazimi";
 import agent from "../../../app/layout/api/agent";
+import { Dropdown } from "primereact/dropdown";
 
 interface IProps {
   huazimi: IHuazimi;
@@ -18,20 +19,17 @@ interface IProps {
   setCreateMode: (createMode: boolean) => void;
   selectHuazimi: (id: number) => void;
   deleteHuazimi: (id: number) => void;
-  editHuazimi: (huazimi: IHuazimi) => void;
 }
 
 const HuazimiTabela: React.FC<IProps> = ({
-  huazimi: initialFormState,
   huazimet,
   librat,
+  setCreateMode,
   selectHuazimi,
-  deleteHuazimi,
-  editHuazimi
+  deleteHuazimi
 }) => {
-  const INITIAL_RETURN_DATE = new Date('0001-01-01T00:00:00.000Z');
-
   const [first, setFirst] = useState<number>(0);
+  const [returnFilter, setReturnFilter] = useState<string>("all")
   const itemsPerPage = 15;
 
   const getLibriTitle = (libriIsbn: string): string => {
@@ -52,7 +50,18 @@ const HuazimiTabela: React.FC<IProps> = ({
     const startIndex = first;
     const endIndex = first + itemsPerPage;
 
-    return huazimet.slice(startIndex, endIndex).map((huazimi) => (
+    const filteredHuazimet = huazimet.filter((huazimi) => {
+      if (returnFilter === "all") {
+        return true;
+      } else if (returnFilter === "returned") {
+        return huazimi.isReturned;
+      } else if (returnFilter === "notReturned") {
+        return !huazimi.isReturned;
+      }
+      return true;
+    });
+
+    return filteredHuazimet.slice(startIndex, endIndex).map((huazimi) => (
       <tr key={huazimi.huazimiId}>
         <td><img src={getLibriKopertina(huazimi.isbn)} className="kopertina"></img></td>
         <td>{huazimi.isbn}</td>
@@ -85,7 +94,22 @@ const HuazimiTabela: React.FC<IProps> = ({
           <Col>
             <h3>Lista e huazimeve</h3>
           </Col>
-        </Row>
+          <Col xs="auto">
+          <Button label="New" text onClick={() => setCreateMode(true)}></Button>
+          </Col>
+          <Col xs="auto">
+            <Dropdown
+              options={[
+                { label: "All", value: "all" },
+                { label: "Returned", value: "returned" },
+                { label: "Not Returned", value: "notReturned" },
+              ]}
+              value={returnFilter}
+              onChange={(e) => setReturnFilter(e.value)}
+              placeholder="Select Return Status"
+            />
+          </Col>
+              </Row>
         <Table striped bordered hover>
           <thead>
             <tr>
