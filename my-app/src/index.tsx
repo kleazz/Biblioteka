@@ -2,10 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "./app/layout/App";
-import "./app/layout/styles.css"
 import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.min.css";
 import 'primereact/resources/themes/viva-light/theme.css';
+import "./app/layout/styles.css"
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

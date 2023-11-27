@@ -155,7 +155,7 @@ const renderLibriCards = (librat: ILibri[]) => {
     <Container style={{marginTop: "70px"}}>
     <Row>
       <Col style={{marginTop: "50px"}}>
-      <Panel header="Kategoria" toggleable>
+      <Panel header="Kategoria" toggleable >
       {renderKategoriteCheckboxes(kategorite)}
             <div className="mt-2">
               <button className="btn-link" onClick={() => setShowMoreKategorite(!showMoreKategorite)}>

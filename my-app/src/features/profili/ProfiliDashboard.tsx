@@ -2,21 +2,35 @@ import React, { useEffect, useState } from "react";
 import { IRezervimi } from "../../app/layout/models/rezervimi";
 import { Avatar } from "primereact/avatar";
 import { Fieldset } from "primereact/fieldset";
-import { TabPanel, TabView } from "primereact/tabview";
+import { DataView } from "primereact/dataview";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import { ILibri } from "../../app/layout/models/libri";
+import { Button } from "primereact/button";
+import { IHuazimi } from "../../app/layout/models/huazimi";
+import { Panel } from "primereact/panel";
+import 'primeicons/primeicons.css';
+import { Accordion, AccordionTab } from "primereact/accordion";
+
 interface IProps {
   rezervimet: IRezervimi[];
+  huazimet: IHuazimi[];
   librat: ILibri[];
   deleteRezervimi: (id:number) => void
 }
 const ProfiliDashboard: React.FC<IProps> = ({
   rezervimet,
+  huazimet,
   librat,
   deleteRezervimi
 
 }) => {
   const e = localStorage.getItem("username");
+
+  const [displayedReturnedHuazimet, setDisplayedReturnedHuazimet] = useState(3);
+
+  const seeMoreReturnedHuazimet = () => {
+    setDisplayedReturnedHuazimet((prev) => prev + 5);
+  };
 
   const getLibriFotoja = (libriIsbn: string): string => {
     const libri = librat.find((libri) => libri.isbn === libriIsbn)
@@ -69,40 +83,95 @@ const ProfiliDashboard: React.FC<IProps> = ({
   };
 
   const filteredReservations = rezervimet.filter((rezervimi) => rezervimi.username === e);
-
+  const filteredHuazimet = huazimet.filter((huazimi) => huazimi.username === e && !huazimi.isReturned);
+  const returnedHuazimet = huazimet.filter((huazimi) => huazimi.isReturned);
+  
   return (
-    <div style={{marginTop:"30px", padding: "90px", minHeight: "100vh"}}>
-      <div className="profile-logo">
+    <div style={{ marginTop: "25px", padding: "90px", minHeight: "100vh" }}>
+    <div className="profile-logo">
       <Avatar label={e ? e.charAt(0).toUpperCase() : ""} size="xlarge" shape="circle" />
-    <h3 style={{marginTop: "20px", marginLeft: "20px"}}>{e}</h3>
+      <h3 style={{ marginTop: "20px", marginLeft: "20px", color: "white" }}>{e}</h3>
     </div>
-    <hr></hr>
-      {filteredReservations.map((rezervimi) => {
-        return (
-          <div key={rezervimi.rezervimiId} className="reservation-card">
-            <div>
+    <Accordion activeIndex={0} className="acc-group">
+                <AccordionTab header="Rezervimet aktuale">
+    {filteredReservations.length === 0 && <h6> Nuk keni rezervim</h6>}
+    {filteredReservations.map((rezervimi, index) => (
+      <React.Fragment key={rezervimi.rezervimiId}>
+        <div className="reservation-card">
+            <div className="card-left">
               <img
                 src={getLibriFotoja(rezervimi.isbn)}
                 alt="Book Cover"
-                style={{ height: "250px", width: "170px" }}
+                style={{ height: "206px", width: "140px" }}
               />
-              <h2>{getLibriTitulli(rezervimi.isbn)}</h2>
+              </div>
+              <div className="card-right">
+              <h3>{getLibriTitulli(rezervimi.isbn)}</h3>
               <p>Due Date: {formatDate(rezervimi.dueDate)}</p>
             </div>
-            <div>
-              <button
-                type="button"
-                className="btn btn-outline-danger"
-                onClick={() => deleteRezervimi(rezervimi.rezervimiId)}
-                style={{ marginTop: "7.5cm" }}
-              >
-                Delete
-              </button>
+            <div className="card-column">
+              <Button label="Delete" severity="danger" text onClick={() => deleteRezervimi(rezervimi.rezervimiId)} />
+            </div>
+            </div>
+            {index !== filteredReservations.length - 1 && <hr className="divhr"></hr>}
+        </React.Fragment>
+      ))} 
+       </AccordionTab>
+       <AccordionTab header="Huazimet aktuale">
+       {filteredHuazimet.length === 0 && <h6> Nuk keni huazime</h6>}
+      {filteredHuazimet.map((huazimi, index) => (
+        <React.Fragment key={huazimi.huazimiId}>
+          <div className="reservation-card">
+          <div className="card-left">
+              <img
+                src={getLibriFotoja(huazimi.isbn)}
+                alt="Book Cover"
+                style={{ height: "206px", width: "140px" }}
+              />
+              </div>
+              <div className="card-right">
+              <h3>{getLibriTitulli(huazimi.isbn)}</h3>
+              <p>Due Date: {formatDate(huazimi.dueDate)}</p>
             </div>
           </div>
-        );
-      })} 
-    </div>
+          {index !== filteredHuazimet.length - 1 && <hr></hr>}
+        </React.Fragment>
+      ))}
+      </AccordionTab>
+      </Accordion>
+      <Accordion>
+      <AccordionTab header={<span><i className="pi pi-history" style={{ color: 'black', marginRight: '10px' }}></i> Huazimet paraprake</span>}>
+      {/* <h4 className="profile-label"> Huazimet paraprake</h4>
+      <hr className="divider-hr"></hr>  */}
+      {returnedHuazimet.length === 0 && <h6> Nuk keni huazime</h6>}
+      {returnedHuazimet.slice(0, displayedReturnedHuazimet).map((huazimi, index) => (
+      <React.Fragment key={huazimi.huazimiId}>
+        <div className="reservation-card">
+            <div className="card-left">
+              <img
+                src={getLibriFotoja(huazimi.isbn)}
+                alt="Book Cover"
+                style={{ height: "206px", width: "140px" }}
+              />
+              </div>
+              <div className="card-right">
+              <h3>{getLibriTitulli(huazimi.isbn)}</h3>
+              <p>Start Date: {formatDate(huazimi.currentDate)} </p>
+              <p>Due Date: {formatDate(huazimi.dueDate)}</p>
+              <p>Return Date: {formatDate(huazimi.returnDate.toString())}</p>
+            </div>
+            </div>
+            {((index !== displayedReturnedHuazimet - 1) && (index !== returnedHuazimet.length - 1)) && <hr className="divhr"></hr>}
+        </React.Fragment>
+        ))}
+          {displayedReturnedHuazimet < returnedHuazimet.length && (
+        <div style={{ textAlign: 'center', margin: '10px' }}>
+          <button className="btn-link" onClick={seeMoreReturnedHuazimet}>Show More</button>
+        </div>
+      )}
+      </AccordionTab>
+      </Accordion>
+      </div>
   );
 };
 

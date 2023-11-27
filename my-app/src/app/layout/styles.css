@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap'); 
 
 body {
-  font-family: "Roboto";
+  font-family: "Roboto", sans-serif;
   /* padding-top: 80px;
   padding-right: 80px;
   padding-left: 80px; */
@@ -66,6 +66,51 @@ body {
   width: 100%;
 }
 
+.p-accordion-content {
+  font-family: "Roboto", sans-serif;
+  color: black;
+} 
+.p-panel-content {
+  font-family: "Roboto", sans-serif;
+}
+.p-panel-header {
+  font-family: "Roboto", sans-serif;
+}
+.p-dialog-header {
+  font-family: "Roboto", sans-serif;
+}
+
+div#pr_id_6_content {
+  font-family: "Roboto", sans-serif;
+}
+
+.p-datepicker-header {
+  font-family: "Roboto", sans-serif;
+}
+
+.p-datepicker-calendar-container {
+  font-family: "Roboto", sans-serif;
+}
+
+span.p-chip-text {
+  font-family: "Roboto", sans-serif;
+}
+
+.p-accordion-tab {
+    font-family: "Roboto", sans-serif;
+}
+
+.p-scrollpanel.p-component.custombar2 {
+  font-family: "Roboto", sans-serif;
+}
+
+span.p-paginator-current {
+  font-family: "Roboto", sans-serif;
+}
+
+.p-avatar.p-component.p-avatar-circle.p-avatar-xl {
+  font-family: 'Roboto', sans-serif;
+}
 /* .registrationdiv {
   height: 15cm;
   width: 30cm;
@@ -91,17 +136,48 @@ body {
 } */
 
 .reservation-card {
-  background-color: white;
-  padding: 0.5cm;
-  border-radius: 10px;
-  height: 9.4cm;
-  width: 30cm;
-  margin: 0.5cm;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  /* background-color: white; */
+  padding: 10px;
+  /* border-radius: 10px; */
+  height: 6cm;
+  /* width: 34.4cm; */
+  margin: 0.5cm 0cm;
+  /* border: 1px solid gray; */
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); */
   display: flex;
   flex-direction: row;
+  /* align-items: center; */
   justify-content: space-between;
 }
+
+.card-left {
+  width: 5cm;
+  height: 5cm;
+  align-items: center;
+}
+
+.card-right {
+  width: 30cm
+}
+
+.divider-hr{
+  border: 2px solid #1c2c3c; /* Set the border width and color */
+  border-radius: 20px;
+  /* margin: 20px auto;  */
+}
+
+/* .p-accordion-tab {
+  height: 5cm;
+} */
+
+.acc-group{
+  margin: 30px 0px;
+}
+
+/* .divhr{
+  width: 96%;
+  margin-left: 29px;
+} */
 
 /* shtim */
 
@@ -555,6 +631,14 @@ input.form-control:focus {
 .profile-logo{
   display: flex;
   flex-direction: row;
+  background-color: #1c2c3c;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.profile-label{
+  margin-top: 30px;
+  color: #708090;
 }
 
 .details-h6{
@@ -573,6 +657,14 @@ input.form-control:focus {
  width: 40px;
 }
 
+a{
+  color:black ;
+  text-decoration: none;
+}
+
+a:hover {
+  color: black;
+}
 
     @media (max-width: 1200px) {
       #login-wrapper{

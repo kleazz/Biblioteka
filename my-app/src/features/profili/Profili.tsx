@@ -7,9 +7,12 @@ import "primereact/resources/themes/lara-light-indigo/theme.css";
 import { ILibri } from "../../app/layout/models/libri";
 import agent from "../../app/layout/api/agent";
 import ProfiliDashboard from "./ProfiliDashboard";
+import { IHuazimi } from "../../app/layout/models/huazimi";
 
 const Profili = () => {
   const [rezervimet, setRezervimet] = useState <IRezervimi[]>([]);
+
+  const [huazimet, setHuazimet] = useState<IHuazimi[]>([]);
 
   const[librat, setLibrat] = useState <ILibri[]>([]);
 
@@ -24,14 +27,19 @@ const Profili = () => {
       setRezervimet(response);
     });
 
-    agent.Librat.list().then((libratResponse: ILibri[]) => {
-      setLibrat(libratResponse);
+    agent.Librat.list().then((response: ILibri[]) => {
+      setLibrat(response);
+
+    agent.Huazimet.list().then((response: IHuazimi[]) => {
+      setHuazimet(response);
+    })
     });
   }, []);
 
   return(
     <ProfiliDashboard
     rezervimet={rezervimet}
+    huazimet={huazimet}
     librat={librat}
     deleteRezervimi={handleDeleteRezervimi}/>
   );
