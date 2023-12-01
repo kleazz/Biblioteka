@@ -221,6 +221,45 @@ namespace BibliotekaMS.Migrations
                     b.ToTable("Libri");
                 });
 
+            modelBuilder.Entity("BibliotekaMS.Models.Review", b =>
+                {
+                    b.Property<int>("ReviewId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReviewId"));
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Id")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsEdited")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Isbn")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Komenti")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ReviewId");
+
+                    b.HasIndex("Id");
+
+                    b.HasIndex("Isbn");
+
+                    b.ToTable("Review");
+                });
+
             modelBuilder.Entity("BibliotekaMS.Models.Rezervimi", b =>
                 {
                     b.Property<int>("RezervimiId")
@@ -443,6 +482,25 @@ namespace BibliotekaMS.Migrations
                     b.Navigation("Libri");
                 });
 
+            modelBuilder.Entity("BibliotekaMS.Models.Review", b =>
+                {
+                    b.HasOne("BibliotekaMS.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany("Reviews")
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BibliotekaMS.Models.Libri", "Libri")
+                        .WithMany("Reviews")
+                        .HasForeignKey("Isbn")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ApplicationUser");
+
+                    b.Navigation("Libri");
+                });
+
             modelBuilder.Entity("BibliotekaMS.Models.Rezervimi", b =>
                 {
                     b.HasOne("BibliotekaMS.Models.ApplicationUser", "ApplicationUser")
@@ -517,6 +575,8 @@ namespace BibliotekaMS.Migrations
                 {
                     b.Navigation("Huazimet");
 
+                    b.Navigation("Reviews");
+
                     b.Navigation("Rezervimet");
                 });
 
@@ -537,6 +597,8 @@ namespace BibliotekaMS.Migrations
                     b.Navigation("Huazimet");
 
                     b.Navigation("KategoriaELibrit");
+
+                    b.Navigation("Reviews");
 
                     b.Navigation("Rezervimet");
                 });

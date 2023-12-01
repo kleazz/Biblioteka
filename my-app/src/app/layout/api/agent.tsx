@@ -6,6 +6,7 @@ import { ILexuesi } from "../models/lexuesi";
 import { ILibriRequest } from "../models/libriRequest";
 import { IRezervimi } from "../models/rezervimi";
 import { IHuazimi } from "../models/huazimi";
+import { IReview } from "../models/review";
 
 axios.defaults.baseURL = "https://localhost:7226/api";
 
@@ -66,6 +67,14 @@ const Lexuesit = {
   delete: (username: string) => requests.del(`/Authenticate/user/${username}`),
 };
 
+const Reviews = {
+  list: (): Promise<IReview[]> => requests.get("/Review"),
+  create: (review: IReview) => requests.post("/Review", review),
+  update: (review: IReview) =>
+    requests.put(`/Review/${review.reviewId}`, review),
+  delete: (reviewId: number) => requests.del(`/Review/${reviewId}`),
+};
+
 export default {
   Librat,
   Kategorite,
@@ -73,4 +82,5 @@ export default {
   Rezervimet,
   Huazimet,
   Lexuesit,
+  Reviews,
 };

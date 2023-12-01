@@ -17,6 +17,8 @@ namespace BibliotekaMS.Helper
             CreateMap<Rezervimi, RezervimiDto>();
             CreateMap<Huazimi, HuazimiDto>();
             CreateMap<HuazimiDto, Huazimi>();
+            CreateMap<Review, ReviewDto>();
+            CreateMap<ReviewDto, Review>();
         }
     }
 }

@@ -8,5 +8,7 @@ namespace BibliotekaMS.Models
         public ICollection<Rezervimi> Rezervimet { get; set; }
 
         public ICollection<Huazimi> Huazimet { get; set; }
+
+        public ICollection<Review> Reviews { get; set; }
     }
 }
