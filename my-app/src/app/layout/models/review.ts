@@ -5,4 +5,6 @@ export interface IReview {
     komenti: string;
     date: Date;
     isEdited: boolean;
+    id: string;
+    rId: number;
   }

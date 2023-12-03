@@ -54,6 +54,10 @@ body {
   align-items:center;
   min-height: 90vh; /* Center vertically within the viewport */
 }
+
+.reviews-container{
+  min-height: 10vh;
+}
 .button-container {
   position: absolute;
   width: 15rem;
@@ -65,6 +69,41 @@ body {
 .card-button {
   width: 100%;
 }
+
+.review-wrapper{
+  min-height: 2cm;
+  max-height: 5cm;
+  padding: 10px 0px;
+}
+
+.review-top{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 0.3cm;
+}
+
+.review-user{
+  font-size:medium;
+  color: #1c2c3c;
+}
+
+.review-bottom{
+   margin-top: 0.5cm;
+}
+.review-comment{
+  width: 30cm;
+}
+.review-right{
+  display: flex;
+  flex-direction: row;
+}
+
+/* .review-bottom{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+} */
 
 .p-accordion-content {
   font-family: "Roboto", sans-serif;
@@ -185,7 +224,7 @@ input.form-control {
 }
 
 .divider-hr{
-  border: 2px solid #1c2c3c; /* Set the border width and color */
+  border: 2px solid; /* Set the border width and color */
   border-radius: 20px;
   /* margin: 20px auto;  */
 }
@@ -429,6 +468,20 @@ input.form-control {
     width: 100%; /* Full width */
     height: 100%; /* Full height */
     opacity: 0;
+  }
+
+  .cancelbtn{
+    background-color:#777b89;
+  }
+
+  .editbtn{
+    background-color: white;
+    color: #777b89;
+  }
+
+  .delbtn{
+    background-color: white;
+    color: #1c2c3c;
   }
 
   .custom-link{

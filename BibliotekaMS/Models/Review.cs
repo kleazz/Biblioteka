@@ -8,6 +8,7 @@ namespace BibliotekaMS.Models
         [Key]
         public int ReviewId { get; set; }
 
+        public int RId { get; set; }
         public string Username { get; set; }
 
         public string Komenti { get; set; }

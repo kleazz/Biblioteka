@@ -32,6 +32,10 @@ const ProfiliDashboard: React.FC<IProps> = ({
     setDisplayedReturnedHuazimet((prev) => prev + 5);
   };
 
+  const seeLessReturnedHuazimet = () => {
+    setDisplayedReturnedHuazimet(3);
+  };
+
   const getLibriFotoja = (libriIsbn: string): string => {
     const libri = librat.find((libri) => libri.isbn === libriIsbn)
     return libri? libri.fotoja: "";
@@ -84,7 +88,7 @@ const ProfiliDashboard: React.FC<IProps> = ({
 
   const filteredReservations = rezervimet.filter((rezervimi) => rezervimi.username === e);
   const filteredHuazimet = huazimet.filter((huazimi) => huazimi.username === e && !huazimi.isReturned);
-  const returnedHuazimet = huazimet.filter((huazimi) => huazimi.isReturned);
+  const returnedHuazimet = huazimet.filter((huazimi) => huazimi.username === e && huazimi.isReturned);
   
   return (
     <div style={{ marginTop: "25px", padding: "90px", minHeight: "100vh" }}>
@@ -164,11 +168,15 @@ const ProfiliDashboard: React.FC<IProps> = ({
             {((index !== displayedReturnedHuazimet - 1) && (index !== returnedHuazimet.length - 1)) && <hr className="divhr"></hr>}
         </React.Fragment>
         ))}
-          {displayedReturnedHuazimet < returnedHuazimet.length && (
-        <div style={{ textAlign: 'center', margin: '10px' }}>
-          <button className="btn-link" onClick={seeMoreReturnedHuazimet}>Show More</button>
-        </div>
-      )}
+    {returnedHuazimet.length > 3 && (
+          <div style={{ textAlign: 'center', margin: '10px' }}>
+            {displayedReturnedHuazimet < returnedHuazimet.length ? (
+              <button className="btn-link" onClick={seeMoreReturnedHuazimet}>Show More</button>
+            ) : (
+              <button className="btn-link" onClick={seeLessReturnedHuazimet}>Show Less</button>
+            )}
+          </div>
+        )}
       </AccordionTab>
       </Accordion>
       </div>

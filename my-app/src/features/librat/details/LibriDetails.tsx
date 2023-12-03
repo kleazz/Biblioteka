@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Calendar } from 'primereact/calendar';
-import { addLocale } from 'primereact/api';
 import { Row, Col, Button, Modal, Form } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { ILibri } from "../../../app/layout/models/libri";
@@ -12,7 +11,7 @@ import agent from "../../../app/layout/api/agent";
 import { IAutori } from "../../../app/layout/models/autori";
 import { IKategoria } from "../../../app/layout/models/kategoria";
 import { Chip } from "primereact/chip";
-
+import Reviews from "../../reviews/dashboard/Reviews";
 
 const LibriDetails: React.FC = () => {
   const { libriIsbn } = useParams<{ libriIsbn: string }>();
@@ -38,11 +37,12 @@ const LibriDetails: React.FC = () => {
       let u = localStorage.getItem("userId");
       let e = localStorage.getItem("username");
 
+      const formattedDueDate = new Date(selectedDueDate!.getTime() - selectedDueDate!.getTimezoneOffset() * 60000);
       const reservationData = {
         username: e,
         id: u,
         isbn: libriIsbn,
-        dueDate: selectedDueDate,
+        dueDate: formattedDueDate.toISOString(),
       };
 
       try {
@@ -119,8 +119,10 @@ const LibriDetails: React.FC = () => {
   // const [date, setDate] = useState<Nullable<Date>>(null);
 
   return (
+    // <div className="details-page">
+    <>
     <div className="details-container">
-      {libri ? (
+      {libri && (
         <div style={{ height: "600px", width: "35cm", backgroundColor: "white", padding: "1cm" }}>
           <Row>
             <Col xs={12} md={4}>
@@ -130,8 +132,8 @@ const LibriDetails: React.FC = () => {
                   marginTop: "1cm",
                   height: "450px",
                   width: "325px",
-                  borderTopRightRadius: "10px",
-                  borderBottomRightRadius: "10px",
+                  borderTopRightRadius: "20px",
+                  borderBottomRightRadius: "20px",
                 }}
                 alt={libri.titulli}
                 className="img-fluid"
@@ -142,12 +144,11 @@ const LibriDetails: React.FC = () => {
               md={8}
               style={{ marginTop: "1cm", overflow: "hidden", display: "flex", flexDirection: "column", justifyContent: "space-between" }}
             >
-              <h1 className="details-h1">{libri.titulli}</h1>
+              <h1 className="details-h1"><b>{libri.titulli}</b></h1>
               <h4>{autoret}</h4>
-              {/* <h6 className="details-h6">{kategorite}</h6> */}
               <h6 className="details-h6">
                 {(kategorite ?? "").split(', ').map((kategoria, index) => (
-                  <Chip key={index} label={kategoria} className="p-mr-2" style={{marginRight:"10px" }}/>
+                  <Chip key={index} label={kategoria} className="p-mr-2" style={{ marginRight: "10px" }} />
                 ))}
               </h6>
               <ScrollPanel style={{ width: '100%', height: '190px' }} className="custombar2">
@@ -163,60 +164,26 @@ const LibriDetails: React.FC = () => {
             </Col>
           </Row>
         </div>
-      ) : (
-        <div></div>
       )}
 
-        <Dialog header="Rezervo Librin" visible={visible} style={{ width: '30vw' }} onHide={() => setVisible(false)}>
-                <label>Due Date</label>
-                <div className="modal-flex">
-            <Calendar 
-              className="custom-calendar" 
-              minDate={getMinDate()}
-              maxDate={getMaxDate()}
-              value={selectedDueDate}
-              onChange={(e) => setSelectedDueDate(e.value)} />
-              </div>
-              <div className="modal-btn">
-            <button className="submitbtn" onClick={() => { handleSave(); setVisible(false); }}>Ruaj</button>
+      <Dialog header="Rezervo Librin" visible={visible} style={{ width: '30vw' }} onHide={() => setVisible(false)}>
+        <label>Due Date</label>
+        <div className="modal-flex">
+          <Calendar
+            className="custom-calendar"
+            minDate={getMinDate()}
+            maxDate={getMaxDate()}
+            value={selectedDueDate}
+            onChange={(e) => setSelectedDueDate(e.value)}
+          />
         </div>
-                {/* <Form.Group>
-            <Form.Label>Due Date</Form.Label>
-            <Form.Control
-              type="date"
-              min={getMinDate()}
-              max={getMaxDate()}
-              value={selectedDueDate}
-              onChange={(e) => setSelectedDueDate(e.target.value)}
-            />
-          </Form.Group> */}
-            </Dialog>
-      {/* <Modal show={showModal} onHide={handleCloseModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>Rezervo Librin</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form.Group>
-            <Form.Label>Due Date</Form.Label>
-            <Form.Control
-              type="date"
-              min={getMinDate()}
-              max={getMaxDate()}
-              value={selectedDueDate}
-              onChange={(e) => setSelectedDueDate(e.target.value)}
-            />
-          </Form.Group>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseModal}>
-            Cancel
-          </Button>
-          <Button variant="primary" onClick={handleSave}>
-            Ruaj
-          </Button>
-        </Modal.Footer>
-      </Modal> */}
+        <div className="modal-btn">
+          <button className="submitbtn" onClick={() => { handleSave(); setVisible(false); }}>Ruaj</button>
+        </div>
+      </Dialog>
     </div>
+<Reviews isbn={libri?.isbn}></Reviews>
+    </>
   );
 };
 
