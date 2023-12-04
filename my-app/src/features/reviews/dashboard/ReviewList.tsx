@@ -35,7 +35,7 @@ const ReviewList: React.FC<IProps> = ({
 }) => {
   const [review, setReview] = useState<IReview>({
     reviewId: 0,
-    rId: 0,
+    // rId: 0,
     username: "",
     isbn: "",
     komenti: "",
@@ -44,7 +44,15 @@ const ReviewList: React.FC<IProps> = ({
     id: ""
     });
 
-  const [reviewIdCounter, setReviewIdCounter] = useState(0);
+    const [displayedReviews, setDisplayedReviews] = useState(5);
+
+    const seeMoreReviews =() => {
+        setDisplayedReviews((prev) => prev + 5);
+    }
+
+    const seeLessReviews=() => {
+        setDisplayedReviews(5);
+    }
 
   const handleSubmit = () => {
     let storedUsername = localStorage.getItem("username");
@@ -55,14 +63,12 @@ const ReviewList: React.FC<IProps> = ({
       username: storedUsername || "",
       id: storedId || "",
       isbn: isbn || "",
-      rId: reviewIdCounter
     };
 
     console.log(newReview);
     createReview(newReview);
 
     // Increment the reviewId counter for the next review
-    setReviewIdCounter((prevCounter) => prevCounter + 1);
 
     setReview({ ...review, komenti: "" });
   };
@@ -77,7 +83,7 @@ const ReviewList: React.FC<IProps> = ({
   return (
     <>
      <div className="details-container" style={{alignItems: "flex-start", marginTop: "15px", minHeight: "5cm"}}>
-    <div style={{width: "35cm", padding: "1cm", paddingBottom: "3cm"}}>
+    <div style={{width: "35cm", padding: "1cm", paddingBottom: "2cm"}}>
     <h3 style={{color: "#1c2c3c"}}><b>Reviews</b></h3>
     {localStorage.getItem("role") !== "admin" && (
      <Row style={{marginTop: "30px"}}>
@@ -100,50 +106,61 @@ const ReviewList: React.FC<IProps> = ({
        </Col>
        </Row>
        )}
-        {filteredReviews.length === 0 && <p>Libri nuk ka reviews.</p>}
-       {filteredReviews.map((r) => (
-    <div key={r.rId} className="review-wrapper">
-        <div className="review-top">
-            <div className="review-user"><b>{r.username}</b></div>
+   {filteredReviews.length === 0 && <p>Libri nuk ka reviews.</p>}
+{filteredReviews.slice(0, displayedReviews).map((r, index) => (
+  <div key={r.reviewId} className="review-wrapper">
+    <div className="review-top">
+      <div className="review-edited">
+        <b className="review-user">{r.username}</b>
+        {r.isEdited && " (edited)"}
+      </div>
+      <div className="review-right">
+        {isAdmin ? (
+          <div>
+            <button className="submitbtn delbtn" onClick={() => deleteReview(r.reviewId)}>
+              <b><i className="pi pi-trash"></i></b>
+            </button>
+          </div>
+        ) : (
+          r.id === localStorage.getItem("userId") && (
             <div className="review-right">
-                {isAdmin ? (
-                    <div>
-                        <button className="submitbtn delbtn" onClick={() => deleteReview(r.rId)}>
-                            <b><i className="pi pi-trash"></i></b>
-                        </button>
-                    </div>
-                ) : (
-                    r.id === localStorage.getItem("userId") && (
-                        <div className="review-right">
-                            <button className="submitbtn editbtn" onClick={() => selectReview(r.rId)}>
-                                <b><i className="pi pi-pencil"></i></b>
-                            </button>
-                            <button className="submitbtn delbtn" onClick={() => deleteReview(r.rId)}>
-                                <b><i className="pi pi-trash"></i></b>
-                            </button>
-                        </div>
-                    )
-                )}
+              <button className="submitbtn editbtn" onClick={() => selectReview(r.reviewId)}>
+                <b><i className="pi pi-pencil"></i></b>
+              </button>
+              <button className="submitbtn delbtn" onClick={() => deleteReview(r.reviewId)}>
+                <b><i className="pi pi-trash"></i></b>
+              </button>
             </div>
-        </div>
-        <div className="review-bottom">
-            <div className="review-comment">{r.komenti}</div>
-        </div>
+          )
+        )}
+      </div>
     </div>
+    <div className="review-bottom">
+      <div className="review-comment">{r.komenti}</div>
+    </div>
+  </div>
 ))}
-                </div>
-            </div>
-            {editMode && selectedReview && (
-                <EditoReview
-                    show={true}
-                    onHide={() => setEditMode(false)}
-                    review={selectedReview!}
-                    editReview={editReview}
-                />
-            )}
-        </>
-    );
+{filteredReviews.length > 5 && (
+  <div style={{ textAlign: 'center', margin: '10px' }}>
+    {displayedReviews < filteredReviews.length ? (
+      <button className="btn-link" onClick={seeMoreReviews}>Show More</button>
+    ) : (
+      <button className="btn-link" onClick={seeLessReviews}>Show Less</button>
+    )}
+  </div>
+)}
+</div>
+</div>
+{editMode && selectedReview && (
+  <EditoReview
+    show={true}
+    onHide={() => setEditMode(false)}
+    review={selectedReview!}
+    editReview={editReview}
+  />
+)}
+</>
+);
 };
-  
-  export default ReviewList;
-  
+
+export default ReviewList;

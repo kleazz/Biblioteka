@@ -6,5 +6,5 @@ export interface IReview {
     date: Date;
     isEdited: boolean;
     id: string;
-    rId: number;
+    // rId: number;
   }

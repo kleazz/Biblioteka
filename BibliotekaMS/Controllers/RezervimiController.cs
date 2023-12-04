@@ -41,7 +41,7 @@ namespace BibliotekaMS.Controllers
             _context.Rezervimi.Add(rezervimi);
             await _context.SaveChangesAsync();
 
-            return Ok("Added successfully");
+            return Ok(rezervimi);
         }
 
         [HttpPut("{rezervimiId}")]

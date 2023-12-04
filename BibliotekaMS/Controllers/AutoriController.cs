@@ -100,7 +100,7 @@ namespace BibliotekaMS.Controllers
                 return StatusCode(500, ModelState);
             }
 
-            return Ok("Successfully created");
+            return Ok(autoriMap);
         }
 
         [HttpPut("{autoriId}")]

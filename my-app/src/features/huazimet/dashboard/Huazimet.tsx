@@ -17,9 +17,9 @@ const Huazimet = () => {
 
   const [editMode, setEditMode] = useState(false);
   const handleCreateHuazimi = (huazimi: IHuazimi) => {
-    agent.Huazimet.create(huazimi).then(() => {
-      setHuazimet([...huazimet, huazimi]);
-      setSelectedHuazimi(huazimi);
+    agent.Huazimet.create(huazimi).then((response) => {
+      setHuazimet([...huazimet, response]);
+      setSelectedHuazimi(response);
       setEditMode(false);
     });
   };

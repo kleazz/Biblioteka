@@ -9,9 +9,9 @@ const Reviews = ({ isbn }: { isbn: string | undefined }) => {
   const [editMode, setEditMode] = useState(false);
 
   const handleCreateReview = (review: IReview) => {
-    agent.Reviews.create(review).then(() => {
-      setReviews([...reviews, review]);
-      setSelectedReview(review);
+    agent.Reviews.create(review).then((response) => {
+      setReviews([...reviews, response]);
+      setSelectedReview(response.data);
     });
   };
 

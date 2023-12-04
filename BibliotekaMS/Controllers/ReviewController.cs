@@ -32,7 +32,6 @@ namespace BibliotekaMS.Controllers
 
             var review = new Review
             {
-                RId = reviewDto.RId,
                 Username = reviewDto.Username,
                 Komenti = reviewDto.Komenti,
                 Date = reviewDto.Date,
@@ -44,13 +43,13 @@ namespace BibliotekaMS.Controllers
             _context.Review.Add(review);
             await _context.SaveChangesAsync();
 
-            return Ok("Added successfully");
+            return Ok(review);
         }
 
         [HttpPut("{reviewId}")]
         public async Task<ActionResult<List<Review>>> Update(int reviewId, ReviewDto reviewDto)
         {
-            var update = await _context.Review.FirstOrDefaultAsync(c => c.RId == reviewId);
+            var update = await _context.Review.FirstOrDefaultAsync(c => c.ReviewId == reviewId);
             if (update == null)
                 return BadRequest("Rezervimi not found");
 
@@ -66,7 +65,7 @@ namespace BibliotekaMS.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<List<Review>>> Delete(int id)
         {
-            var delete = await _context.Review.FirstOrDefaultAsync(c => c.RId == id);
+            var delete = await _context.Review.FirstOrDefaultAsync(c => c.ReviewId == id);
             if (delete == null)
                 return BadRequest("Rezervimi not found");
 

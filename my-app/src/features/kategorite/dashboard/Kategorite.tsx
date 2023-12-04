@@ -15,9 +15,9 @@ const Kategorite = () => {
   const [editKatMode, setEditKatMode] = useState(false);
 
   const handleCreateKategoria = (kategoria: IKategoria) => {
-    agent.Kategorite.create(kategoria).then(() => {
-      setKategorite([...kategorite, kategoria]);
-      setSelectedKategoria(kategoria);
+    agent.Kategorite.create(kategoria).then((response) => {
+      setKategorite([...kategorite, response]);
+      setSelectedKategoria(response);
       setEditKatMode(false);
     });
   };

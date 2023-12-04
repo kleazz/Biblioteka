@@ -13,9 +13,9 @@ const Autoret = () => {
   const [editAutMode, setEditAutMode] = useState(false);
 
   const handleCreateAutori = (autori: IAutori) => {
-    agent.Autoret.create(autori).then(() => {
-      setAutoret([...autoret, autori]);
-      setSelectedAutori(autori);
+    agent.Autoret.create(autori).then((response) => {
+      setAutoret([...autoret, response]);
+      setSelectedAutori(response);
       setEditAutMode(false);
     });
   };

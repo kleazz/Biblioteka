@@ -43,7 +43,7 @@ namespace BibliotekaMS.Controllers
             _context.Huazimi.Add(huazimi);
             await _context.SaveChangesAsync();
 
-            return Ok("Added successfully");
+            return Ok(huazimi);
         }
 
         [HttpPut("{huazimiId}")]

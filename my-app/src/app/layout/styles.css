@@ -87,7 +87,10 @@ body {
   font-size:medium;
   color: #1c2c3c;
 }
-
+.review-edited{
+  font-size: medium;
+  color:#777b89;
+}
 .review-bottom{
    margin-top: 0.5cm;
 }
@@ -128,6 +131,10 @@ body {
 }
 
 .p-datepicker-calendar-container {
+  font-family: "Roboto", sans-serif;
+}
+
+input.p-inputtext.p-component.p-filled.p-autocomplete-input {
   font-family: "Roboto", sans-serif;
 }
 
